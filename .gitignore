@@ -57,3 +57,5 @@ profile-*
 
 # compiled app
 dist
+lib
+bin

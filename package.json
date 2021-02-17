@@ -2,6 +2,15 @@
   "name": "typed-fastify",
   "description": "opinionated types for fastify",
   "version": "0.0.0-dev",
+  "bin": {
+    "typed-fastify-schema": "bin/gen.bin.js",
+    "tfs": "bin/gen.bin.js"
+  },
+  "files": [
+    "src",
+    "lib",
+    "bin"
+  ],
   "dependencies": {
     "crypto-js": "^4.0.0",
     "escape-string-regexp": "^4.0.0",
@@ -50,6 +59,7 @@
     }
   },
   "scripts": {
+    "build": "tsc -p src && tsc -p generator",
     "test": "tap test/*.test.ts -R terse"
   }
 }

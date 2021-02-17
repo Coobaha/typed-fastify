@@ -1,24 +1,21 @@
-import fastify from "fastify";
-import tap from "tap";
-import t from "tap";
-import addSchema, { Service } from "../src";
-import { TestSchema } from "./test_schema";
-import jsonSchema from "./test_schema.gen.json";
+import fastify from 'fastify';
+import tap from 'tap';
+import t from 'tap';
+import addSchema, { Service } from '../src';
+import { TestSchema } from './test_schema';
+import jsonSchema from './test_schema.gen.json';
 
-type Test = typeof tap["Test"]["prototype"];
+type Test = typeof tap['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"');
 };
 
 const defaultService: Service<TestSchema> = {
-  "GET /": (req, reply) => {
-    return reply
-      .status(200)
-      .headers({ "x-custom": "1" })
-      .send({ name: "hello" });
+  'GET /': (req, reply) => {
+    return reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
   },
-  "POST /": (req, reply) => {
+  'POST /': (req, reply) => {
     const { user: userData } = req.body;
     return reply.status(200).send({
       user: userData,
@@ -42,38 +39,38 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
 };
 
 const requiredHeaders = {
-  authorization: "required",
-  getHeader: "isHere",
+  authorization: 'required',
+  getHeader: 'isHere',
 };
 
-t.test("app starts and GET / works", async (t) => {
+t.test('app starts and GET / works', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: "/",
+    url: '/',
     headers: requiredHeaders,
   });
 
-  t.matchSnapshot(res.json(), "happy path");
+  t.matchSnapshot(res.json(), 'happy path');
 });
 
-t.test("it sends headers", async (t) => {
+t.test('it sends headers', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: "/",
+    url: '/',
     headers: requiredHeaders,
   });
 
-  t.matchSnapshot(res.headers, "x-custom header is present");
+  t.matchSnapshot(res.headers, 'x-custom header is present');
 });
 
-t.test("response is validated", async (t) => {
+t.test('response is validated', async (t) => {
   const app = await buildApp(t, {
     ...defaultService,
-    "GET /": (req, reply) => {
+    'GET /': (req, reply) => {
       return (
         reply
           .status(200)
-          .header("x-custom", "1")
+          .header('x-custom', '1')
           //@ts-expect-error
           .send({ invalid: 1 })
       );
@@ -81,72 +78,72 @@ t.test("response is validated", async (t) => {
   });
 
   const res = await app.inject({
-    url: "/",
+    url: '/',
     headers: requiredHeaders,
   });
 
-  t.matchSnapshot(res.json(), "invalid response");
+  t.matchSnapshot(res.json(), 'invalid response');
 });
 
-t.test("it validates get query param against schema", async (t) => {
+t.test('it validates get query param against schema', async (t) => {
   const app = await buildApp(t);
 
   const res = await app.inject({
-    url: "/",
+    url: '/',
     headers: requiredHeaders,
     query: {
-      getQueryParam: "1",
+      getQueryParam: '1',
     },
   });
 
-  t.matchSnapshot(res.json(), "wrong type of query param");
+  t.matchSnapshot(res.json(), 'wrong type of query param');
 });
 
-t.test("it validates headers", async (t) => {
+t.test('it validates headers', async (t) => {
   const app = await buildApp(t);
 
   const responses = await Promise.all([
     app.inject({
-      url: "/",
+      url: '/',
       headers: {
-        getHeader: "isHere",
+        getHeader: 'isHere',
       },
     }),
     app.inject({
-      url: "/",
+      url: '/',
       headers: {
-        authorization: "isHere",
+        authorization: 'isHere',
       },
     }),
   ]);
 
   t.matchSnapshot(
     responses.map((res) => res.json()),
-    "missing headers"
+    'missing headers',
   );
 });
 
-t.test("POST / works", async (t) => {
+t.test('POST / works', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: "/",
-    method: "POST",
+    url: '/',
+    method: 'POST',
     headers: requiredHeaders,
     payload: {
       user: {
-        name: "Test User",
+        name: 'Test User',
       },
     },
   });
 
-  t.matchSnapshot(res.json(), "contains user name in msg");
+  t.matchSnapshot(res.json(), 'contains user name in msg');
 });
 
-t.test("POST / rejects invalid payload", async (t) => {
+t.test('POST / rejects invalid payload', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: "/",
-    method: "POST",
+    url: '/',
+    method: 'POST',
     headers: requiredHeaders,
     payload: {
       user: {
@@ -155,14 +152,14 @@ t.test("POST / rejects invalid payload", async (t) => {
     },
   });
 
-  t.matchSnapshot(res.json(), "invalid user name");
+  t.matchSnapshot(res.json(), 'invalid user name');
 });
 
-t.test("POST / type casts payload when possible", async (t) => {
+t.test('POST / type casts payload when possible', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: "/",
-    method: "POST",
+    url: '/',
+    method: 'POST',
     headers: requiredHeaders,
     payload: {
       user: {
@@ -171,5 +168,5 @@ t.test("POST / type casts payload when possible", async (t) => {
     },
   });
 
-  t.matchSnapshot(res.json(), "123 was casted to string");
+  t.matchSnapshot(res.json(), '123 was casted to string');
 });

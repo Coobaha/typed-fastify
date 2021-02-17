@@ -1,6 +1,6 @@
-import { HTTPMethods } from "fastify";
-import { IncomingHttpHeaders, OutgoingHttpHeaders } from "http";
-import type { Stream } from "stream";
+import { HTTPMethods } from 'fastify';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import type { Stream } from 'stream';
 
 // prettier-ignore
 export type StatusCode =
@@ -65,11 +65,10 @@ export interface Operation {
   };
   response?: {
     content?: { [Status in StatusCode]?: validResponses } | {};
-    headers?: OutgoingHttpHeaders &
-      { [HeaderName in string]?: string | string[] | number };
+    headers?: OutgoingHttpHeaders & { [HeaderName in string]?: string | string[] | number };
   };
 }
 export interface Schema<SecurityId extends string = string> {
-  readonly __SCHEMA_TAG__?: "BETTER-FASTIFY-SCHEMA";
+  readonly __SCHEMA_TAG__?: 'BETTER-FASTIFY-SCHEMA';
   paths: Record<`${HTTPMethods} ${string}`, Partial<Operation>>;
 }

@@ -1,5 +1,4 @@
 {
-  "include": ["./src/**/*.ts", "./generator/**/*.ts", "./test-d/**/*.ts"],
   "compilerOptions": {
     "moduleResolution": "node",
     "declaration": true,
