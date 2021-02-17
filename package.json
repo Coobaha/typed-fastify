@@ -1,0 +1,43 @@
+{
+  "name": "typed-fastify",
+  "description": "opinionated types for fastify",
+  "version": "0.0.0-dev",
+  "dependencies": {
+    "fastify": "^3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.22",
+    "@types/prettier": "^2.2.1",
+    "@types/tap": "^14.10.2",
+    "husky": "^5.0.9",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "syncpack": "^5.7.11",
+    "tap": "^14.11.0",
+    "tsd": "^0.14.0",
+    "typescript": "4.2.0-dev.20210123"
+  },
+  "directories": {
+    "test": "test/"
+  },
+  "license": "MIT",
+  "main": "src/index.ts",
+  "private": true,
+  "repository": "ssh://git@github.com/Coobaha/typed-fastify.git",
+  "lint-staged": {
+    "*.{js,ts}": [
+      "prettier --write"
+    ],
+    "package.json": [
+      "syncpack format"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "scripts": {
+    "test": "tap test/*.test.ts -R terse"
+  }
+}
