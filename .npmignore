@@ -1,0 +1,8 @@
+*.tsbuildinfo
+.nyc_output
+.gitignore
+.prettierrc
+.tsconfig
+.yarn-error.log
+.github
+.husky

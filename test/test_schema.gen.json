@@ -1,0 +1,116 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "SharedRequest": {
+        "type": "object",
+        "required": [
+          "headers"
+        ],
+        "properties": {
+          "headers": {
+            "type": "object",
+            "properties": {
+              "authorization": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "$id": "test_schema"
+  },
+  "fastify": {
+    "GET /": {
+      "request": {
+        "$ref": "test_schema#/definitions/SharedRequest",
+        "type": "object",
+        "required": [
+          "headers",
+          "querystring"
+        ],
+        "properties": {
+          "querystring": {
+            "type": "object",
+            "properties": {
+              "getQueryParam": {
+                "type": "boolean"
+              }
+            }
+          },
+          "headers": {
+            "type": "object",
+            "required": [
+              "authorization",
+              "getHeader"
+            ],
+            "properties": {
+              "authorization": {
+                "type": "string"
+              },
+              "getHeader": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "$ref": "test_schema#/definitions/User"
+        }
+      }
+    },
+    "POST /": {
+      "request": {
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "properties": {
+          "body": {
+            "type": "object",
+            "required": [
+              "user"
+            ],
+            "properties": {
+              "user": {
+                "$ref": "test_schema#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "msg",
+            "user"
+          ],
+          "properties": {
+            "user": {
+              "$ref": "test_schema#/definitions/User"
+            },
+            "msg": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$hash": "983be0c99c26f024595a2e2434dcf447863e5889193d57b0655ce91b05cd6d01___v0002"
+}
