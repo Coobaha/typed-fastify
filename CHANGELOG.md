@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.2](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.1...v1.0.2) (2021-02-18)
+
+
+### Bug Fixes
+
+* move fastify to peerDep ([58a329e](https://www.github.com/Coobaha/typed-fastify/commit/58a329ea53be06b35e7d5a9526b18c6e0d306930))
+
 ### [1.0.1](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.0...v1.0.1) (2021-02-18)
 
 
