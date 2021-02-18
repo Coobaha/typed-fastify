@@ -57,7 +57,7 @@ jobs:
           yarn install
           yarn build
           yarn test
-          yarn publish --tag=next
+          yarn publish
       - uses: actions/github-script@v3
         if: ${{ steps.release.outputs.release_created }}
         with:
