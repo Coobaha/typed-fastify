@@ -23,7 +23,7 @@ From this schema it does two things:
 ```sh
 npm i @coobaha/typed-fastify
 
-yarn add Fastify-@coobaha/typed
+yarn add @coobaha/typed-fastify
 ```
 Example of service we want to build
 
