@@ -5,7 +5,7 @@ import path from 'path';
 import sha256 from 'crypto-js/sha256';
 import type { TsConfigJson } from 'type-fest';
 import escapeRegexp from 'escape-string-regexp';
-import traverse, { SchemaObject } from 'json-schema-traverse';
+import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
 import { JSONSchema7 } from 'json-schema';
 
@@ -14,7 +14,7 @@ const revision = '___v0002' + Date.now();
 function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
   const mergedAllOfSchema = mergeAllOf(originalSchema);
 
-  traverse(mergedAllOfSchema, (schema: SchemaObject) => {
+  traverse(mergedAllOfSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
     /*{
         "type": "array",
         "items": {
@@ -28,6 +28,27 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
       }*/
     if (schema.type === 'array' && schema.items.allOf && !schema.items.type) {
       schema.items.type = 'object';
+    }
+    /* fixes schema extension from
+    *
+    *   type
+    *   properties: [...]
+    *
+    *  to
+    *   type
+    *   allOf: [$ref, properties]
+    * */
+    if (schema.type && schema.$ref && parentSchema && parentKeyword && parentSchema[parentKeyword]) {
+      const { $ref, type, ...rest } = schema;
+      const next = {
+        type,
+        allOf: [{ $ref: schema.$ref }, rest],
+      };
+      if (keyIndex !== undefined) {
+        parentSchema[parentKeyword][keyIndex] = next;
+      } else {
+        parentSchema[parentKeyword] = next;
+      }
     }
   });
   return mergedAllOfSchema;
