@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.5](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.4...v1.0.5) (2021-02-18)
+
+
+### Bug Fixes
+
+* fix yarn pack contents ([142fda2](https://www.github.com/Coobaha/typed-fastify/commit/142fda288bbb90eafd776b93dcbc77a079bdf159))
+
 ### [1.0.4](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.3...v1.0.4) (2021-02-18)
 
 
