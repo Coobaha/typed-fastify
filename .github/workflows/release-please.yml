@@ -14,7 +14,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          package-name: "@coobaha/typed-fastify"
+          package-name: '@coobaha/typed-fastify'
           command: release-pr
       - id: label
         if: ${{ steps.release-pr.outputs.pr }}
@@ -38,7 +38,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          package-name: "@coobaha/typed-fastify"
+          package-name: '@coobaha/typed-fastify'
           command: github-release
       # The logic below handles the npm publication:
       - uses: actions/checkout@v2
@@ -49,15 +49,18 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         with:
           node-version: 12
-      - id: publish
+          registry-url: 'https://registry.npmjs.org'
+      - id: build
         if: ${{ steps.release.outputs.release_created }}
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
           yarn install
           yarn build
           yarn test
-          yarn publish
+      - id: publish
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: yarn publish
       - uses: actions/github-script@v3
         if: ${{ steps.release.outputs.release_created }}
         with:
