@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - next
 name: release-please
 jobs:
   release-please-pr:
