@@ -18,6 +18,11 @@ From this schema it does two things:
 
 ## Usage
 
+```sh
+npm i @coobaha/typed-fastify
+
+yarn add Fastify-@coobaha/typed
+```
 Example of service we want to build
 
 ```
