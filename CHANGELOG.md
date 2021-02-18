@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.5...v1.1.0) (2021-02-18)
+
+
+### Features
+
+* initial commit ([e00fcb9](https://www.github.com/Coobaha/typed-fastify/commit/e00fcb908ae63bbc19016878a856479cb7255a35))
+
 ### [1.0.4](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.3...v1.0.4) (2021-02-18)
 
 
