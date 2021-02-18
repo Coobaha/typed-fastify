@@ -5,3 +5,4 @@
 .tsconfig
 .yarn-error.log
 .github
+.husky

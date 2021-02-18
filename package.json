@@ -42,8 +42,7 @@
   "files": [
     "src",
     "lib",
-    "bin",
-    "!**/*/tsconfig.tsbuildinfo"
+    "bin"
   ],
   "husky": {
     "hooks": {
