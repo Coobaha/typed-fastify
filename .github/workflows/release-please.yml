@@ -2,7 +2,8 @@
 on:
   push:
     branches:
-      - master
+      - main
+      - next
 name: release-please
 jobs:
   release-please-pr:
@@ -57,7 +58,7 @@ jobs:
           yarn install
           yarn build
           yarn test
-          yarn publish
+          yarn publish --tag=next
       - uses: actions/github-script@v3
         if: ${{ steps.release.outputs.release_created }}
         with:
