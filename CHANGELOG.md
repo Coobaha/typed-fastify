@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.0.3](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.2...v1.0.3) (2021-02-18)
+
+
+### Bug Fixes
+
+* add fastify to devDeps ([fa80e40](https://www.github.com/Coobaha/typed-fastify/commit/fa80e40544b67b9689426f3ab2e02bf4b864dca1))
+* proper husky setup ([ca4d248](https://www.github.com/Coobaha/typed-fastify/commit/ca4d248d401705dbc6219fe6de7049839ac0ab95))
+
 ### [1.0.2](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.1...v1.0.2) (2021-02-18)
 
 
