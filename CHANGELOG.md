@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.0.3](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.2...v0.0.3) (2021-02-18)
+
+
+### Bug Fixes
+
+* release as latest dist-tag ([37e3541](https://www.github.com/Coobaha/typed-fastify/commit/37e354104e77e932b815725b5bb3166520899d24))
+
 ### [0.0.2](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.1...v0.0.2) (2021-02-18)
 
 
