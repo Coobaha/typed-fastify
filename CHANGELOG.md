@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.4](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.3...v1.0.4) (2021-02-18)
+
+
+### Bug Fixes
+
+* wrong glob in files for yarn pack ([b428910](https://www.github.com/Coobaha/typed-fastify/commit/b4289108c8d8ddbbfe60d6028b53ad09c6367392))
+
 ### [1.0.3](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.2...v1.0.3) (2021-02-18)
 
 
