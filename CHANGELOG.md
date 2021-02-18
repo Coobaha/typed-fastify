@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/Coobaha/typed-fastify/compare/v1.0.0...v1.0.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* remove private field from package.json ([f90aa6c](https://www.github.com/Coobaha/typed-fastify/commit/f90aa6c18f81c5b84c1a0972708359e638bf2465))
+
 ## 1.0.0 (2021-02-18)
 
 
