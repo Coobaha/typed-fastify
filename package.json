@@ -40,9 +40,7 @@
     "lib": "lib"
   },
   "files": [
-    "src",
-    "lib",
-    "bin"
+    "{src,lib,bin}/**/*.{js,ts,map}"
   ],
   "husky": {
     "hooks": {
