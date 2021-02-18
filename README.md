@@ -13,8 +13,10 @@ From this schema it does two things:
   - `request.querystring`
   - `request.params` (not tested)
   - `reply` is always based on status, developer won't be able to use plain `reply.send()` but forced to explicitly set status first, based on which response type will be inferred
-- JSON schema generation from TS Schema
+- JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom transforms)
 - Runtime validation using generated JSON schema (optional but strongly recommended)
+
+[demo video](https://user-images.githubusercontent.com/2446638/108409543-08b45f00-722f-11eb-905c-06505b57f5fe.mp4)
 
 ## Usage
 
