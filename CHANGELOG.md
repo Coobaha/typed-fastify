@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.1.0...v0.2.0) (2021-02-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* bumping minor version as 0.1.x were published
+
+### Bug Fixes
+
+* bumping minor version as 0.1.x were published ([bd0d44c](https://www.github.com/Coobaha/typed-fastify/commit/bd0d44c339265c337c626e05aa5ec01db48b9ac6))
+
 ## [0.1.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.5...v0.1.0) (2021-02-19)
 
 
