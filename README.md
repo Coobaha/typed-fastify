@@ -4,7 +4,7 @@
 
 ## ❗TS 4.2 is required, prior versions will have type errors due to incorrect type inference
 
-This package brings makes fastify request handlers strongly typed by forcing developers to write service schema which is used to validate request params and replies.
+This package brings strongly typed request handlers to fastify by forcing developers to write service schema which is used to validate request params and replies.
 From this schema it does two things:
 
 - static typechecking against TS Schema
