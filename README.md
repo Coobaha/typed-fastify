@@ -25,6 +25,7 @@ npm i @coobaha/typed-fastify
 
 yarn add @coobaha/typed-fastify
 ```
+
 Example of service we want to build
 
 ```
@@ -46,8 +47,8 @@ export interface ExampleSchema extends Schema {
         };
       };
       response: {
-        content: {
-          200: string;
+        200: {
+          content: string;
         };
       };
     };
