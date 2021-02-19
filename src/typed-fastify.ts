@@ -152,9 +152,9 @@ interface Reply<
     P extends keyof ServiceSchema['paths'],
     IsKnown = P extends Path ? true : false,
     NewOp extends ServiceSchema['paths'][P] = ServiceSchema['paths'][P],
-    S = keyof Get2<NewOp, 'response', 'content'>,
-    Content = Get<Get2<NewOp, 'response', 'content'>, S>,
-    Headers = Get<Get2<NewOp, 'response', 'content'>, S>
+    S = keyof Get<NewOp, 'response'>,
+    Content = Get<Get2<NewOp, 'response', S>, 'content'>,
+    Headers = Get<Get2<NewOp, 'response', S>, 'headers'>
   >(
     this: any,
     path: IsKnown extends true ? P : Path,
@@ -163,7 +163,7 @@ interface Reply<
     : never;
 
   send<
-    AllHeaders = Get<Op['response'], 'headers'>,
+    AllHeaders = Get2<Op['response'], Status, 'headers'>,
     O = [Headers, AllHeaders],
     MissingHeaders = Missing<Headers, AllHeaders>,
     MissingStatus = [Status] extends [never] ? true : false
@@ -177,19 +177,19 @@ interface Reply<
             string
           >} ]. Please provide required headers before sending reply.`>,
         ]
-      : [Get2<Op['response'], 'content', Status>] extends [never]
+      : [Get2<Op['response'], Status, 'content'>] extends [never]
       ? []
-      : [Get2<Op['response'], 'content', Status>]
+      : [Get2<Op['response'], Status, 'content'>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;
   readonly statusCode: Status;
 
-  headers<Headers extends Get<Op['response'], 'headers'>>(
+  headers<Headers extends Get2<Op['response'], Status, 'headers'>>(
     values: Headers,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 
-  header<Header extends keyof AllHeaders, AllHeaders = Get<Op['response'], 'headers'>>(
+  header<Header extends keyof AllHeaders, AllHeaders = Get2<Op['response'], Status, 'headers'>>(
     header: Header,
     value: AllHeaders[Header],
   ): OpaqueReply<
@@ -208,7 +208,7 @@ interface Reply<
   getHeader<Header extends keyof Headers>(header: Header): Headers[Header];
   getHeaders(): Headers;
 
-  redirect<Status extends keyof Get<Op['response'], 'content'>>(
+  redirect<Status extends keyof Op['response']>(
     statusCode: Status,
     url: string,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
@@ -217,13 +217,13 @@ interface Reply<
   ): OpaqueReply<Op, 302, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 
   status<
-    Status extends [Get<Op['response'], 'content'>] extends [never]
+    Status extends [keyof Op['response']] extends [never]
       ? Invalid<` ${Extract<Path, string>} - has no response`>
-      : keyof Get<Op['response'], 'content'>
+      : keyof Op['response']
   >(
     status: Status,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
-  code<Status extends keyof Get<Op['response'], 'content'>>(
+  code<Status extends keyof Op['response']>(
     status: Status,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 }
@@ -296,10 +296,10 @@ type Handler<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
-  ValidSchema = [Get<Op['response'], 'content'>] extends [never]
+  ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
     ? Invalid<` ${Extract<Path, string>} - has no response, every path should have at least one response defined`>
     : true,
-  Status extends keyof Get<Op['response'], 'content'> = keyof Get<Op['response'], 'content'>
+  Status extends keyof Op['response'] = keyof Op['response']
 > = ValidSchema extends true
   ? (
       this: F.FastifyInstance<RawServer, RawRequest, RawReply, ContextConfig>,

@@ -23,11 +23,11 @@ export interface TestSchema extends Schema {
         };
       };
       response: {
-        content: {
-          200: User;
-        };
-        headers: {
-          'x-custom': string;
+        200: {
+          content: User;
+          headers: {
+            'x-custom': string;
+          };
         };
       };
     };
@@ -38,8 +38,8 @@ export interface TestSchema extends Schema {
         };
       };
       response: {
-        content: {
-          200: { user: User; msg: string };
+        200: {
+          content: { user: User; msg: string };
         };
       };
     };

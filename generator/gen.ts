@@ -9,7 +9,7 @@ import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
 import { JSONSchema7 } from 'json-schema';
 
-const revision = '___v0002'; // + Date.now();
+const revision = '__v' + require('../package.json').version; // + Date.now();
 
 function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
   const mergedAllOfSchema = mergeAllOf(originalSchema);
@@ -140,11 +140,17 @@ export default async (params: { files: string[] }) => {
         if (typeof schema.response === 'boolean') continue;
         if (typeof schema.response?.properties?.content === 'boolean') continue;
 
+        const response = Object.entries(schema.response?.properties ?? {}).reduce((acc, [status, response]) => {
+          if (typeof response !== 'boolean' && response?.properties?.content) {
+            acc[status] = response.properties.content;
+          }
+          return acc;
+        }, {} as Record<string, TJS.DefinitionOrBoolean>);
         results[key] = {
           // @ts-ignore
           security: schema.security ? true : undefined,
           request: schema.request || {},
-          response: schema.response?.properties?.content?.properties || {},
+          response: response,
         };
       }
     }

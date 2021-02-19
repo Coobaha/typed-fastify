@@ -29,11 +29,11 @@ interface ExampleSchema extends Schema {
         };
       };
       response: {
-        content: {
-          200: User;
-        };
-        headers: {
-          'x-custom': string;
+        200: {
+          content: User;
+          headers: {
+            'x-custom': string;
+          };
         };
       };
     };
@@ -52,12 +52,12 @@ interface ExampleSchema extends Schema {
         };
       };
       response: {
-        content: {
-          201: User;
-        };
-        headers: {
-          postHeaderRes: string;
-          postHeaderRes2: string;
+        201: {
+          content: User;
+          headers: {
+            postHeaderRes: string;
+            postHeaderRes2: string;
+          };
         };
       };
     };
@@ -65,8 +65,8 @@ interface ExampleSchema extends Schema {
     'PATCH /': {
       request: SharedRequest;
       response: {
-        content: {
-          204: 'ok';
+        204: {
+          content: 'ok';
         };
       };
     };
@@ -86,16 +86,16 @@ interface ExtendedSchema extends ExampleSchema {
     'PATCH /other': {
       request: SharedRequest;
       response: {
-        content: {
-          204: 'ok';
+        204: {
+          content: 'ok';
         };
       };
     };
     'PATCH /other_empty': {
       request: SharedRequest;
       response: {
-        content: {
-          204: void;
+        204: {
+          content: void;
         };
       };
     };
@@ -106,24 +106,24 @@ interface ExtendedSchema extends ExampleSchema {
         };
       };
       response: {
-        content: {
-          200: User;
+        200: {
+          content: User;
         };
       };
     };
     'GET /test': {
       request: GetAndPost;
       response: {
-        content: {
-          200: 'ok';
+        200: {
+          content: 'ok';
         };
       };
     };
     'POST /test': {
       request: GetAndPost;
       response: {
-        content: {
-          200: 'ok';
+        200: {
+          content: 'ok';
         };
       };
     };

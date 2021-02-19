@@ -64,8 +64,11 @@ export interface Operation {
     querystring?: unknown;
   };
   response?: {
-    content?: { [Status in StatusCode]?: validResponses } | {};
-    headers?: OutgoingHttpHeaders & { [HeaderName in string]?: string | string[] | number };
+    [Status in StatusCode]?: {
+      description?: string;
+      content?: validResponses;
+      headers?: OutgoingHttpHeaders & { [HeaderName in string]?: string | string[] | number };
+    };
   };
 }
 export interface Schema<SecurityId extends string = string> {
