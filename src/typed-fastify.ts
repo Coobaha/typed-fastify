@@ -216,7 +216,11 @@ interface Reply<
     url: string,
   ): OpaqueReply<Op, 302, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 
-  status<Status extends keyof Get<Op['response'], 'content'>>(
+  status<
+    Status extends [Get<Op['response'], 'content'>] extends [never]
+      ? Invalid<` ${Extract<Path, string>} - has no response`>
+      : keyof Get<Op['response'], 'content'>
+  >(
     status: Status,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
   code<Status extends keyof Get<Op['response'], 'content'>>(
@@ -292,15 +296,20 @@ type Handler<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
+  ValidSchema = [Get<Op['response'], 'content'>] extends [never]
+    ? Invalid<` ${Extract<Path, string>} - has no response, every path should have at least one response defined`>
+    : true,
   Status extends keyof Get<Op['response'], 'content'> = keyof Get<Op['response'], 'content'>
-> = (
-  this: F.FastifyInstance<RawServer, RawRequest, RawReply, ContextConfig>,
-  request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>,
-  reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig> & {
-    readonly __unknownReply: unique symbol;
-    M: MP<Path>[0];
-  },
-) => AsReply | Promise<AsReply>;
+> = ValidSchema extends true
+  ? (
+      this: F.FastifyInstance<RawServer, RawRequest, RawReply, ContextConfig>,
+      request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>,
+      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig> & {
+        readonly __unknownReply: unique symbol;
+        M: MP<Path>[0];
+      },
+    ) => AsReply | Promise<AsReply>
+  : ValidSchema;
 
 type HandlerObj<
   Op extends Operation,

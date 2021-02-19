@@ -85,6 +85,19 @@ interface ExtendedSchema extends ExampleSchema {
   paths: ExampleSchema['paths'] & {
     'PATCH /other': {
       request: SharedRequest;
+      response: {
+        content: {
+          204: 'ok';
+        };
+      };
+    };
+    'PATCH /other_empty': {
+      request: SharedRequest;
+      response: {
+        content: {
+          204: void;
+        };
+      };
     };
     'PUT /other': {
       request: SharedRequest & {
@@ -214,7 +227,10 @@ function never(_: never) {
 }
 
 //<editor-fold desc="shared wtf handler request/reply types">
-type ComplexHandlers = RequestHandler<ExtendedSchema, 'GET /' | 'POST /' | 'PATCH /' | 'PUT /other' | 'PATCH /other'>;
+type ComplexHandlers = RequestHandler<
+  ExtendedSchema,
+  'GET /' | 'POST /' | 'PATCH /' | 'PUT /other' | 'PATCH /other' | 'PATCH /other_empty'
+>;
 //<editor-fold desc="shared wtf handler request/reply types">
 const complexHandlers = (
   req: ComplexHandlers['Request'],
@@ -264,7 +280,7 @@ const complexHandlers = (
       req.query.postQueryParam;
       break;
     case 'PATCH':
-      expectType<'/' | '/other'>(req.routerPath);
+      expectType<'/' | '/other' | '/other_empty'>(req.routerPath);
       break;
     case 'PUT':
       expectType<'/' | '/other'>(req.routerPath);
@@ -277,6 +293,9 @@ const complexHandlers = (
     case '/':
       expectType<'GET' | 'PATCH' | 'POST'>(req.method);
       expectType<'GET' | 'PATCH' | 'POST'>(req.routerMethod);
+      break;
+    case '/other_empty':
+      expectType<'PATCH'>(req.routerMethod);
       break;
     case '/other':
       expectType<'PUT' | 'PATCH'>(req.method);
@@ -306,13 +325,10 @@ const complexHandlers = (
   const routerPathWithMethod = `${reply.request.method} ${reply.request.routerPath}` as ComplexHandlers['Paths'];
   switch (routerPathWithMethod) {
     case 'GET /':
-      break;
     case 'POST /':
-      break;
     case 'PUT /other':
-      break;
     case 'PATCH /other':
-      break;
+    case 'PATCH /other_empty':
     case 'PATCH /':
       break;
     default:
@@ -323,6 +339,7 @@ const complexHandlers = (
     'GET /': () => console.log(1),
     'PUT /other': () => console.log(1),
     'PATCH /other': () => console.log(1),
+    'PATCH /other_empty': () => console.log(1),
     'POST /': () => console.log(1),
     'PATCH /': () => console.log(1),
   };
@@ -405,10 +422,15 @@ const complexHandlers = (
     const fastifyReply4 = reply.status(204);
     //@ts-expect-error
     fastifyReply4.send(void 0);
-    //@ts-expect-error no status in schema, we should not be allowed to respond
-    fastifyReply4.done();
-    //@ts-expect-error no status in schema, we should not be allowed to respond
-    return reply.done();
+    if (randomNumber) {
+      //@ts-expect-error no send was called
+      return fastifyReply4;
+    }
+    return fastifyReply4.send('ok');
+  } else if (reply.matches('PATCH /other_empty')) {
+    //@ts-expect-error
+    reply.send(void 0);
+    return reply.status(204).send();
   } else {
     never(reply);
     return reply;
@@ -430,9 +452,9 @@ expectType<Service<ExtendedSchema>>({
   'PATCH /': complexHandlers,
   'PUT /other': complexHandlers,
   'PATCH /other': complexHandlers,
+  'PATCH /other_empty': complexHandlers,
   'GET /test': testHandler,
   'POST /test': testHandler,
-  //@ts-expect-error
   'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER': complexHandlers as RequestHandler<
     ExtendedSchema,
     'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER'

@@ -1,4 +1,4 @@
-import { Schema } from "../src";
+import { Schema } from '../src';
 
 interface SharedRequest {
   headers: {
@@ -12,7 +12,7 @@ interface User {
 
 export interface TestSchema extends Schema {
   paths: {
-    "GET /": {
+    'GET /': {
       request: SharedRequest & {
         querystring: {
           getQueryParam?: boolean;
@@ -27,11 +27,11 @@ export interface TestSchema extends Schema {
           200: User;
         };
         headers: {
-          "x-custom": string;
+          'x-custom': string;
         };
       };
     };
-    "POST /": {
+    'POST /': {
       request: {
         body: {
           user: User;
