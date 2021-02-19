@@ -1,3 +1,3 @@
-export * from './better-fastify';
-export { default as default } from './better-fastify';
+export * from './typed-fastify';
+export { default as default } from './typed-fastify';
 export * from './schema';
