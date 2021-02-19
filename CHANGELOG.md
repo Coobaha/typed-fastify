@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.5...v0.1.0) (2021-02-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* make response schema be a map of statuses instead of contents
+
+### Bug Fixes
+
+* make response schema be a map of statuses instead of contents ([a8fd0c7](https://www.github.com/Coobaha/typed-fastify/commit/a8fd0c7e94505dfc33b8e51f4b39851d6ba7b0a4))
+
 ### [0.0.5](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.4...v0.0.5) (2021-02-19)
 
 
