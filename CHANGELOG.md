@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.0.5](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.4...v0.0.5) (2021-02-19)
+
+
+### Bug Fixes
+
+* validate schema without responses and force send to be called ([2ecda87](https://www.github.com/Coobaha/typed-fastify/commit/2ecda876484c21d1b23e7f0a520d4e015cad5eb9))
+
 ### [0.0.4](https://www.github.com/Coobaha/typed-fastify/compare/v0.0.3...v0.0.4) (2021-02-18)
 
 
