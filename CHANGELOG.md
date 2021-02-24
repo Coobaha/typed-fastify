@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.1](https://www.github.com/Coobaha/typed-fastify/compare/v0.2.0...v0.2.1) (2021-02-24)
+
+
+### Bug Fixes
+
+* Omit then from Reply to correctly infer AsReply return 🎉 ([a2a143c](https://www.github.com/Coobaha/typed-fastify/commit/a2a143c2d0d9f0ff0dab8eefee49bd1e4380e048))
+
 ## [0.2.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.1.0...v0.2.0) (2021-02-19)
 
 
