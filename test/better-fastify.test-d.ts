@@ -543,3 +543,19 @@ expectType<Service<EmptyResponses>>(s);
 expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
   return reply.status(204);
 });
+
+interface Redirects extends Schema {
+  paths: {
+    'POST /redirect': {
+      response: {
+        302: {};
+      };
+    };
+  };
+}
+
+expectType<Service<Redirects>>({
+  'POST /redirect': (req, reply) => {
+    return reply.status(302).send();
+  },
+});

@@ -110,7 +110,15 @@
           }
         }
       }
+    },
+    "GET /empty": {
+      "request": {},
+      "response": {}
+    },
+    "POST /redirect": {
+      "request": {},
+      "response": {}
     }
   },
-  "$hash": "e8c54bf22e2f972ebf0aae46914bb9bed6d83e6e8f1a7de1ea1b18be56ab721b__v0.0.4"
+  "$hash": "578359f04be3caf819bd8c91ebc19ffaebe40d23be14f598d7098b26efd29bf7__v0.2.1"
 }
