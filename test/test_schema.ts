@@ -48,5 +48,10 @@ export interface TestSchema extends Schema {
         204: {};
       };
     };
+    'POST /redirect': {
+      response: {
+        302: {};
+      };
+    };
   };
 }

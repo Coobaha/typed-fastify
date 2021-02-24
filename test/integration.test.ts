@@ -13,8 +13,7 @@ t.cleanSnapshot = (s) => {
 
 const defaultService: Service<TestSchema> = {
   'GET /': (req, reply) => {
-    let res = reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
-    return res;
+    return reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
   },
   'POST /': (req, reply) => {
     const { user: userData } = req.body;
@@ -27,10 +26,28 @@ const defaultService: Service<TestSchema> = {
     const fastifyReply = reply.status(204);
     return fastifyReply.send();
   },
+  'POST /redirect': async (req, reply) => {
+    return reply.redirect('example.com');
+  },
 };
 
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
-  const app = fastify();
+  const opts = {
+    logger: {
+      level: 'error',
+      serializers: {
+        err: (err: any) => {
+          if (err.constructor.name !== 'Error') {
+            t.fail('should not happen', err);
+          } else {
+            t.matchSnapshot(err, 'error logs');
+          }
+          return err;
+        },
+      },
+    },
+  };
+  const app = fastify(opts);
 
   service ??= defaultService;
 
@@ -174,4 +191,25 @@ t.test('POST / type casts payload when possible', async (t) => {
   });
 
   t.matchSnapshot(res.json(), '123 was casted to string');
+});
+
+t.test('POST /redirect works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/redirect',
+    method: 'POST',
+  });
+
+  t.equal(res.statusCode, 302);
+  t.equal(res.headers.location, 'example.com');
+});
+
+t.test('GET /empty works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/empty',
+    method: 'GET',
+  });
+
+  t.equal(res.statusCode, 204);
 });

@@ -354,8 +354,7 @@ const complexHandlers = (
     //@ts-expect-error
     return reply;
   } else if (randomNumber) {
-    const redirect = reply.redirect('/');
-    return redirect.send();
+    return reply.redirect('/');
   } else if (randomNumber) {
     //@ts-expect-error
     return reply.redirect(200, '/').done();
@@ -527,8 +526,7 @@ type Created = Service<EmptyResponses>['GET /empty'];
 expectType<Created>(
   //@ts-expect-error
   async (req, reply) => {
-    let reply1 = reply.status(204);
-    return reply1;
+    return reply.status(204);
   },
 );
 
@@ -542,4 +540,20 @@ expectType<Service<EmptyResponses>>(s);
 //@ts-expect-error
 expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
   return reply.status(204);
+});
+
+interface Redirects extends Schema {
+  paths: {
+    'POST /redirect': {
+      response: {
+        302: {};
+      };
+    };
+  };
+}
+
+expectType<Service<Redirects>>({
+  'POST /redirect': (req, reply) => {
+    return reply.redirect('example.com');
+  },
 });

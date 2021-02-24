@@ -68,6 +68,8 @@
     "postinstall": "husky install",
     "postpublish": "pinst --enable",
     "prepublishOnly": "pinst --disable",
-    "test": "tsc -p test/tsconfig.test.json && tap test/*.test.ts -R terse"
+    "test": "yarn test:types && yarn test:integration",
+    "test:integration": "tap test/*.test.ts -R terse",
+    "test:types": "tsc -p test/tsconfig.test.json"
   }
 }
