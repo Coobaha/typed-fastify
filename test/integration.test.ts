@@ -25,7 +25,7 @@ const defaultService: Service<TestSchema> = {
   },
   'GET /empty': async (req, reply) => {
     const fastifyReply = reply.status(204);
-    return fastifyReply;
+    return fastifyReply.send();
   },
 };
 

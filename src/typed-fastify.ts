@@ -99,10 +99,7 @@ const addSchema = <
 
 export default addSchema;
 
-export type Missing<Candidate extends any, MaybeRequired extends any> = [Candidate, MaybeRequired] extends [
-  never,
-  never,
-]
+type Missing<Candidate extends any, MaybeRequired extends any> = [Candidate, MaybeRequired] extends [never, never]
   ? false
   : [Candidate] extends [never]
   ? true
@@ -146,6 +143,7 @@ interface Reply<
     | 'request'
     | 'getHeader'
     | 'getHeaders'
+    | 'then'
   > {
   asReply(this: any): AsReply;
   matches<
@@ -227,6 +225,7 @@ interface Reply<
     status: Status,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 }
+
 type OpaqueReply<
   Op extends Operation,
   Status,
@@ -239,13 +238,7 @@ type OpaqueReply<
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
   Opaque = Reply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>
-> = Status extends never | unknown
-  ? Opaque
-  : Content extends never | unknown
-  ? Opaque
-  : Headers extends never | unknown
-  ? Opaque
-  : never;
+> = Status extends unknown ? Opaque : Content extends unknown ? Opaque : Headers extends unknown ? Opaque : never;
 
 interface Invalid<msg = any> {
   readonly __INVALID__: unique symbol;
@@ -253,6 +246,7 @@ interface Invalid<msg = any> {
 
 interface AsReply {
   readonly __REPLY_SYMBOL__: unique symbol;
+  then(fulfilled: () => void, rejected: (err: Error) => void): void;
 }
 const assertAsReply: (any: any) => asserts any is AsReply = () => {};
 export const asReply = (any: any) => {
