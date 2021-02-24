@@ -43,5 +43,10 @@ export interface TestSchema extends Schema {
         };
       };
     };
+    'GET /empty': {
+      response: {
+        204: {};
+      };
+    };
   };
 }
