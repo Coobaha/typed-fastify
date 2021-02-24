@@ -127,7 +127,11 @@ interface ExtendedSchema extends ExampleSchema {
         };
       };
     };
-    'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER': {};
+    'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER': {
+      response: {
+        200: {};
+      };
+    };
   };
 }
 
@@ -455,9 +459,87 @@ expectType<Service<ExtendedSchema>>({
   'PATCH /other_empty': complexHandlers,
   'GET /test': testHandler,
   'POST /test': testHandler,
+  //@ts-expect-error
   'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER': complexHandlers as RequestHandler<
     ExtendedSchema,
     'PUT /NOT_HANDLED_BY_COMPLEX_HANDLER'
   >['AsRoute'],
 });
 //</editor-fold>
+
+interface EmptyResponses extends Schema {
+  paths: {
+    'GET /empty': {
+      response: {
+        204: {};
+      };
+    };
+  };
+}
+
+type AsyncEmptyHandler = RequestHandler<EmptyResponses, 'GET /empty'>;
+//@ts-expect-error
+let handler = (async (req, reply) => {
+  return reply.status(204);
+}) as AsyncEmptyHandler['AsRoute'];
+
+const handlerSync: AsyncEmptyHandler['AsRoute'] = (req, reply) => {
+  return reply.status(204).send();
+};
+expectType<Service<EmptyResponses>['GET /empty']>(handler);
+expectType<Service<EmptyResponses>['GET /empty']>(handlerSync);
+
+//@ts-expect-error
+expectType<AsyncEmptyHandler['AsRoute']>((req, reply) => {
+  return reply.status(204);
+});
+
+expectType<Service<EmptyResponses>>({
+  //@ts-expect-error
+  'GET /empty': (req, reply) => {
+    return reply.status(204);
+  },
+});
+expectType<Service<EmptyResponses>>({
+  'GET /empty': (req, reply) => {
+    return reply.status(204).send();
+  },
+});
+
+expectType<AsyncEmptyHandler['AsRoute']>((req, reply) => {
+  return reply.status(204).send();
+});
+expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
+  return reply.status(204).send();
+});
+expectType<Service<EmptyResponses>>({
+  'GET /empty': (req, reply) => {
+    return reply.status(204).send();
+  },
+});
+expectType<Service<EmptyResponses>>({
+  'GET /empty': async (req, reply) => {
+    return reply.status(204).send();
+  },
+});
+
+type Created = Service<EmptyResponses>['GET /empty'];
+expectType<Created>(
+  //@ts-expect-error
+  async (req, reply) => {
+    let reply1 = reply.status(204);
+    return reply1;
+  },
+);
+
+const s: Service<EmptyResponses> = {
+  //@ts-expect-error
+  'GET /empty': async (req, reply) => {
+    return reply.status(204);
+  },
+};
+expectType<Service<EmptyResponses>>(s);
+//@ts-expect-error
+expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
+  return reply.status(204);
+});
