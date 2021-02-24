@@ -30,6 +30,7 @@ const defaultService: Service<TestSchema> = {
     return reply.redirect('example.com');
   },
 };
+
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
   const opts = {
     logger: {
@@ -38,6 +39,8 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
         err: (err: any) => {
           if (err.constructor.name !== 'Error') {
             t.fail('should not happen', err);
+          } else {
+            t.matchSnapshot(err, 'error logs');
           }
           return err;
         },
