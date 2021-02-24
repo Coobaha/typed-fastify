@@ -13,8 +13,7 @@ t.cleanSnapshot = (s) => {
 
 const defaultService: Service<TestSchema> = {
   'GET /': (req, reply) => {
-    let res = reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
-    return res;
+    return reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
   },
   'POST /': (req, reply) => {
     const { user: userData } = req.body;
@@ -28,7 +27,7 @@ const defaultService: Service<TestSchema> = {
     return fastifyReply.send();
   },
   'POST /redirect': async (req, reply) => {
-    return reply.redirect('example.com').send();
+    return reply.redirect('example.com');
   },
 };
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {

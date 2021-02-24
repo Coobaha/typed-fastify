@@ -206,13 +206,8 @@ interface Reply<
   getHeader<Header extends keyof Headers>(header: Header): Headers[Header];
   getHeaders(): Headers;
 
-  redirect<Status extends keyof Op['response']>(
-    statusCode: Status,
-    url: string,
-  ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
-  redirect(
-    url: string,
-  ): OpaqueReply<Op, 302, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+  redirect<Status extends keyof Op['response']>(statusCode: Status, url: string): AsReply;
+  redirect(url: string): AsReply;
 
   status<
     Status extends [keyof Op['response']] extends [never]
