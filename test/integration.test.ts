@@ -36,7 +36,9 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
       level: 'error',
       serializers: {
         err: (err: any) => {
-          t.fail('should not happen', err);
+          if (err.constructor.name !== 'Error') {
+            t.fail('should not happen', err);
+          }
           return err;
         },
       },
