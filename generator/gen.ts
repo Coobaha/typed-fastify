@@ -168,7 +168,7 @@ export default async (params: { files: string[] }) => {
       },
       null,
       2,
-    ).replaceAll(PLACEHOLDER_ID, name);
+    ).replace(new RegExp(escapeRegexp(PLACEHOLDER_ID), 'gmi'), name);
     if (existing !== newContents) {
       await fs.writeFile(saved, newContents, { encoding: 'utf8', flag: 'w' });
     }
