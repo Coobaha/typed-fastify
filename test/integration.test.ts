@@ -4,11 +4,11 @@ import t from 'tap';
 import addSchema, { Service } from '../src';
 import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
-
+import split from 'split2';
 type Test = typeof tap['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
-  return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"');
+  return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
 };
 
 const defaultService: Service<TestSchema> = {
@@ -30,24 +30,54 @@ const defaultService: Service<TestSchema> = {
     return reply.redirect('example.com');
   },
 };
-
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
-  const opts = {
+  let stream = split(() => {});
+  const app = fastify({
     logger: {
-      level: 'error',
+      // @ts-ignore
+      stream: stream,
       serializers: {
-        err: (err: any) => {
+        req: (req: any) => {
+          t.matchSnapshot(
+            {
+              Params: req.params,
+              Query: req.query,
+              Headers: req.headers,
+              Body: req.body,
+              schema: req.context.schema,
+            },
+            'request',
+          );
+          return {};
+        },
+        res: (res: any) => {
+          t.matchSnapshot(
+            {
+              Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => JSON.parse(x.toString())),
+              Headers: res.raw._header?.split('\r\n').filter(Boolean),
+            },
+            'response',
+          );
+          return {
+            statusCode: res.statusCode,
+          };
+        },
+        err: (err) => {
           if (err.constructor.name !== 'Error') {
             t.fail('should not happen', err);
           } else {
             t.matchSnapshot(err, 'error logs');
           }
-          return err;
+          return {
+            ...err,
+            type: err.name,
+            message: err.toString(),
+            stack: err.stack ?? '',
+          };
         },
       },
     },
-  };
-  const app = fastify(opts);
+  });
 
   service ??= defaultService;
 

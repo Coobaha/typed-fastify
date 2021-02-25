@@ -21,6 +21,7 @@
     "@types/json-schema-merge-allof": "^0.6.0",
     "@types/node": "^14.14.31",
     "@types/prettier": "^2.2.1",
+    "@types/split2": "^2.1.6",
     "@types/tap": "^14.10.2",
     "@types/yargs": "^16.0.0",
     "fastify": "^3.12.0",
@@ -28,6 +29,7 @@
     "lint-staged": "^10.5.4",
     "pinst": "^2.1.6",
     "prettier": "^2.2.1",
+    "split2": "^3.2.2",
     "syncpack": "^5.7.11",
     "tap": "^14.11.0",
     "tsd": "^0.14.0",
@@ -68,6 +70,7 @@
     "postinstall": "husky install",
     "postpublish": "pinst --enable",
     "prepublishOnly": "pinst --disable",
+    "pretest": "ts-node generator/gen.bin.ts gen 'test/test_schema.ts'",
     "test": "yarn test:types && yarn test:integration",
     "test:integration": "tap test/*.test.ts -R terse",
     "test:types": "tsc -p test/tsconfig.test.json"

@@ -5,11 +5,134 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict';
+exports[`test/integration.test.ts TAP GET /empty works > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "response": Object {},
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP GET /empty works > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 204 No Content",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
+Error: body.user.name should be string {
+  "validation": Array [
+    Object {
+      "dataPath": ".user.name",
+      "keyword": "type",
+      "message": "should be string",
+      "params": Object {
+        "type": "string",
+      },
+      "schemaPath": "test_schema#/definitions/User/properties/name/type",
+    },
+  ],
+  "validationContext": "body",
+}
+`;
+
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > invalid user name 1`] = `
 Object {
   "error": "Bad Request",
   "message": "body.user.name should be string",
   "statusCode": 400,
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "23",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "body": Object {
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/definitions/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "properties": Object {
+              "name": Object {
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "name",
+            ],
+            "type": "object",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > response 1`] = `
+Object {
+  "Headers": undefined,
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > response 2`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 400 Bad Request",
+    "content-length: 84",
+    "content-type: application/json; charset=utf-8",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "error": "Bad Request",
+      "message": "body.user.name should be string",
+      "statusCode": 400,
+    },
+  ],
 }
 `;
 
@@ -22,6 +145,80 @@ Object {
 }
 `;
 
+exports[`test/integration.test.ts TAP POST / type casts payload when possible > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "21",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "body": Object {
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/definitions/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "properties": Object {
+              "name": Object {
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "name",
+            ],
+            "type": "object",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / type casts payload when possible > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 50",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "msg": "Hello, 123, string",
+      "user": Object {
+        "name": "123",
+      },
+    },
+  ],
+}
+`;
+
 exports[`test/integration.test.ts TAP POST / works > contains user name in msg 1`] = `
 Object {
   "msg": "Hello, Test User, string",
@@ -31,9 +228,235 @@ Object {
 }
 `;
 
+exports[`test/integration.test.ts TAP POST / works > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "29",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "body": Object {
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/definitions/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "properties": Object {
+              "name": Object {
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "name",
+            ],
+            "type": "object",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP POST / works > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 62",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "msg": "Hello, Test User, string",
+      "user": Object {
+        "name": "Test User",
+      },
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts TAP POST /redirect works > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "response": Object {},
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP POST /redirect works > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 302 Found",
+    "location: example.com",
+    "content-length: 0",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [],
+}
+`;
+
 exports[`test/integration.test.ts TAP app starts and GET / works > happy path 1`] = `
 Object {
   "name": "hello",
+}
+`;
+
+exports[`test/integration.test.ts TAP app starts and GET / works > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP app starts and GET / works > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "x-custom: 1",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 16",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "name": "hello",
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts TAP it sends headers > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP it sends headers > response 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "x-custom: 1",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 16",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "name": "hello",
+    },
+  ],
 }
 `;
 
@@ -47,11 +470,134 @@ Object {
 }
 `;
 
+exports[`test/integration.test.ts TAP it validates get query param against schema > error logs 1`] = `
+Error: querystring.getQueryParam should be boolean {
+  "validation": Array [
+    Object {
+      "dataPath": ".getQueryParam",
+      "keyword": "type",
+      "message": "should be boolean",
+      "params": Object {
+        "type": "boolean",
+      },
+      "schemaPath": "#/properties/getQueryParam/type",
+    },
+  ],
+  "validationContext": "querystring",
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates get query param against schema > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {
+    "getQueryParam": "1",
+  },
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates get query param against schema > response 1`] = `
+Object {
+  "Headers": undefined,
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates get query param against schema > response 2`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 400 Bad Request",
+    "content-length: 96",
+    "content-type: application/json; charset=utf-8",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "error": "Bad Request",
+      "message": "querystring.getQueryParam should be boolean",
+      "statusCode": 400,
+    },
+  ],
+}
+`;
+
 exports[`test/integration.test.ts TAP it validates get query param against schema > wrong type of query param 1`] = `
 Object {
   "error": "Bad Request",
   "message": "querystring.getQueryParam should be boolean",
   "statusCode": 400,
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > error logs 1`] = `
+Error: headers should have required property 'authorization' {
+  "validation": Array [
+    Object {
+      "dataPath": "",
+      "keyword": "required",
+      "message": "should have required property 'authorization'",
+      "params": Object {
+        "missingProperty": "authorization",
+      },
+      "schemaPath": "#/required",
+    },
+  ],
+  "validationContext": "headers",
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > error logs 2`] = `
+Error: headers should have required property 'getheader' {
+  "validation": Array [
+    Object {
+      "dataPath": "",
+      "keyword": "required",
+      "message": "should have required property 'getheader'",
+      "params": Object {
+        "missingProperty": "getheader",
+      },
+      "schemaPath": "#/required",
+    },
+  ],
+  "validationContext": "headers",
 }
 `;
 
@@ -70,6 +616,144 @@ Array [
 ]
 `;
 
+exports[`test/integration.test.ts TAP it validates headers > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > request 2`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > response 1`] = `
+Object {
+  "Headers": undefined,
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > response 2`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 400 Bad Request",
+    "content-length: 106",
+    "content-type: application/json; charset=utf-8",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "error": "Bad Request",
+      "message": "headers should have required property 'authorization'",
+      "statusCode": 400,
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > response 3`] = `
+Object {
+  "Headers": undefined,
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP it validates headers > response 4`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 400 Bad Request",
+    "content-length: 102",
+    "content-type: application/json; charset=utf-8",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "error": "Bad Request",
+      "message": "headers should have required property 'getheader'",
+      "statusCode": 400,
+    },
+  ],
+}
+`;
+
 exports[`test/integration.test.ts TAP response is validated > error logs 1`] = `
 Error: "name" is required!
 `;
@@ -79,5 +763,120 @@ Object {
   "error": "Internal Server Error",
   "message": "\\"name\\" is required!",
   "statusCode": 500,
+}
+`;
+
+exports[`test/integration.test.ts TAP response is validated > request 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP response is validated > request 2`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "authorization": "required",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "headers": Object {
+      "properties": Object {
+        "authorization": Object {
+          "type": "string",
+        },
+        "getHeader": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "authorization",
+        "getHeader",
+      ],
+      "type": "object",
+    },
+    "querystring": Object {
+      "properties": Object {
+        "getQueryParam": Object {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "$ref": "test_schema#/definitions/User",
+      },
+    },
+  },
+}
+`;
+
+exports[`test/integration.test.ts TAP response is validated > response 1`] = `
+Object {
+  "Headers": undefined,
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts TAP response is validated > response 2`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 500 Internal Server Error",
+    "x-custom: 1",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 84",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "error": "Internal Server Error",
+      "message": "\\"name\\" is required!",
+      "statusCode": 500,
+    },
+  ],
 }
 `;
