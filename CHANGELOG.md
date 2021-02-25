@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/Coobaha/typed-fastify/compare/v0.3.0...v0.3.1) (2021-02-25)
+
+
+### Bug Fixes
+
+* fix schema generator in node v14 ([391d59d](https://www.github.com/Coobaha/typed-fastify/commit/391d59d8d9e29b079130a7a4c05040ae320d7c5a))
+
 ## [0.3.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.2.1...v0.3.0) (2021-02-24)
 
 
