@@ -4,17 +4,21 @@
 
 ## ❗TS 4.2 is required, prior versions will have type errors due to incorrect type inference
 
-This package brings strongly typed request handlers to fastify by forcing developers to write service schema which is used to validate request params and replies.
-From this schema it does two things:
+This package brings strongly typed request handlers to fastify by forcing developers to write
+service schema which is used to validate request params and replies. From this schema it does two
+things:
 
 - static typechecking against TS Schema
   - `request.body`
   - `request.headers`
   - `request.querystring`
-  - `request.params` (not tested)
-  - `reply` is always based on status, developer won't be able to use plain `reply.send()` but forced to explicitly set status first, based on which response type will be inferred
-- JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom transforms)
-- Runtime validation using generated JSON schema (optional but strongly recommended)
+  - `request.params`
+  - `reply` is always based on status, developer won't be able to use plain `reply.send()` but
+    forced to explicitly set status first, based on which response type will be inferred
+- JSON schema generation from TS Schema (
+  using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
+  transforms)
+- Runtime validation using generated JSON schema (optional but strongly recommended as it brings extra safety to runtime and ensures that code assumptions about data are correct)
 
 [demo video](https://user-images.githubusercontent.com/2446638/108409543-08b45f00-722f-11eb-905c-06505b57f5fe.mp4)
 
@@ -85,7 +89,8 @@ app.listen(3000, (err: any) => {
 });
 ```
 
-Complex examples can be found [typescript tests](./test/better-fastify.test-d.ts) and in [integration.test.ts](./test/integration.test.ts).
+Complex examples can be found [typescript tests](./test/better-fastify.test-d.ts) and
+in [integration.test.ts](./test/integration.test.ts).
 
 ## JSON schema generation
 
@@ -132,7 +137,8 @@ addSchema(app, {
 
 Type inference will work nicely in this case, you just make TS happy and things are working 🥳
 
-2. Handlers in a different file or separate functions - you will need to hint TS with exact type of handler
+2. Handlers in a different file or separate functions - you will need to hint TS with exact type of
+   handler
 
 The Easiest way to do it is
 
@@ -144,7 +150,8 @@ interface MySchema extends Schema {}
 const myHandler: RequestHandler<MySchema, 'GET /hello'>['AsRoute'] = (req, reply) => {};
 ```
 
-3. When you want to have complex shared handler for multiple endpoints that intersect (share same props)
+3. When you want to have complex shared handler for multiple endpoints that intersect (share same
+   props)
 
 ```typescript
 import { RequestHandler, Schema } from '@coobaha/typed-fastify';
@@ -154,7 +161,8 @@ interface MySchema extends Schema {}
 const myHandlers: RequestHandler<MySchema, 'GET /hello' | `GET /hello2`>['AsRoute'] = (req, reply) => {};
 ```
 
-4. Sometimes properties won't be the same (for instance GET never has body and POST will). In this case you will probably be asked to add types to function params
+4. Sometimes properties won't be the same (for instance GET never has body and POST will). In this
+   case you will probably be asked to add types to function params
 
 ```typescript
 import { RequestHandler, Schema } from '@coobaha/typed-fastify';
@@ -176,7 +184,8 @@ addSchema(app, {
 });
 ```
 
-It might be that TS can't infer exact type of complex handler when passed to `addSchema` so you'll need to do it manually
+It might be that TS can't infer exact type of complex handler when passed to `addSchema` so you'll
+need to do it manually
 
 ```typescript
 addSchema(app, {
@@ -187,3 +196,30 @@ addSchema(app, {
   },
 });
 ```
+
+### Note about request.params
+
+Route path params (string tokens) are not validated on type level. This means that it is possible to
+make a typo:
+
+```typescript
+// Invalid example that demonstrates typo in params tokens
+interface InvalidParams extends Schema {
+  paths: {
+    'GET /params/:ANOTHER_ID': {
+      // fastify will map it to { ANOTHER_ID: string }
+      request: {
+        params: {
+          id: number;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
+  };
+}
+```
+
+As our schema expects params to be `{ id: number }` - typo will result in validation error if
+generated JSON schemas are used or invalid runtime assumptions about data if plain types are used
