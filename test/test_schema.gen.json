@@ -118,7 +118,59 @@
     "POST /redirect": {
       "request": {},
       "response": {}
+    },
+    "POST /params/:id/:subid": {
+      "request": {
+        "type": "object",
+        "required": [
+          "params"
+        ],
+        "properties": {
+          "params": {
+            "type": "object",
+            "required": [
+              "id",
+              "subid"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "subid": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "response": {}
+    },
+    "POST /paramswithtypo/:Ids/:subid": {
+      "request": {
+        "type": "object",
+        "required": [
+          "params"
+        ],
+        "properties": {
+          "params": {
+            "type": "object",
+            "required": [
+              "id",
+              "subid"
+            ],
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "subid": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "response": {}
     }
   },
-  "$hash": "578359f04be3caf819bd8c91ebc19ffaebe40d23be14f598d7098b26efd29bf7__v0.2.1"
+  "$hash": "91fcb94e572799dcc3d8229ea2f988cf86ae49775a21cb610ed388cadd1bb56d__v0.3.1"
 }

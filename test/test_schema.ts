@@ -53,5 +53,28 @@ export interface TestSchema extends Schema {
         302: {};
       };
     };
+    'POST /params/:id/:subid': {
+      request: {
+        params: {
+          id: number;
+          subid: string;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
+
+    'POST /paramswithtypo/:Ids/:subid': {
+      request: {
+        params: {
+          id: number;
+          subid: string;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
   };
 }
