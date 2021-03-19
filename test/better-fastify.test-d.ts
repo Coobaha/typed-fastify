@@ -557,3 +557,26 @@ expectType<Service<Redirects>>({
     return reply.redirect('example.com');
   },
 });
+
+interface Params extends Schema {
+  paths: {
+    'POST /params/:ids/:subid': {
+      request: {
+        params: {
+          id: string;
+          subid: string;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
+  };
+}
+
+expectType<Service<Params>>({
+  'POST /params/:ids/:subid': (req, reply) => {
+    req.params.subid;
+    return reply.status(200).send();
+  },
+});

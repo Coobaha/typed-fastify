@@ -6,7 +6,6 @@ import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
 import split from 'split2';
 type Test = typeof tap['Test']['prototype'];
-
 t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
 };
@@ -29,9 +28,17 @@ const defaultService: Service<TestSchema> = {
   'POST /redirect': async (req, reply) => {
     return reply.redirect('example.com');
   },
+  'POST /params/:id/:subid': (req, reply) => {
+    return reply.status(200).send();
+  },
+  'POST /paramswithtypo/:Ids/:subid': (req, reply) => {
+    return reply.status(200).send();
+  },
 };
+
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
   let stream = split(() => {});
+
   const app = fastify({
     logger: {
       // @ts-ignore
@@ -46,18 +53,20 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
               Body: req.body,
               schema: req.context.schema,
             },
-            'request',
+            `request path:${req.method} ${req.url} id:${req.id}`,
           );
           return {};
         },
         res: (res: any) => {
-          t.matchSnapshot(
-            {
-              Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => JSON.parse(x.toString())),
-              Headers: res.raw._header?.split('\r\n').filter(Boolean),
-            },
-            'response',
-          );
+          if (res.raw.finished) {
+            t.matchSnapshot(
+              {
+                Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => JSON.parse(x.toString())),
+                Headers: res.raw._header?.split('\r\n').filter(Boolean),
+              },
+              `response path:${res.request.method} ${res.request.url} id:${res.request.id}`,
+            );
+          }
           return {
             statusCode: res.statusCode,
           };
@@ -86,7 +95,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
     service,
   });
   await app.ready();
-  t.tearDown(() => void app.close());
+  t.tearDown(async () => app.close());
   return app;
 };
 
@@ -242,4 +251,24 @@ t.test('GET /empty works', async (t) => {
   });
 
   t.equal(res.statusCode, 204);
+});
+
+t.test('POST /params/:id/:subid works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/params/11/22',
+    method: 'POST',
+  });
+
+  t.equal(res.statusCode, 200);
+});
+
+t.test('POST /paramswithtypo/:Ids/:subid', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/params/paramswithtypo/22',
+    method: 'POST',
+  });
+
+  t.equal(res.statusCode, 400);
 });
