@@ -111,7 +111,7 @@ Options:
 
 ```sh
 # it will generate example_schema.gen.json next to file
-npx tfs gen 'example_schema.ts'
+npx tfs gen example_schema.ts
 ```
 
 When schema is generated - just pass it to plugin to have runtime validations 🎉
