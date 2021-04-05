@@ -11,9 +11,8 @@ things:
   - `request.params`
   - `reply` is always based on status, developer won't be able to use plain `reply.send()` but
     forced to explicitly set status first, based on which response type will be inferred
-- JSON schema generation from TS Schema (
-  using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
-  transforms)
+- JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
+  transforms, all `@tjs` annotations can be used to fine-tune output)
 - Runtime validation using generated JSON schema (optional but strongly recommended as it brings extra safety to runtime and ensures that code assumptions about data are correct)
 
 [demo video](https://user-images.githubusercontent.com/2446638/108409543-08b45f00-722f-11eb-905c-06505b57f5fe.mp4)
