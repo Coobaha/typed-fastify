@@ -72,7 +72,7 @@ const app = fastify();
 addSchema(app, {
   // it is strongly recommended to generate json schema to guaruntee runtime validity
   jsonSchema: {},
-  service,
+  service: exampleService,
 });
 
 // Start listening.
