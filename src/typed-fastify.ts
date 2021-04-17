@@ -23,7 +23,7 @@ const addSchema = <
   if (schema?.$id) {
     fastify.addSchema(schema);
   } else {
-    throw Error('Schema was ignored, $id is missing; Better fastify was not registered...');
+    throw Error('Schema was ignored, $id is missing; Typed fastify schema was not registered...');
   }
 
   fastify.decorateReply('matches', function (this: F.FastifyReply, routeWithMethod: string) {
