@@ -34,6 +34,14 @@ const defaultService: Service<TestSchema> = {
   'POST /paramswithtypo/:Ids/:subid': (req, reply) => {
     return reply.status(200).send();
   },
+  'POST /testframe': (req, reply) => {
+    return reply.status(200).send({
+      frame: {
+        type: 'TEST',
+        id: 'string',
+      },
+    });
+  },
 };
 
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
@@ -95,7 +103,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
     service,
   });
   await app.ready();
-  t.tearDown(async () => app.close());
+  t.teardown(async () => app.close());
   return app;
 };
 
@@ -257,6 +265,16 @@ t.test('POST /params/:id/:subid works', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
     url: '/params/11/22',
+    method: 'POST',
+  });
+
+  t.equal(res.statusCode, 200);
+});
+
+t.test('POST /testframe works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/testframe',
     method: 'POST',
   });
 

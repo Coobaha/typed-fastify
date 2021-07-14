@@ -10,6 +10,14 @@ interface User {
   name: string;
 }
 
+interface Obj {
+  type: string;
+  /** @format uuid*/
+  id: string;
+}
+
+type TestObj = Omit<Obj, 'type'> & { type: 'TEST' };
+
 export interface TestSchema extends Schema {
   paths: {
     'GET /': {
@@ -65,6 +73,15 @@ export interface TestSchema extends Schema {
       };
     };
 
+    'POST /testframe': {
+      response: {
+        200: {
+          content: {
+            frame: TestObj;
+          };
+        };
+      };
+    };
     'POST /paramswithtypo/:Ids/:subid': {
       request: {
         params: {

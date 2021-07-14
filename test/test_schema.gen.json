@@ -28,6 +28,56 @@
             "type": "string"
           }
         }
+      },
+      "Obj": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      },
+      "TestObj": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Omit<Obj,\"type\">"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "TEST"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "Omit<Obj,\"type\">": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
       }
     },
     "$id": "test_schema"
@@ -145,6 +195,41 @@
       },
       "response": {}
     },
+    "POST /testframe": {
+      "request": {},
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "frame"
+          ],
+          "properties": {
+            "frame": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "test_schema#/definitions/Omit<Obj,\"type\">"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "TEST"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "POST /paramswithtypo/:Ids/:subid": {
       "request": {
         "type": "object",
@@ -172,5 +257,5 @@
       "response": {}
     }
   },
-  "$hash": "91fcb94e572799dcc3d8229ea2f988cf86ae49775a21cb610ed388cadd1bb56d__v0.3.1"
+  "$hash": "c164cd6bd2d34892c6a7ff0e78015f6d1088a6ab33515bc4b7bf80cac5b972c2__v0.3.1"
 }
