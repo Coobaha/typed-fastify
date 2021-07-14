@@ -447,7 +447,38 @@ Object {
   "Params": Object {},
   "Query": Null Object {},
   "schema": Object {
-    "response": Object {},
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "frame": Object {
+            "allOf": Array [
+              Object {
+                "$ref": "test_schema#/definitions/Omit<Obj,\\"type\\">",
+              },
+              Object {
+                "properties": Object {
+                  "type": Object {
+                    "enum": Array [
+                      "TEST",
+                    ],
+                    "type": "string",
+                  },
+                },
+                "required": Array [
+                  "type",
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "object",
+          },
+        },
+        "required": Array [
+          "frame",
+        ],
+        "type": "object",
+      },
+    },
   },
 }
 `

@@ -12,6 +12,7 @@ interface User {
 
 interface Obj {
   type: string;
+  /** @format uuid*/
   id: string;
 }
 

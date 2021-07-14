@@ -40,6 +40,7 @@
             "type": "string"
           },
           "id": {
+            "format": "uuid",
             "type": "string"
           }
         }
@@ -73,6 +74,7 @@
         ],
         "properties": {
           "id": {
+            "format": "uuid",
             "type": "string"
           }
         }
@@ -195,7 +197,38 @@
     },
     "POST /testframe": {
       "request": {},
-      "response": {}
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "frame"
+          ],
+          "properties": {
+            "frame": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "test_schema#/definitions/Omit<Obj,\"type\">"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "TEST"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
     },
     "POST /paramswithtypo/:Ids/:subid": {
       "request": {
@@ -224,5 +257,5 @@
       "response": {}
     }
   },
-  "$hash": "fbcb6c3fd22f8bac40ca7204549d5250a4f2018fa86aaafb3bcdfc0ddaaba0e9__v0.3.1"
+  "$hash": "c164cd6bd2d34892c6a7ff0e78015f6d1088a6ab33515bc4b7bf80cac5b972c2__v0.3.1"
 }
