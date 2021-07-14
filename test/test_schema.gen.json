@@ -49,7 +49,7 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "test_schema#/definitions/Omit<Obj,\"type\">"
+            "$ref": "#/definitions/Omit<Obj,\"type\">"
           },
           {
             "type": "object",
@@ -205,7 +205,26 @@
           ],
           "properties": {
             "frame": {
-              "$ref": "test_schema#/definitions/TestObj"
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "test_schema#/definitions/Omit<Obj,\"type\">"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "TEST"
+                      ]
+                    }
+                  }
+                }
+              ]
             }
           }
         }
@@ -238,5 +257,5 @@
       "response": {}
     }
   },
-  "$hash": "c164cd6bd2d34892c6a7ff0e78015f6d1088a6ab33515bc4b7bf80cac5b972c2__v0.3.1"
+  "$hash": "c164cd6bd2d34892c6a7ff0e78015f6d1088a6ab33515bc4b7bf80cac5b972c2__v0.4.0"
 }

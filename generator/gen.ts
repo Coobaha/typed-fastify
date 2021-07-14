@@ -73,7 +73,7 @@ export default async (params: { files: string[] }) => {
   const settings: TJS.PartialArgs = {
     required: true,
     ref: true,
-    aliasRef: true,
+    aliasRef: false,
     topRef: true,
     ignoreErrors: true,
     strictNullChecks: true,
@@ -155,7 +155,9 @@ export default async (params: { files: string[] }) => {
       }
     }
     if (schema) {
-      schema = JSON.parse(JSON.stringify(schema).replace(new RegExp(escapeRegexp(PLACEHOLDER_ID), 'gmi'), name));
+      schema = JSON.parse(
+        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), '#/'),
+      );
     }
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
     const newContents = JSON.stringify(
