@@ -28,6 +28,54 @@
             "type": "string"
           }
         }
+      },
+      "Obj": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "TestObj": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Omit<Obj,\"type\">"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "TEST"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "Omit<Obj,\"type\">": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
       }
     },
     "$id": "test_schema"
@@ -145,6 +193,10 @@
       },
       "response": {}
     },
+    "POST /testframe": {
+      "request": {},
+      "response": {}
+    },
     "POST /paramswithtypo/:Ids/:subid": {
       "request": {
         "type": "object",
@@ -172,5 +224,5 @@
       "response": {}
     }
   },
-  "$hash": "91fcb94e572799dcc3d8229ea2f988cf86ae49775a21cb610ed388cadd1bb56d__v0.3.1"
+  "$hash": "fbcb6c3fd22f8bac40ca7204549d5250a4f2018fa86aaafb3bcdfc0ddaaba0e9__v0.3.1"
 }

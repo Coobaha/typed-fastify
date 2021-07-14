@@ -5,7 +5,7 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
-exports[`test/integration.test.ts TAP GET /empty works > request path:GET /empty id:1 1`] = `
+exports[`test/integration.test.ts TAP GET /empty works > request path:GET /empty id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -20,7 +20,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP GET /empty works > response path:GET /empty id:1 1`] = `
+exports[`test/integration.test.ts TAP GET /empty works > response path:GET /empty id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 204 No Content",
@@ -56,7 +56,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > request path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > request path:POST / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -110,7 +110,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > response path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / rejects invalid payload > response path:POST / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -138,7 +138,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / type casts payload when possible > request path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / type casts payload when possible > request path:POST / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -192,7 +192,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / type casts payload when possible > response path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / type casts payload when possible > response path:POST / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -221,7 +221,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / works > request path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / works > request path:POST / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -275,7 +275,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST / works > response path:POST / id:1 1`] = `
+exports[`test/integration.test.ts TAP POST / works > response path:POST / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -295,7 +295,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /params/:id/:subid works > request path:POST /params/11/22 id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /params/:id/:subid works > request path:POST /params/11/22 id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -328,7 +328,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /params/:id/:subid works > response path:POST /params/11/22 id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /params/:id/:subid works > response path:POST /params/11/22 id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -357,7 +357,7 @@ Error: params.id should be number {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > request path:POST /params/paramswithtypo/22 id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > request path:POST /params/paramswithtypo/22 id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -390,7 +390,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > response path:POST /params/paramswithtypo/22 id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > response path:POST /params/paramswithtypo/22 id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -409,7 +409,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /redirect works > request path:POST /redirect id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /redirect works > request path:POST /redirect id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -424,7 +424,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP POST /redirect works > response path:POST /redirect id:1 1`] = `
+exports[`test/integration.test.ts TAP POST /redirect works > response path:POST /redirect id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 302 Found",
@@ -437,13 +437,48 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP POST /testframe works > request path:POST /testframe id:req-1 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Null Object {},
+  "schema": Object {
+    "response": Object {},
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP POST /testframe works > response path:POST /testframe id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 39",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "frame": Object {
+        "id": "string",
+        "type": "TEST",
+      },
+    },
+  ],
+}
+`
+
 exports[`test/integration.test.ts TAP app starts and GET / works > happy path 1`] = `
 Object {
   "name": "hello",
 }
 `
 
-exports[`test/integration.test.ts TAP app starts and GET / works > request path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP app starts and GET / works > request path:GET / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -487,7 +522,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP app starts and GET / works > response path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP app starts and GET / works > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -505,7 +540,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it sends headers > request path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP it sends headers > request path:GET / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -549,7 +584,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it sends headers > response path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP it sends headers > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -594,7 +629,7 @@ Error: querystring.getQueryParam should be boolean {
 }
 `
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > request path:GET /?getQueryParam=1 id:1 1`] = `
+exports[`test/integration.test.ts TAP it validates get query param against schema > request path:GET /?getQueryParam=1 id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -640,7 +675,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > response path:GET /?getQueryParam=1 id:1 1`] = `
+exports[`test/integration.test.ts TAP it validates get query param against schema > response path:GET /?getQueryParam=1 id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -716,7 +751,7 @@ Array [
 ]
 `
 
-exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -759,7 +794,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:2 1`] = `
+exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-2 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -802,7 +837,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -821,7 +856,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:2 1`] = `
+exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:req-2 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -852,7 +887,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP response is validated > request path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 1`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -896,7 +931,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP response is validated > request path:GET / id:1 2`] = `
+exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 2`] = `
 Object {
   "Body": null,
   "Headers": Object {
@@ -940,7 +975,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP response is validated > response path:GET / id:1 1`] = `
+exports[`test/integration.test.ts TAP response is validated > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 500 Internal Server Error",
