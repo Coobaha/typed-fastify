@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.4.0...v0.5.0) (2021-07-30)
+
+
+### Features
+
+* add AsRouteObj to Service interface ([f03cb41](https://www.github.com/Coobaha/typed-fastify/commit/f03cb415042b75e43403430fd09f61ba96a821e4))
+
 ## [0.4.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.3.2...v0.4.0) (2021-07-14)
 
 
