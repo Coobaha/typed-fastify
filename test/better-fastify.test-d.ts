@@ -511,6 +511,14 @@ expectType<AsyncEmptyHandler['AsRoute']>((req, reply) => {
 expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
   return reply.status(204).send();
 });
+expectType<AsyncEmptyHandler['AsRouteObj']>({
+  preHandler: async (req, reply) => {
+    return reply.status(204).send();
+  },
+  handler: async (req, reply) => {
+    return reply.status(204).send();
+  },
+});
 expectType<Service<EmptyResponses>>({
   'GET /empty': (req, reply) => {
     return reply.status(204).send();
@@ -540,6 +548,32 @@ expectType<Service<EmptyResponses>>(s);
 //@ts-expect-error
 expectType<AsyncEmptyHandler['AsRoute']>(async (req, reply) => {
   return reply.status(204);
+});
+expectType<AsyncEmptyHandler['AsRouteObj']>({
+  //@ts-expect-error
+  handler: async (req, reply) => {
+    return reply.status(204);
+  },
+});
+
+//@ts-expect-error
+expectType<AsyncEmptyHandler['AsRouteObj']>({});
+
+//@ts-expect-error
+expectType<AsyncEmptyHandler['AsRouteObj']>({
+  preHandler: async (req, reply) => {
+    return reply.status(204).send();
+  },
+});
+
+expectType<AsyncEmptyHandler['AsRouteObj']>({
+  preHandler: async (req, reply) => {
+    //@ts-expect-error
+    return reply.status(204).send(111);
+  },
+  handler: async (req, reply) => {
+    return reply.status(204).send();
+  },
 });
 
 interface Redirects extends Schema {

@@ -7,7 +7,7 @@ const addSchema = <
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   Logger = F.FastifyLoggerInstance,
   ContextConfig = F.ContextConfigDefault,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>
+  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
 >(
   fastify: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
   opts: {
@@ -130,7 +130,7 @@ interface Reply<
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
-  ContextConfig = F.ContextConfigDefault
+  ContextConfig = F.ContextConfigDefault,
 > extends Omit<
     F.FastifyReply<RawServer, RawRequest, RawReply, Router<Op>, ContextConfig>,
     | 'send'
@@ -152,7 +152,7 @@ interface Reply<
     NewOp extends ServiceSchema['paths'][P] = ServiceSchema['paths'][P],
     S = keyof Get<NewOp, 'response'>,
     Content = Get<Get2<NewOp, 'response', S>, 'content'>,
-    Headers = Get<Get2<NewOp, 'response', S>, 'headers'>
+    Headers = Get<Get2<NewOp, 'response', S>, 'headers'>,
   >(
     this: any,
     path: IsKnown extends true ? P : Path,
@@ -164,7 +164,7 @@ interface Reply<
     AllHeaders = Get2<Op['response'], Status, 'headers'>,
     O = [Headers, AllHeaders],
     MissingHeaders = Missing<Headers, AllHeaders>,
-    MissingStatus = [Status] extends [never] ? true : false
+    MissingStatus = [Status] extends [never] ? true : false,
   >(
     ...payload: [MissingStatus] extends [true]
       ? [Invalid<`Missing status`>]
@@ -212,7 +212,7 @@ interface Reply<
   status<
     Status extends [keyof Op['response']] extends [never]
       ? Invalid<` ${Extract<Path, string>} - has no response`>
-      : keyof Op['response']
+      : keyof Op['response'],
   >(
     status: Status,
   ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
@@ -232,7 +232,7 @@ type OpaqueReply<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
-  Opaque = Reply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>
+  Opaque = Reply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
 > = Status extends unknown ? Opaque : Content extends unknown ? Opaque : Headers extends unknown ? Opaque : never;
 
 interface Invalid<msg = any> {
@@ -265,7 +265,7 @@ interface Request<
   Op extends Operation,
   Path extends keyof ServiceSchema['paths'],
   RawServer extends F.RawServerBase = F.RawServerDefault,
-  RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>
+  RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
 > extends Omit<
     F.FastifyRequest<Router<Op>, RawServer, RawRequest>,
     'headers' | 'method' | 'routerMethod' | 'routerPath'
@@ -288,7 +288,7 @@ type Handler<
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
     ? Invalid<` ${Extract<Path, string>} - has no response, every path should have at least one response defined`>
     : true,
-  Status extends keyof Op['response'] = keyof Op['response']
+  Status extends keyof Op['response'] = keyof Op['response'],
 > = ValidSchema extends true
   ? (
       this: F.FastifyInstance<RawServer, RawRequest, RawReply, ContextConfig>,
@@ -307,7 +307,7 @@ type HandlerObj<
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
-  ContextConfig = F.ContextConfigDefault
+  ContextConfig = F.ContextConfigDefault,
 > = F.RouteShorthandOptions<RawServer, RawRequest, RawReply, Router<Op>> & {
   handler: Handler<Op, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
 };
@@ -317,7 +317,7 @@ export type Service<
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
-  ContextConfig = F.ContextConfigDefault
+  ContextConfig = F.ContextConfigDefault,
 > = {
   [P in keyof S['paths']]:
     | Handler<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig>
@@ -335,7 +335,18 @@ export type RequestHandler<
   Paths = ServiceSchema['paths'],
   OpHandler = {
     [Path in HandlerPaths]: Handler<Paths[Path], Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
-  }[HandlerPaths]
+  }[HandlerPaths],
+  OpHandlerObj = {
+    [Path in HandlerPaths]: HandlerObj<
+      Paths[Path],
+      Path,
+      ServiceSchema,
+      RawServer,
+      RawRequest,
+      RawReply,
+      ContextConfig
+    >;
+  }[HandlerPaths],
 > = OpHandler extends (...args: any) => any
   ? {
       Request: Parameters<OpHandler>[0];
@@ -346,6 +357,7 @@ export type RequestHandler<
       Return: AsReply | Promise<AsReply>;
       ReturnAsync: Promise<AsReply>;
       AsRoute: OpHandler;
+      AsRouteObj: OpHandlerObj;
       Paths: HandlerPaths;
     }
   : never;
