@@ -31,6 +31,54 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP GET /inferredParams/:id > request path:GET /inferredParams/321/123 id:req-1 1`] = `
+Object {
+  "Body": null,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {
+    "castedToNumber": "123",
+    "id": "321",
+  },
+  "Query": Null Object {},
+  "schema": Object {
+    "params": Object {
+      "properties": Object {
+        "castedToNumber": Object {
+          "type": "number",
+        },
+      },
+      "required": Array [
+        "castedToNumber",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "type": "string",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP GET /inferredParams/:id > response path:GET /inferredParams/321/123 id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: text/plain; charset=utf-8",
+    "content-length: 51",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    "id type is string and castedToNumber type is number",
+  ],
+}
+`
+
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
 Error: body.user.name should be string {
   "validation": Array [
@@ -337,75 +385,6 @@ Object {
     "Connection: keep-alive",
   ],
   "Payload": Array [],
-}
-`
-
-exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > error logs 1`] = `
-Error: params.id should be number {
-  "validation": Array [
-    Object {
-      "dataPath": ".id",
-      "keyword": "type",
-      "message": "should be number",
-      "params": Object {
-        "type": "number",
-      },
-      "schemaPath": "#/properties/id/type",
-    },
-  ],
-  "validationContext": "params",
-}
-`
-
-exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > request path:POST /params/paramswithtypo/22 id:req-1 1`] = `
-Object {
-  "Body": null,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {
-    "id": "paramswithtypo",
-    "subid": "22",
-  },
-  "Query": Null Object {},
-  "schema": Object {
-    "params": Object {
-      "properties": Object {
-        "id": Object {
-          "type": "number",
-        },
-        "subid": Object {
-          "type": "string",
-        },
-      },
-      "required": Array [
-        "id",
-        "subid",
-      ],
-      "type": "object",
-    },
-    "response": Object {},
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > response path:POST /params/paramswithtypo/22 id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 400 Bad Request",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 79",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "error": "Bad Request",
-      "message": "params.id should be number",
-      "statusCode": 400,
-    },
-  ],
 }
 `
 
