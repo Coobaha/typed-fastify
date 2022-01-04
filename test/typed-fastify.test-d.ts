@@ -1,4 +1,4 @@
-import { expectAssignable, expectType } from 'tsd';
+import { expectAssignable, expectType, expectNotType } from 'tsd';
 import type { RequestHandler, Schema, Service } from '../src';
 
 type User = {
@@ -594,10 +594,45 @@ expectType<Service<Redirects>>({
 
 interface Params extends Schema {
   paths: {
+    'GET /params/:ids/:subid': {
+      response: {
+        200: {};
+      };
+    };
+    'GET /mixed/:shouldBeNumber/:string': {
+      request: {
+        params: {
+          shouldBeNumber: number;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
+    'POST /validation/:present/:missing': {
+      request: {
+        params: {
+          present: string;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
+    'POST /typoInParam/:present': {
+      request: {
+        params: {
+          presentTypo: string;
+        };
+      };
+      response: {
+        200: {};
+      };
+    };
     'POST /params/:ids/:subid': {
       request: {
         params: {
-          id: string;
+          ids: string;
           subid: string;
         };
       };
@@ -609,6 +644,28 @@ interface Params extends Schema {
 }
 
 expectType<Service<Params>>({
+  'GET /params/:ids/:subid': (req, reply) => {
+    req.params.subid;
+    req.params.ids;
+    //@ts-expect-error
+    req.params.subId;
+    //@ts-expect-error
+    req.params.wrong;
+    return reply.status(200).send();
+  },
+  'GET /mixed/:shouldBeNumber/:string': (req, reply) => {
+    expectType<string>(req.params.string);
+    expectType<number>(req.params.shouldBeNumber);
+    expectNotType<string>(req.params.shouldBeNumber);
+    return reply.status(200).send();
+  },
+  'POST /validation/:present/:missing': (req, reply) => {
+    return reply.status(200).send();
+  },
+  //@ts-expect-error
+  'POST /typoInParam/:present': (req, reply) => {
+    return reply.status(200).send();
+  },
   'POST /params/:ids/:subid': (req, reply) => {
     req.params.subid;
     return reply.status(200).send();

@@ -120,6 +120,12 @@ type MP<T extends string | number | symbol> =
   | ExtractMethodPath<T, 'PUT'>
   | ExtractMethodPath<T, 'OPTIONS'>;
 
+type ExtractParams<T extends string | number | symbol, Acc = {}> = T extends `${infer _}:${infer P}/${infer R}`
+  ? ExtractParams<R, Acc & { [_ in P]: string }>
+  : T extends `${infer _}:${infer P}`
+  ? Id<Acc & { [_ in P]: string }>
+  : Acc;
+
 interface Reply<
   Op extends Operation,
   Status,
@@ -259,6 +265,7 @@ interface Router<Op extends Operation> {
   // force reply to be never, as we expose it via custom reply interface
   Reply: never;
 }
+type Id<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
 interface Request<
   ServiceSchema extends Schema,
@@ -266,8 +273,18 @@ interface Request<
   Path extends keyof ServiceSchema['paths'],
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
+  OpRequest extends Router<Op> = Router<Op>,
+  PathParams = OpRequest['Params'] extends never
+    ? ExtractParams<Path>
+    : Id<Omit<ExtractParams<Path>, keyof OpRequest['Params']>>,
 > extends Omit<
-    F.FastifyRequest<Router<Op>, RawServer, RawRequest>,
+    F.FastifyRequest<
+      OpRequest['Params'] extends [never]
+        ? Omit<Router<Op>, 'Params'> & { Params: PathParams }
+        : Omit<Router<Op>, 'Params'> & { Params: Id<PathParams & Router<Op>['Params']> },
+      RawServer,
+      RawRequest
+    >,
     'headers' | 'method' | 'routerMethod' | 'routerPath'
   > {
   readonly method: MP<Path>[0];
@@ -277,6 +294,23 @@ interface Request<
   readonly headers: Get<Op['request'], 'headers'>;
   readonly routerPath: MP<Path>[1];
 }
+
+type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2 ? true : false;
+
+type GetInvalidParamsValidation<
+  Op extends Operation,
+  Path extends keyof ServiceSchema['paths'],
+  ServiceSchema extends Schema,
+  DifferentKeys = Id<Omit<Router<Op>['Params'], keyof ExtractParams<Path>>>,
+> = Router<Op>['Params'] extends never
+  ? false
+  : IsEqual<DifferentKeys, {}> extends false
+  ? Invalid<`request.params keys doesn't match params from router path, probably due to typo in [ ${Extract<
+      keyof DifferentKeys,
+      string
+    >} ] in path: [ ${Extract<MP<Path>[1], string>} ]`>
+  : false;
+
 type Handler<
   Op extends Operation,
   Path extends keyof ServiceSchema['paths'],
@@ -285,8 +319,11 @@ type Handler<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
+  InvalidParams = GetInvalidParamsValidation<Op, Path, ServiceSchema>,
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
-    ? Invalid<` ${Extract<Path, string>} - has no response, every path should have at least one response defined`>
+    ? Invalid<`${Extract<Path, string>} - has no response, every path should have at least one response defined`>
+    : InvalidParams extends Invalid
+    ? InvalidParams
     : true,
   Status extends keyof Op['response'] = keyof Op['response'],
 > = ValidSchema extends true
