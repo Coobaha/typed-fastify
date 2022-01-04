@@ -114,8 +114,8 @@ exports[`test/integration.test.ts TAP POST / rejects invalid payload > response 
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
-    "content-length: 84",
     "content-type: application/json; charset=utf-8",
+    "content-length: 84",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -394,8 +394,8 @@ exports[`test/integration.test.ts TAP POST /paramswithtypo/:Ids/:subid > respons
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
-    "content-length: 79",
     "content-type: application/json; charset=utf-8",
+    "content-length: 79",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -710,8 +710,8 @@ exports[`test/integration.test.ts TAP it validates get query param against schem
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
-    "content-length: 96",
     "content-type: application/json; charset=utf-8",
+    "content-length: 96",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -872,8 +872,8 @@ exports[`test/integration.test.ts TAP it validates headers > response path:GET /
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
-    "content-length: 106",
     "content-type: application/json; charset=utf-8",
+    "content-length: 106",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -891,8 +891,8 @@ exports[`test/integration.test.ts TAP it validates headers > response path:GET /
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
-    "content-length: 102",
     "content-type: application/json; charset=utf-8",
+    "content-length: 102",
     "Date: dateString",
     "Connection: keep-alive",
   ],
