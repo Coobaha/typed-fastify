@@ -334,11 +334,19 @@ export type RequestHandler<
   S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
   Paths = ServiceSchema['paths'],
   OpHandler = {
-    [Path in HandlerPaths]: Handler<Paths[Path], Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+    [Path in HandlerPaths]: Handler<
+      Path extends keyof Paths ? Paths[Path] : never,
+      Path,
+      ServiceSchema,
+      RawServer,
+      RawRequest,
+      RawReply,
+      ContextConfig
+    >;
   }[HandlerPaths],
   OpHandlerObj = {
     [Path in HandlerPaths]: HandlerObj<
-      Paths[Path],
+      Path extends keyof Paths ? Paths[Path] : never,
       Path,
       ServiceSchema,
       RawServer,

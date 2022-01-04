@@ -95,7 +95,7 @@ interface ExtendedSchema extends ExampleSchema {
       request: SharedRequest;
       response: {
         204: {
-          content: void;
+          content: never;
         };
       };
     };
