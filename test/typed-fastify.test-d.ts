@@ -660,6 +660,8 @@ expectType<Service<Params>>({
     return reply.status(200).send();
   },
   'POST /validation/:present/:missing': (req, reply) => {
+    expectType<string>(req.params.present);
+    expectType<string>(req.params.missing);
     return reply.status(200).send();
   },
   //@ts-expect-error
