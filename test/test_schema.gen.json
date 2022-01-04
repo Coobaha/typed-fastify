@@ -230,7 +230,7 @@
         }
       }
     },
-    "POST /paramswithtypo/:Ids/:subid": {
+    "GET /inferredParams/:id/:castedToNumber": {
       "request": {
         "type": "object",
         "required": [
@@ -240,22 +240,22 @@
           "params": {
             "type": "object",
             "required": [
-              "id",
-              "subid"
+              "castedToNumber"
             ],
             "properties": {
-              "id": {
+              "castedToNumber": {
                 "type": "number"
-              },
-              "subid": {
-                "type": "string"
               }
             }
           }
         }
       },
-      "response": {}
+      "response": {
+        "200": {
+          "type": "string"
+        }
+      }
     }
   },
-  "$hash": "c164cd6bd2d34892c6a7ff0e78015f6d1088a6ab33515bc4b7bf80cac5b972c2__v0.5.0"
+  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.5.0"
 }

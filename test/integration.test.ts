@@ -31,8 +31,10 @@ const defaultService: Service<TestSchema> = {
   'POST /params/:id/:subid': (req, reply) => {
     return reply.status(200).send();
   },
-  'POST /paramswithtypo/:Ids/:subid': (req, reply) => {
-    return reply.status(200).send();
+  //@ts-ignore
+  'GET /inferredParams/:id/:castedToNumber': (req, reply) => {
+    const payload = `id type is ${typeof req.params.id} and castedToNumber type is ${typeof req.params.castedToNumber}`;
+    return reply.status(200).send(payload);
   },
   'POST /testframe': (req, reply) => {
     return reply.status(200).send({
@@ -69,7 +71,13 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
           if (res.raw.finished) {
             t.matchSnapshot(
               {
-                Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => JSON.parse(x.toString())),
+                Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => {
+                  try {
+                    return JSON.parse(x.toString());
+                  } catch (e) {
+                    return x.toString();
+                  }
+                }),
                 Headers: res.raw._header?.split('\r\n').filter(Boolean),
               },
               `response path:${res.request.method} ${res.request.url} id:${res.request.id}`,
@@ -81,6 +89,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
         },
         err: (err) => {
           if (err.constructor.name !== 'Error') {
+            console.log(err);
             t.fail('should not happen', err);
           } else {
             t.matchSnapshot(err, 'error logs');
@@ -281,12 +290,12 @@ t.test('POST /testframe works', async (t) => {
   t.equal(res.statusCode, 200);
 });
 
-t.test('POST /paramswithtypo/:Ids/:subid', async (t) => {
+t.test('GET /inferredParams/:id', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({
-    url: '/params/paramswithtypo/22',
-    method: 'POST',
+    url: '/inferredParams/321/123',
+    method: 'GET',
   });
 
-  t.equal(res.statusCode, 400);
+  t.equal(res.body, 'id type is string and castedToNumber type is number');
 });

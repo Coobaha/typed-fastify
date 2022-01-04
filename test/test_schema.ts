@@ -82,15 +82,16 @@ export interface TestSchema extends Schema {
         };
       };
     };
-    'POST /paramswithtypo/:Ids/:subid': {
+    'GET /inferredParams/:id/:castedToNumber': {
       request: {
         params: {
-          id: number;
-          subid: string;
+          castedToNumber: number;
         };
       };
       response: {
-        200: {};
+        200: {
+          content: string;
+        };
       };
     };
   };

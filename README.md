@@ -9,6 +9,7 @@ things:
   - `request.headers`
   - `request.querystring`
   - `request.params`
+  - `route.path.params` are also inferred and mapped to `request.params`, it is also not possible to make a typo in schema params
   - `reply` is always based on status, developer won't be able to use plain `reply.send()` but
     forced to explicitly set status first, based on which response type will be inferred
 - JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
@@ -191,30 +192,3 @@ addSchema(app, {
   },
 });
 ```
-
-### Note about request.params
-
-Route path params (string tokens) are not validated on type level. This means that it is possible to
-make a typo:
-
-```typescript
-// Invalid example that demonstrates typo in params tokens
-interface InvalidParams extends Schema {
-  paths: {
-    'GET /params/:ANOTHER_ID': {
-      // fastify will map it to { ANOTHER_ID: string }
-      request: {
-        params: {
-          id: number;
-        };
-      };
-      response: {
-        200: {};
-      };
-    };
-  };
-}
-```
-
-As our schema expects params to be `{ id: number }` - typo will result in validation error if
-generated JSON schemas are used or invalid runtime assumptions about data if plain types are used
