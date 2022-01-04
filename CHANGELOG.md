@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.5.0...v0.6.0) (2022-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* empty response type should now be typed as never instead of void
+
+### Features
+
+* add typed params inferred from route path ([613ef14](https://www.github.com/Coobaha/typed-fastify/commit/613ef143f0a741be9456057c1a70877678184d2f))
+
+
+### Bug Fixes
+
+* bump deps ([51019ff](https://www.github.com/Coobaha/typed-fastify/commit/51019ffc1d57e362f3e07cc48bf3df8d50f0b742))
+* fix code after deps bump ([6440479](https://www.github.com/Coobaha/typed-fastify/commit/64404796f3ba28a407e120e903398dac979d8e64))
+
 ## [0.5.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.4.0...v0.5.0) (2021-07-30)
 
 
