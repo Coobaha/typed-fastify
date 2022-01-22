@@ -1,10 +1,10 @@
 # Typed Fastify
 
-This package brings strongly typed request handlers to fastify by forcing developers to write
-service schema which is used to validate request params and replies. From this schema it does two
+This package adds strong TypeScript support to Fastify request handlers and enforces
+handlers to have typed schema which is used to validate request params and replies. From this schema it does two
 things:
 
-- static typechecking against TS Schema
+- static typechecking against TypeScript Schema
   - `request.body`
   - `request.headers`
   - `request.querystring`
