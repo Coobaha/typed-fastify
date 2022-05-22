@@ -886,7 +886,12 @@ Object {
 `
 
 exports[`test/integration.test.ts TAP response is validated > error logs 1`] = `
-Error: "name" is required!
+Error: "name" is required! {
+  "serialization": Object {
+    "method": "GET",
+    "url": "/",
+  },
+}
 `
 
 exports[`test/integration.test.ts TAP response is validated > invalid response 1`] = `

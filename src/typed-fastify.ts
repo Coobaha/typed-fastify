@@ -5,9 +5,8 @@ const addSchema = <
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
-  Logger = F.FastifyLoggerInstance,
-  ContextConfig = F.ContextConfigDefault,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
+  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, Logger>,
 >(
   fastify: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
   opts: {
@@ -273,6 +272,8 @@ interface Request<
   Path extends keyof ServiceSchema['paths'],
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
+  ContextConfig = F.ContextConfigDefault,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
   OpRequest extends Router<Op> = Router<Op>,
   PathParams = OpRequest['Params'] extends never
     ? ExtractParams<Path>
@@ -283,7 +284,9 @@ interface Request<
         ? Omit<Router<Op>, 'Params'> & { Params: PathParams }
         : Omit<Router<Op>, 'Params'> & { Params: Id<PathParams & Router<Op>['Params']> },
       RawServer,
-      RawRequest
+      RawRequest,
+      ContextConfig,
+      Logger
     >,
     'headers' | 'method' | 'routerMethod' | 'routerPath'
   > {
@@ -319,6 +322,8 @@ type Handler<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
+  SchemaCompiler = F.FastifySchema,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
   InvalidParams = GetInvalidParamsValidation<Op, Path, ServiceSchema>,
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
     ? Invalid<`${Extract<Path, string>} - has no response, every path should have at least one response defined`>
@@ -328,9 +333,9 @@ type Handler<
   Status extends keyof Op['response'] = keyof Op['response'],
 > = ValidSchema extends true
   ? (
-      this: F.FastifyInstance<RawServer, RawRequest, RawReply, ContextConfig>,
-      request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>,
-      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig> & {
+      this: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
+      request: Request<ServiceSchema, Op, Path, RawServer, RawRequest, ContextConfig, Logger>,
+      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, Logger> & {
         readonly __unknownReply: unique symbol;
         M: MP<Path>[0];
       },
@@ -345,8 +350,10 @@ type HandlerObj<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
-> = F.RouteShorthandOptions<RawServer, RawRequest, RawReply, Router<Op>> & {
-  handler: Handler<Op, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+  SchemaCompiler = F.FastifySchema,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
+> = F.RouteShorthandOptions<RawServer, RawRequest, RawReply, Router<Op>, ContextConfig, SchemaCompiler, Logger> & {
+  handler: Handler<Op, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, Logger>;
 };
 
 export type Service<
@@ -355,10 +362,12 @@ export type Service<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
+  SchemaCompiler = F.FastifySchema,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
 > = {
   [P in keyof S['paths']]:
-    | Handler<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig>
-    | HandlerObj<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig>;
+    | Handler<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, Logger>
+    | HandlerObj<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, Logger>;
 };
 
 export type RequestHandler<
@@ -368,7 +377,9 @@ export type RequestHandler<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
+  SchemaCompiler = F.FastifySchema,
+  Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
+  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, Logger>,
   Paths = ServiceSchema['paths'],
   OpHandler = {
     [Path in HandlerPaths]: Handler<
@@ -378,7 +389,8 @@ export type RequestHandler<
       RawServer,
       RawRequest,
       RawReply,
-      ContextConfig
+      ContextConfig,
+      Logger
     >;
   }[HandlerPaths],
   OpHandlerObj = {
@@ -389,14 +401,16 @@ export type RequestHandler<
       RawServer,
       RawRequest,
       RawReply,
-      ContextConfig
+      ContextConfig,
+      SchemaCompiler,
+      Logger
     >;
   }[HandlerPaths],
 > = OpHandler extends (...args: any) => any
   ? {
       Request: Parameters<OpHandler>[0];
       AsFastifyRequest: Parameters<OpHandler>[0] extends F.FastifyRequest<any, any, any>
-        ? F.FastifyRequest<Router<Paths[keyof Paths]>, RawServer, RawRequest>
+        ? F.FastifyRequest<Router<Paths[keyof Paths]>, RawServer, RawRequest, ContextConfig, Logger>
         : never;
       Reply: Parameters<OpHandler>[1];
       Return: AsReply | Promise<AsReply>;
