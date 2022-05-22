@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Coobaha/typed-fastify/compare/v0.6.0...v0.7.0) (2022-05-22)
+
+
+### Features
+
+* bump deps and expose logger and schema compiler generics from Fastify ([80d209d](https://github.com/Coobaha/typed-fastify/commit/80d209dda1721ee4492a5eff5a05ac07fe76c7e6))
+
 ## [0.6.0](https://www.github.com/Coobaha/typed-fastify/compare/v0.5.0...v0.6.0) (2022-01-04)
 
 
