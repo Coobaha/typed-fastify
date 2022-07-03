@@ -14,7 +14,7 @@ const revision = '__v' + require('../package.json').version; // + Date.now();
 function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
   const mergedAllOfSchema = mergeAllOf(originalSchema);
 
-  const escapeGenerics = (key: string) => key.replaceAll('<', '__').replaceAll('>', '__');
+  const escapeGenerics = (key: string) => key.replace(/</gim, '__').replace(/>/gim, '__');
 
   traverse(mergedAllOfSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
     /*{
