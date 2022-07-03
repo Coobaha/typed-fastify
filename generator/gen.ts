@@ -168,7 +168,7 @@ export default async (params: { files: string[] }) => {
     }
     if (schema) {
       schema = JSON.parse(
-        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), `${name}#/`),
+        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), '#/'),
       );
     }
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
