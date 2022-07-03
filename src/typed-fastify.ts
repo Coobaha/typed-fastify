@@ -1,4 +1,10 @@
 import type * as F from 'fastify';
+import {
+  FastifyRequestType,
+  FastifyTypeProvider,
+  FastifyTypeProviderDefault,
+  ResolveFastifyRequestType,
+} from 'fastify/types/type-provider';
 import { Operation, Schema } from './schema';
 const addSchema = <
   ServiceSchema extends Schema,
@@ -272,20 +278,27 @@ interface Request<
   Path extends keyof ServiceSchema['paths'],
   RawServer extends F.RawServerBase = F.RawServerDefault,
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
+  SchemaCompiler extends F.FastifySchema = F.FastifySchema,
+  TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
   ContextConfig = F.ContextConfigDefault,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
   OpRequest extends Router<Op> = Router<Op>,
   PathParams = OpRequest['Params'] extends never
     ? ExtractParams<Path>
     : Id<Omit<ExtractParams<Path>, keyof OpRequest['Params']>>,
+  RouteGeneric = OpRequest['Params'] extends [never]
+    ? Omit<Router<Op>, 'Params'> & { Params: PathParams }
+    : Omit<Router<Op>, 'Params'> & { Params: Id<PathParams & Router<Op>['Params']> },
+  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, RouteGeneric>,
 > extends Omit<
     F.FastifyRequest<
-      OpRequest['Params'] extends [never]
-        ? Omit<Router<Op>, 'Params'> & { Params: PathParams }
-        : Omit<Router<Op>, 'Params'> & { Params: Id<PathParams & Router<Op>['Params']> },
+      RouteGeneric,
       RawServer,
       RawRequest,
+      SchemaCompiler,
+      TypeProvider,
       ContextConfig,
+      RequestType,
       Logger
     >,
     'headers' | 'method' | 'routerMethod' | 'routerPath'
@@ -323,6 +336,8 @@ type Handler<
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
   SchemaCompiler = F.FastifySchema,
+  TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
+  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Op>>,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
   InvalidParams = GetInvalidParamsValidation<Op, Path, ServiceSchema>,
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
@@ -334,7 +349,17 @@ type Handler<
 > = ValidSchema extends true
   ? (
       this: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
-      request: Request<ServiceSchema, Op, Path, RawServer, RawRequest, ContextConfig, Logger>,
+      request: Request<
+        ServiceSchema,
+        Op,
+        Path,
+        RawServer,
+        RawRequest,
+        ContextConfig,
+        TypeProvider,
+        RequestType,
+        Logger
+      >,
       reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, Logger> & {
         readonly __unknownReply: unique symbol;
         M: MP<Path>[0];
@@ -351,8 +376,20 @@ type HandlerObj<
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
   SchemaCompiler = F.FastifySchema,
+  TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
+  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Op>>,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
-> = F.RouteShorthandOptions<RawServer, RawRequest, RawReply, Router<Op>, ContextConfig, SchemaCompiler, Logger> & {
+> = F.RouteShorthandOptions<
+  RawServer,
+  RawRequest,
+  RawReply,
+  Router<Op>,
+  ContextConfig,
+  SchemaCompiler,
+  TypeProvider,
+  RequestType,
+  Logger
+> & {
   handler: Handler<Op, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, Logger>;
 };
 
@@ -363,11 +400,36 @@ export type Service<
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
   SchemaCompiler = F.FastifySchema,
+  TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
 > = {
   [P in keyof S['paths']]:
-    | Handler<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, Logger>
-    | HandlerObj<S['paths'][P], P, S, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, Logger>;
+    | Handler<
+        S['paths'][P],
+        P,
+        S,
+        RawServer,
+        RawRequest,
+        RawReply,
+        ContextConfig,
+        SchemaCompiler,
+        TypeProvider,
+        ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<S['paths'][P]>>,
+        Logger
+      >
+    | HandlerObj<
+        S['paths'][P],
+        P,
+        S,
+        RawServer,
+        RawRequest,
+        RawReply,
+        ContextConfig,
+        SchemaCompiler,
+        TypeProvider,
+        ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<S['paths'][P]>>,
+        Logger
+      >;
 };
 
 export type RequestHandler<
@@ -378,6 +440,7 @@ export type RequestHandler<
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
   SchemaCompiler = F.FastifySchema,
+  TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
   S = Service<ServiceSchema, RawServer, RawRequest, RawReply, Logger>,
   Paths = ServiceSchema['paths'],
@@ -390,6 +453,9 @@ export type RequestHandler<
       RawRequest,
       RawReply,
       ContextConfig,
+      SchemaCompiler,
+      TypeProvider,
+      ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Path extends keyof Paths ? Paths[Path] : never>>,
       Logger
     >;
   }[HandlerPaths],
@@ -403,6 +469,8 @@ export type RequestHandler<
       RawReply,
       ContextConfig,
       SchemaCompiler,
+      TypeProvider,
+      ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Path extends keyof Paths ? Paths[Path] : never>>,
       Logger
     >;
   }[HandlerPaths],
@@ -410,7 +478,16 @@ export type RequestHandler<
   ? {
       Request: Parameters<OpHandler>[0];
       AsFastifyRequest: Parameters<OpHandler>[0] extends F.FastifyRequest<any, any, any>
-        ? F.FastifyRequest<Router<Paths[keyof Paths]>, RawServer, RawRequest, ContextConfig, Logger>
+        ? F.FastifyRequest<
+            Router<Paths[keyof Paths]>,
+            RawServer,
+            RawRequest,
+            SchemaCompiler,
+            TypeProvider,
+            ContextConfig,
+            ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Paths[keyof Paths]>>,
+            Logger
+          >
         : never;
       Reply: Parameters<OpHandler>[1];
       Return: AsReply | Promise<AsReply>;

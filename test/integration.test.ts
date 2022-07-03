@@ -54,31 +54,31 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
       // @ts-ignore
       stream: stream,
       serializers: {
-        req: (req: any) => {
+        req: (req) => {
           t.matchSnapshot(
             {
               Params: req.params,
               Query: req.query,
               Headers: req.headers,
               Body: req.body,
-              schema: req.context.schema,
+              schema: Reflect.get(req.context, 'schema'),
             },
             `request path:${req.method} ${req.url} id:${req.id}`,
           );
           return {};
         },
-        res: (res: any) => {
+        res: (res) => {
           if (res.raw.finished) {
             t.matchSnapshot(
               {
-                Payload: res.raw._lightMyRequest.payloadChunks.map((x: any) => {
+                Payload: (res.raw as any)._lightMyRequest.payloadChunks.map((x: any) => {
                   try {
                     return JSON.parse(x.toString());
                   } catch (e) {
                     return x.toString();
                   }
                 }),
-                Headers: res.raw._header?.split('\r\n').filter(Boolean),
+                Headers: (res.raw as any)._header?.split('\r\n').filter(Boolean),
               },
               `response path:${res.request.method} ${res.request.url} id:${res.request.id}`,
             );
@@ -225,7 +225,7 @@ t.test('POST / rejects invalid payload', async (t) => {
     headers: requiredHeaders,
     payload: {
       user: {
-        name: [123],
+        name: [123, '123'],
       },
     },
   });

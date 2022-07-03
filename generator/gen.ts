@@ -14,6 +14,8 @@ const revision = '__v' + require('../package.json').version; // + Date.now();
 function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
   const mergedAllOfSchema = mergeAllOf(originalSchema);
 
+  const escapeGenerics = (key: string) => key.replace(/</gim, '__').replace(/>/gim, '__');
+
   traverse(mergedAllOfSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
     /*{
         "type": "array",
@@ -29,6 +31,16 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
     if (schema.type === 'array' && schema.items.allOf && !schema.items.type) {
       schema.items.type = 'object';
     }
+    if (parentSchema && keyIndex && parentKeyword === 'definitions' && jsonPtr.includes('<') && jsonPtr.endsWith('>')) {
+      const escapedKey = escapeGenerics(String(keyIndex));
+      parentSchema[parentKeyword][escapedKey] = parentSchema[parentKeyword][keyIndex];
+      delete parentSchema[parentKeyword][keyIndex];
+    }
+
+    if (schema.type && schema.$ref) {
+      schema.$ref = escapeGenerics(schema.$ref);
+    }
+
     /* fixes schema extension for response only
      *
      *   type

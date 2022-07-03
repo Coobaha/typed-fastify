@@ -49,7 +49,7 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/Omit<Obj,\"type\">"
+            "$ref": "#/definitions/Omit__Obj,\"type\"__"
           },
           {
             "type": "object",
@@ -67,7 +67,7 @@
           }
         ]
       },
-      "Omit<Obj,\"type\">": {
+      "Omit__Obj,\"type\"__": {
         "type": "object",
         "required": [
           "id"
@@ -208,7 +208,7 @@
               "type": "object",
               "allOf": [
                 {
-                  "$ref": "test_schema#/definitions/Omit<Obj,\"type\">"
+                  "$ref": "test_schema#/definitions/Omit__Obj,\"type\"__"
                 },
                 {
                   "type": "object",
@@ -257,5 +257,5 @@
       }
     }
   },
-  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.6.0"
+  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.7.0"
 }
