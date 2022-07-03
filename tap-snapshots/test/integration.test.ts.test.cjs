@@ -7,13 +7,13 @@
 'use strict'
 exports[`test/integration.test.ts TAP GET /empty works > request path:GET /empty id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "response": Object {},
   },
@@ -33,7 +33,7 @@ Object {
 
 exports[`test/integration.test.ts TAP GET /inferredParams/:id > request path:GET /inferredParams/321/123 id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
@@ -42,7 +42,7 @@ Object {
     "castedToNumber": "123",
     "id": "321",
   },
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "params": Object {
       "properties": Object {
@@ -80,12 +80,12 @@ Object {
 `
 
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
-Error: body.user.name should be string {
+Error: body/user/name must be string {
   "validation": Array [
     Object {
-      "dataPath": ".user.name",
+      "instancePath": "/user/name",
       "keyword": "type",
-      "message": "should be string",
+      "message": "must be string",
       "params": Object {
         "type": "string",
       },
@@ -99,24 +99,24 @@ Error: body.user.name should be string {
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > invalid user name 1`] = `
 Object {
   "error": "Bad Request",
-  "message": "body.user.name should be string",
+  "message": "body/user/name must be string",
   "statusCode": 400,
 }
 `
 
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > request path:POST / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
-    "content-length": "23",
+    "content-length": "29",
     "content-type": "application/json",
     "getheader": "isHere",
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "body": Object {
       "properties": Object {
@@ -163,14 +163,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 84",
+    "content-length: 82",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "error": "Bad Request",
-      "message": "body.user.name should be string",
+      "message": "body/user/name must be string",
       "statusCode": 400,
     },
   ],
@@ -188,7 +188,7 @@ Object {
 
 exports[`test/integration.test.ts TAP POST / type casts payload when possible > request path:POST / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "content-length": "21",
@@ -198,7 +198,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "body": Object {
       "properties": Object {
@@ -271,7 +271,7 @@ Object {
 
 exports[`test/integration.test.ts TAP POST / works > request path:POST / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "content-length": "29",
@@ -281,7 +281,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "body": Object {
       "properties": Object {
@@ -345,7 +345,7 @@ Object {
 
 exports[`test/integration.test.ts TAP POST /params/:id/:subid works > request path:POST /params/11/22 id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
@@ -354,7 +354,7 @@ Object {
     "id": "11",
     "subid": "22",
   },
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "params": Object {
       "properties": Object {
@@ -390,13 +390,13 @@ Object {
 
 exports[`test/integration.test.ts TAP POST /redirect works > request path:POST /redirect id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "response": Object {},
   },
@@ -418,13 +418,13 @@ Object {
 
 exports[`test/integration.test.ts TAP POST /testframe works > request path:POST /testframe id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "response": Object {
       "200": Object {
@@ -432,7 +432,7 @@ Object {
           "frame": Object {
             "allOf": Array [
               Object {
-                "$ref": "test_schema#/definitions/Omit<Obj,\\"type\\">",
+                "$ref": "test_schema#/definitions/Omit__Obj,\\"type\\"__",
               },
               Object {
                 "properties": Object {
@@ -490,7 +490,7 @@ Object {
 
 exports[`test/integration.test.ts TAP app starts and GET / works > request path:GET / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
@@ -498,7 +498,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {
@@ -552,7 +552,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it sends headers > request path:GET / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
@@ -560,7 +560,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {
@@ -623,12 +623,12 @@ Object {
 `
 
 exports[`test/integration.test.ts TAP it validates get query param against schema > error logs 1`] = `
-Error: querystring.getQueryParam should be boolean {
+Error: querystring/getQueryParam must be boolean {
   "validation": Array [
     Object {
-      "dataPath": ".getQueryParam",
+      "instancePath": "/getQueryParam",
       "keyword": "type",
-      "message": "should be boolean",
+      "message": "must be boolean",
       "params": Object {
         "type": "boolean",
       },
@@ -641,7 +641,7 @@ Error: querystring.getQueryParam should be boolean {
 
 exports[`test/integration.test.ts TAP it validates get query param against schema > request path:GET /?getQueryParam=1 id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
@@ -690,14 +690,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 96",
+    "content-length: 94",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "error": "Bad Request",
-      "message": "querystring.getQueryParam should be boolean",
+      "message": "querystring/getQueryParam must be boolean",
       "statusCode": 400,
     },
   ],
@@ -707,18 +707,18 @@ Object {
 exports[`test/integration.test.ts TAP it validates get query param against schema > wrong type of query param 1`] = `
 Object {
   "error": "Bad Request",
-  "message": "querystring.getQueryParam should be boolean",
+  "message": "querystring/getQueryParam must be boolean",
   "statusCode": 400,
 }
 `
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 1`] = `
-Error: headers should have required property 'authorization' {
+Error: headers must have required property 'authorization' {
   "validation": Array [
     Object {
-      "dataPath": "",
+      "instancePath": "",
       "keyword": "required",
-      "message": "should have required property 'authorization'",
+      "message": "must have required property 'authorization'",
       "params": Object {
         "missingProperty": "authorization",
       },
@@ -730,12 +730,12 @@ Error: headers should have required property 'authorization' {
 `
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 2`] = `
-Error: headers should have required property 'getheader' {
+Error: headers must have required property 'getheader' {
   "validation": Array [
     Object {
-      "dataPath": "",
+      "instancePath": "",
       "keyword": "required",
-      "message": "should have required property 'getheader'",
+      "message": "must have required property 'getheader'",
       "params": Object {
         "missingProperty": "getheader",
       },
@@ -750,12 +750,12 @@ exports[`test/integration.test.ts TAP it validates headers > missing headers 1`]
 Array [
   Object {
     "error": "Bad Request",
-    "message": "headers should have required property 'authorization'",
+    "message": "headers must have required property 'authorization'",
     "statusCode": 400,
   },
   Object {
     "error": "Bad Request",
-    "message": "headers should have required property 'getheader'",
+    "message": "headers must have required property 'getheader'",
     "statusCode": 400,
   },
 ]
@@ -763,14 +763,14 @@ Array [
 
 exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "getheader": "isHere",
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {
@@ -806,14 +806,14 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-2 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "isHere",
     "host": "localhost:80",
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {
@@ -852,14 +852,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 106",
+    "content-length: 104",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "error": "Bad Request",
-      "message": "headers should have required property 'authorization'",
+      "message": "headers must have required property 'authorization'",
       "statusCode": 400,
     },
   ],
@@ -871,14 +871,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 102",
+    "content-length: 100",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "error": "Bad Request",
-      "message": "headers should have required property 'getheader'",
+      "message": "headers must have required property 'getheader'",
       "statusCode": 400,
     },
   ],
@@ -904,7 +904,7 @@ Object {
 
 exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 1`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
@@ -912,7 +912,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {
@@ -948,7 +948,7 @@ Object {
 
 exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 2`] = `
 Object {
-  "Body": null,
+  "Body": undefined,
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
@@ -956,7 +956,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {},
+  "Query": Object {},
   "schema": Object {
     "headers": Object {
       "properties": Object {

@@ -14,6 +14,8 @@ const revision = '__v' + require('../package.json').version; // + Date.now();
 function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
   const mergedAllOfSchema = mergeAllOf(originalSchema);
 
+  const escapeGenerics = (key: string) => key.replaceAll('<', '__').replaceAll('>', '__');
+
   traverse(mergedAllOfSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
     /*{
         "type": "array",
@@ -29,6 +31,16 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
     if (schema.type === 'array' && schema.items.allOf && !schema.items.type) {
       schema.items.type = 'object';
     }
+    if (parentSchema && keyIndex && parentKeyword === 'definitions' && jsonPtr.includes('<') && jsonPtr.endsWith('>')) {
+      const escapedKey = escapeGenerics(String(keyIndex));
+      parentSchema[parentKeyword][escapedKey] = parentSchema[parentKeyword][keyIndex];
+      delete parentSchema[parentKeyword][keyIndex];
+    }
+
+    if (schema.type && schema.$ref) {
+      schema.$ref = escapeGenerics(schema.$ref);
+    }
+
     /* fixes schema extension for response only
      *
      *   type
@@ -156,7 +168,7 @@ export default async (params: { files: string[] }) => {
     }
     if (schema) {
       schema = JSON.parse(
-        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), '#/'),
+        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), `${name}#/`),
       );
     }
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
