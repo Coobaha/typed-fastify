@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.8.0](https://github.com/Coobaha/typed-fastify/compare/v0.7.0...v0.8.0) (2022-07-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* bump to fastify4
+
+### Bug Fixes
+
+* bump to fastify4 ([b1e9813](https://github.com/Coobaha/typed-fastify/commit/b1e98132abb660cc0bb7b0d0d905ef252f3b15d0))
+
 ## [0.7.0](https://github.com/Coobaha/typed-fastify/compare/v0.6.0...v0.7.0) (2022-05-22)
 
 
