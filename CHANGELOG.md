@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.9.0](https://github.com/Coobaha/typed-fastify/compare/v0.8.0...v0.9.0) (2022-07-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* bump to fastify4
+* empty response type should now be typed as never instead of void
+* start correctly aliasing refs
+* bumping minor version as 0.1.x were published
+* make response schema be a map of statuses instead of contents
+
+### Features
+
+* add AsRouteObj to Service interface ([f03cb41](https://github.com/Coobaha/typed-fastify/commit/f03cb415042b75e43403430fd09f61ba96a821e4))
+* add typed params inferred from route path ([613ef14](https://github.com/Coobaha/typed-fastify/commit/613ef143f0a741be9456057c1a70877678184d2f))
+* bump deps and expose logger and schema compiler generics from Fastify ([80d209d](https://github.com/Coobaha/typed-fastify/commit/80d209dda1721ee4492a5eff5a05ac07fe76c7e6))
+* start correctly aliasing refs ([6e3362d](https://github.com/Coobaha/typed-fastify/commit/6e3362db34819869f2a61aef4ebbad803f77b6f1))
+* treat redirect as reply ([519e6ca](https://github.com/Coobaha/typed-fastify/commit/519e6cad45ba780c78f6c0938f75b032b6bf2da1))
+
+
+### Bug Fixes
+
+* bump deps ([51019ff](https://github.com/Coobaha/typed-fastify/commit/51019ffc1d57e362f3e07cc48bf3df8d50f0b742))
+* bump deps ([584c73e](https://github.com/Coobaha/typed-fastify/commit/584c73ec22311562aa025b8443043c37913506d7))
+* bump to fastify4 ([b1e9813](https://github.com/Coobaha/typed-fastify/commit/b1e98132abb660cc0bb7b0d0d905ef252f3b15d0))
+* bumping minor version as 0.1.x were published ([bd0d44c](https://github.com/Coobaha/typed-fastify/commit/bd0d44c339265c337c626e05aa5ec01db48b9ac6))
+* fix code after deps bump ([6440479](https://github.com/Coobaha/typed-fastify/commit/64404796f3ba28a407e120e903398dac979d8e64))
+* fix schema generator in node v14 ([391d59d](https://github.com/Coobaha/typed-fastify/commit/391d59d8d9e29b079130a7a4c05040ae320d7c5a))
+* make response schema be a map of statuses instead of contents ([a8fd0c7](https://github.com/Coobaha/typed-fastify/commit/a8fd0c7e94505dfc33b8e51f4b39851d6ba7b0a4))
+* mention TS 4.2 requirement ([fdc39d0](https://github.com/Coobaha/typed-fastify/commit/fdc39d06e584393c941d00655cc5e485ae0dd970))
+* Omit then from Reply to correctly infer AsReply return 🎉 ([a2a143c](https://github.com/Coobaha/typed-fastify/commit/a2a143c2d0d9f0ff0dab8eefee49bd1e4380e048))
+* release as latest dist-tag ([9517815](https://github.com/Coobaha/typed-fastify/commit/951781514813f1d64f213614c19edcefae29cd92))
+* release as latest dist-tag ([37e3541](https://github.com/Coobaha/typed-fastify/commit/37e354104e77e932b815725b5bb3166520899d24))
+* validate schema without responses and force send to be called ([2ecda87](https://github.com/Coobaha/typed-fastify/commit/2ecda876484c21d1b23e7f0a520d4e015cad5eb9))
+
 ## [0.8.0](https://github.com/Coobaha/typed-fastify/compare/v0.7.0...v0.8.0) (2022-07-03)
 
 
