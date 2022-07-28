@@ -40,9 +40,11 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: strin
       delete parentSchema[parentKeyword][keyIndex];
     }
 
-    if (schema.type && schema.$ref) {
-      schema.$ref = escapeGenerics(schema.$ref);
+    if (schema.$ref) {
       schema.$ref = schema.$ref.replace(rootId, newRootId);
+      if (schema.type) {
+        schema.$ref = escapeGenerics(schema.$ref);
+      }
     }
     /* fixes schema extension for response only
      *
@@ -124,7 +126,7 @@ export default async (params: { files: string[] }) => {
     const symbols = generator?.getMainFileSymbols(program, [file]) ?? [];
 
     const jsonschema = generator?.getSchemaForSymbols(symbols, true);
-    const { namespace = {} } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
+    const { namespace = {}, $schema } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
 
     console.log('Generating', symbols, 'for', file);
 
@@ -173,7 +175,7 @@ export default async (params: { files: string[] }) => {
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
     const newContents = JSON.stringify(
       {
-        schema: { namespace, $id: name },
+        schema: { namespace, $id: name, $schema },
         fastify: results,
         $hash: hash,
       },
