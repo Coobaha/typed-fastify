@@ -1,7 +1,6 @@
 {
   "schema": {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
+    "namespace": {
       "SharedRequest": {
         "type": "object",
         "required": [
@@ -49,7 +48,7 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/Omit__Obj,\"type\"__"
+            "$ref": "test_schema#/namespace/Omit__Obj,\"type\"__"
           },
           {
             "type": "object",
@@ -80,12 +79,13 @@
         }
       }
     },
-    "$id": "test_schema"
+    "$id": "test_schema",
+    "$schema": "http://json-schema.org/draft-07/schema#"
   },
   "fastify": {
     "GET /": {
       "request": {
-        "$ref": "test_schema#/definitions/SharedRequest",
+        "$ref": "test_schema#/namespace/SharedRequest",
         "type": "object",
         "required": [
           "headers",
@@ -119,7 +119,7 @@
       },
       "response": {
         "200": {
-          "$ref": "test_schema#/definitions/User"
+          "$ref": "test_schema#/namespace/User"
         }
       }
     },
@@ -137,7 +137,7 @@
             ],
             "properties": {
               "user": {
-                "$ref": "test_schema#/definitions/User"
+                "$ref": "test_schema#/namespace/User"
               }
             }
           }
@@ -152,7 +152,7 @@
           ],
           "properties": {
             "user": {
-              "$ref": "test_schema#/definitions/User"
+              "$ref": "test_schema#/namespace/User"
             },
             "msg": {
               "type": "string"
@@ -208,7 +208,7 @@
               "type": "object",
               "allOf": [
                 {
-                  "$ref": "test_schema#/definitions/Omit__Obj,\"type\"__"
+                  "$ref": "test_schema#/namespace/Omit__Obj,\"type\"__"
                 },
                 {
                   "type": "object",
@@ -257,5 +257,5 @@
       }
     }
   },
-  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.7.0"
+  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.8.0"
 }
