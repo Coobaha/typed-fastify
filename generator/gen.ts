@@ -15,7 +15,7 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: strin
   // @fastify/swagger just deletes `definitions` https://github.com/fastify/fastify-swagger/blob/master/lib/spec/swagger/utils.js#L325
   // so we rename it to `namespace`
   rootId = `${rootId}#/definitions/`;
-  newRootId = `${newRootId}#/namespace/`;
+  newRootId = `${newRootId}#/properties/`;
 
   const escapeGenerics = (key: string) => key.replace(/</gim, '__').replace(/>/gim, '__');
 
@@ -76,7 +76,7 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: strin
   });
 
   const { definitions, ...rest } = mergedSchema;
-  return { namespace: definitions, ...rest };
+  return { properties: definitions, ...rest };
 }
 export default async (params: { files: string[] }) => {
   const compilerOptions: TsConfigJson['compilerOptions'] = {
@@ -126,13 +126,13 @@ export default async (params: { files: string[] }) => {
     const symbols = generator?.getMainFileSymbols(program, [file]) ?? [];
 
     const jsonschema = generator?.getSchemaForSymbols(symbols, true);
-    const { namespace = {}, $schema } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
+    const { properties = {}, $schema } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
 
     console.log('Generating', symbols, 'for', file);
 
     const results: Record<string, { request: Object; response: Object }> = {};
 
-    for (const [defName, def] of Object.entries(namespace)) {
+    for (const [defName, def] of Object.entries(properties)) {
       if (typeof def === 'boolean') continue;
       if (!def?.properties) continue;
       if (typeof def?.properties.paths === 'boolean') continue;
@@ -141,7 +141,7 @@ export default async (params: { files: string[] }) => {
       if (!tag || typeof tag === 'boolean') continue;
 
       if (tag.enum?.length === 1 && tag.enum?.[0] === 'BETTER-FASTIFY-SCHEMA') {
-        delete namespace[defName];
+        delete properties[defName];
       }
 
       const paths = Object.entries(def.properties.paths?.properties ?? {});
@@ -175,7 +175,7 @@ export default async (params: { files: string[] }) => {
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
     const newContents = JSON.stringify(
       {
-        schema: { namespace, $id: name, $schema },
+        schema: { properties, $id: name, $schema, type: 'object' },
         fastify: results,
         $hash: hash,
       },

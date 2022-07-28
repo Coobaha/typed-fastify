@@ -1,6 +1,6 @@
 {
   "schema": {
-    "namespace": {
+    "properties": {
       "SharedRequest": {
         "type": "object",
         "required": [
@@ -48,7 +48,7 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "test_schema#/namespace/Omit__Obj,\"type\"__"
+            "$ref": "test_schema#/properties/Omit__Obj,\"type\"__"
           },
           {
             "type": "object",
@@ -80,12 +80,13 @@
       }
     },
     "$id": "test_schema",
-    "$schema": "http://json-schema.org/draft-07/schema#"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object"
   },
   "fastify": {
     "GET /": {
       "request": {
-        "$ref": "test_schema#/namespace/SharedRequest",
+        "$ref": "test_schema#/properties/SharedRequest",
         "type": "object",
         "required": [
           "headers",
@@ -119,7 +120,7 @@
       },
       "response": {
         "200": {
-          "$ref": "test_schema#/namespace/User"
+          "$ref": "test_schema#/properties/User"
         }
       }
     },
@@ -137,7 +138,7 @@
             ],
             "properties": {
               "user": {
-                "$ref": "test_schema#/namespace/User"
+                "$ref": "test_schema#/properties/User"
               }
             }
           }
@@ -152,7 +153,7 @@
           ],
           "properties": {
             "user": {
-              "$ref": "test_schema#/namespace/User"
+              "$ref": "test_schema#/properties/User"
             },
             "msg": {
               "type": "string"
@@ -208,7 +209,7 @@
               "type": "object",
               "allOf": [
                 {
-                  "$ref": "test_schema#/namespace/Omit__Obj,\"type\"__"
+                  "$ref": "test_schema#/properties/Omit__Obj,\"type\"__"
                 },
                 {
                   "type": "object",
