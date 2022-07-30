@@ -240,16 +240,24 @@ const complexHandlers = (
   req: ComplexHandlers['Request'],
   reply: ComplexHandlers['Reply'],
 ): ComplexHandlers['Return'] => {
-  if ('getQueryParam' in reply.request.query) {
+  if (req.operationPath === 'GET /') {
     //@ts-expect-error
-    reply.request.query.postQueryParam;
-    reply.request.query.getQueryParam;
+    req.query.postQueryParam;
+    req.query.getQueryParam;
     //@ts-expect-error
     reply.status(200);
-  } else if ('postQueryParam' in req.query) {
+  } else if (req.operationPath === 'POST /') {
     req.query.postQueryParam;
     //@ts-expect-error
     req.query.getQueryParam;
+  } else if (req.operationPath === 'PATCH /') {
+    req.method === 'PATCH';
+  } else if (req.operationPath === 'PUT /other') {
+    req.query.getQueryParam;
+  } else if (req.operationPath === 'PATCH /other' || req.operationPath === 'PATCH /other_empty') {
+    req.method === 'PATCH';
+  } else {
+    never(req);
   }
 
   function testHeaders(headers: typeof req['headers'] | typeof reply['request']['headers']) {
