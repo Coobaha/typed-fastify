@@ -34,7 +34,11 @@ const addSchema = <
   fastify.decorateReply('matches', function (this: F.FastifyReply, routeWithMethod: string) {
     return `${this.request.method} ${this.request.routerPath}` === routeWithMethod;
   });
-
+  fastify.decorateRequest('operationPath', null);
+  fastify.addHook('onRequest', function (req, reply, done) {
+    (req as {} as { operationPath: string }).operationPath = `${req.method} ${req.routerPath}`;
+    done();
+  });
   fastify.decorateReply('asReply', function (this: F.FastifyReply) {
     return this;
   });
@@ -298,11 +302,12 @@ interface Request<
       SchemaCompiler,
       TypeProvider,
       ContextConfig,
-      RequestType,
-      Logger
+      Logger,
+      RequestType
     >,
     'headers' | 'method' | 'routerMethod' | 'routerPath'
   > {
+  readonly operationPath: Path;
   readonly method: MP<Path>[0];
   // A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
   readonly body: MP<Path>[0] extends 'GET' ? never : Get<Op['request'], 'body'>;
@@ -360,7 +365,7 @@ type Handler<
         RequestType,
         Logger
       >,
-      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, Logger> & {
+      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig> & {
         readonly __unknownReply: unique symbol;
         M: MP<Path>[0];
       },
@@ -387,7 +392,6 @@ type HandlerObj<
   ContextConfig,
   SchemaCompiler,
   TypeProvider,
-  RequestType,
   Logger
 > & {
   handler: Handler<Op, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, Logger>;
@@ -485,8 +489,8 @@ export type RequestHandler<
             SchemaCompiler,
             TypeProvider,
             ContextConfig,
-            ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Paths[keyof Paths]>>,
-            Logger
+            Logger,
+            ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Paths[keyof Paths]>>
           >
         : never;
       Reply: Parameters<OpHandler>[1];

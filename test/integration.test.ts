@@ -5,16 +5,25 @@ import addSchema, { Service } from '../src';
 import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
 import split from 'split2';
+
 type Test = typeof tap['Test']['prototype'];
+
 t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
 };
 
 const defaultService: Service<TestSchema> = {
   'GET /': (req, reply) => {
+    console.log('get');
+    if (req.operationPath !== 'GET /') {
+      throw new Error('Should never happen');
+    }
     return reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
   },
   'POST /': (req, reply) => {
+    if (req.operationPath !== 'POST /') {
+      throw new Error('Should never happen');
+    }
     const { user: userData } = req.body;
     return reply.status(200).send({
       user: userData,
@@ -31,7 +40,6 @@ const defaultService: Service<TestSchema> = {
   'POST /params/:id/:subid': (req, reply) => {
     return reply.status(200).send();
   },
-  //@ts-ignore
   'GET /inferredParams/:id/:castedToNumber': (req, reply) => {
     const payload = `id type is ${typeof req.params.id} and castedToNumber type is ${typeof req.params.castedToNumber}`;
     return reply.status(200).send(payload);
@@ -51,8 +59,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
 
   const app = fastify({
     logger: {
-      // @ts-ignore
-      stream: stream,
+      stream,
       serializers: {
         req: (req) => {
           t.matchSnapshot(

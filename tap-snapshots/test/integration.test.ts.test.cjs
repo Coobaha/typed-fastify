@@ -81,6 +81,7 @@ Object {
 
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
 Error: body/user/name must be string {
+  "statusCode": 400,
   "validation": Array [
     Object {
       "instancePath": "/user/name",
@@ -136,15 +137,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "properties": Object {
-              "name": Object {
-                "type": "string",
-              },
-            },
-            "required": Array [
-              "name",
-            ],
-            "type": "object",
+            "$ref": "test_schema#/definitions/User",
           },
         },
         "required": Array [
@@ -218,15 +211,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "properties": Object {
-              "name": Object {
-                "type": "string",
-              },
-            },
-            "required": Array [
-              "name",
-            ],
-            "type": "object",
+            "$ref": "test_schema#/definitions/User",
           },
         },
         "required": Array [
@@ -301,15 +286,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "properties": Object {
-              "name": Object {
-                "type": "string",
-              },
-            },
-            "required": Array [
-              "name",
-            ],
-            "type": "object",
+            "$ref": "test_schema#/definitions/User",
           },
         },
         "required": Array [
@@ -624,6 +601,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates get query param against schema > error logs 1`] = `
 Error: querystring/getQueryParam must be boolean {
+  "statusCode": 400,
   "validation": Array [
     Object {
       "instancePath": "/getQueryParam",
@@ -714,6 +692,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 1`] = `
 Error: headers must have required property 'authorization' {
+  "statusCode": 400,
   "validation": Array [
     Object {
       "instancePath": "",
@@ -731,6 +710,7 @@ Error: headers must have required property 'authorization' {
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 2`] = `
 Error: headers must have required property 'getheader' {
+  "statusCode": 400,
   "validation": Array [
     Object {
       "instancePath": "",
