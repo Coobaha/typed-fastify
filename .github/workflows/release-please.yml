@@ -53,22 +53,3 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: yarn publish
-      - uses: actions/github-script@v3
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            await github.issues.addLabels({
-              owner,
-              repo,
-              issue_number: ${{steps.release.outputs.pr}},
-              labels: ['autorelease: published']
-            });
-            github.issues.removeLabel({
-              owner,
-              repo,
-              issue_number: ${{steps.release.outputs.pr}},
-              name: 'autorelease: tagged',
-            });
-            console.log(`Tagged ${{steps.release.outputs.pr}}`)
