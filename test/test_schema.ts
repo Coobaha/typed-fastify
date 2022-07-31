@@ -18,6 +18,10 @@ interface Obj {
 
 type TestObj = Omit<Obj, 'type'> & { type: 'TEST' };
 
+type RecordStringString = { [k: string]: string | number };
+
+type UserAndObj = [User, TestObj, RecordStringString];
+
 export interface TestSchema extends Schema {
   paths: {
     'GET /': {
@@ -36,6 +40,13 @@ export interface TestSchema extends Schema {
           headers: {
             'x-custom': string;
           };
+        };
+      };
+    };
+    'GET /user_and_obj': {
+      response: {
+        200: {
+          content: UserAndObj;
         };
       };
     };

@@ -79,6 +79,100 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP GET /user_and_obj works > request path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "items": Array [
+          Object {
+            "$ref": "test_schema#/properties/User",
+            "type": "object",
+          },
+          Object {
+            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
+            "properties": Object {
+              "type": Object {
+                "enum": Array [
+                  "TEST",
+                ],
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "type",
+            ],
+            "type": "object",
+          },
+          Object {
+            "additionalProperties": Object {
+              "anyOf": Array [
+                Object {
+                  "type": "string",
+                },
+                Object {
+                  "type": "number",
+                },
+              ],
+            },
+            "type": "object",
+          },
+        ],
+        "maxItems": 3,
+        "minItems": 3,
+        "type": "array",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP GET /user_and_obj works > response path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 45",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Array [
+      Object {
+        "name": "user1",
+      },
+      Object {
+        "id": "1",
+      },
+      Object {
+        "any": "thing",
+      },
+    ],
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP GET /user_and_obj works > user_and_obj 1`] = `
+Array [
+  Object {
+    "name": "user1",
+  },
+  Object {
+    "id": "1",
+  },
+  Object {
+    "any": "thing",
+  },
+]
+`
+
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
 Error: body/user/name must be string {
   "statusCode": 400,
@@ -137,7 +231,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
@@ -211,7 +305,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
@@ -286,7 +380,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
@@ -407,24 +501,17 @@ Object {
       "200": Object {
         "properties": Object {
           "frame": Object {
-            "allOf": Array [
-              Object {
-                "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
-              },
-              Object {
-                "properties": Object {
-                  "type": Object {
-                    "enum": Array [
-                      "TEST",
-                    ],
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "type",
+            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
+            "properties": Object {
+              "type": Object {
+                "enum": Array [
+                  "TEST",
                 ],
-                "type": "object",
+                "type": "string",
               },
+            },
+            "required": Array [
+              "type",
             ],
             "type": "object",
           },
@@ -444,7 +531,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 39",
+    "content-length: 25",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -452,7 +539,6 @@ Object {
     Object {
       "frame": Object {
         "id": "string",
-        "type": "TEST",
       },
     },
   ],
@@ -461,7 +547,7 @@ Object {
 
 exports[`test/integration.test.ts TAP app starts and GET / works > happy path 1`] = `
 Object {
-  "name": "hello",
+  "name": "hello, getQueryParam=undefined",
 }
 `
 
@@ -515,13 +601,13 @@ Object {
     "HTTP/1.1 200 OK",
     "x-custom: 1",
     "content-type: application/json; charset=utf-8",
-    "content-length: 16",
+    "content-length: 41",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
-      "name": "hello",
+      "name": "hello, getQueryParam=undefined",
     },
   ],
 }
@@ -577,13 +663,13 @@ Object {
     "HTTP/1.1 200 OK",
     "x-custom: 1",
     "content-type: application/json; charset=utf-8",
-    "content-length: 16",
+    "content-length: 41",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
-      "name": "hello",
+      "name": "hello, getQueryParam=undefined",
     },
   ],
 }
@@ -592,7 +678,7 @@ Object {
 exports[`test/integration.test.ts TAP it sends headers > x-custom header is present 1`] = `
 Object {
   "connection": "keep-alive",
-  "content-length": "16",
+  "content-length": "41",
   "content-type": "application/json; charset=utf-8",
   "date": "dateString",
   "x-custom": "1",
@@ -987,5 +1073,721 @@ Object {
       "statusCode": 500,
     },
   ],
+}
+`
+
+exports[`test/integration.test.ts TAP swagger integration works > request path:GET /openapi/json id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "hide": true,
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP swagger integration works > response path:GET /openapi/json id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 3311",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "basePath": "/",
+      "definitions": Object {
+        "def-0": Object {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "properties": Object {
+            "Obj": Object {
+              "properties": Object {
+                "id": Object {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                "type": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "id",
+                "type",
+              ],
+              "type": "object",
+            },
+            "Omit__Obj,\\"type\\"__": Object {
+              "properties": Object {
+                "id": Object {
+                  "format": "uuid",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "id",
+              ],
+              "type": "object",
+            },
+            "RecordStringString": Object {
+              "additionalProperties": Object {
+                "anyOf": Array [
+                  Object {
+                    "type": "string",
+                  },
+                  Object {
+                    "type": "number",
+                  },
+                ],
+              },
+              "type": "object",
+            },
+            "SharedRequest": Object {
+              "properties": Object {
+                "headers": Object {
+                  "properties": Object {
+                    "authorization": Object {
+                      "type": "string",
+                    },
+                  },
+                  "type": "object",
+                },
+              },
+              "required": Array [
+                "headers",
+              ],
+              "type": "object",
+            },
+            "TestObj": Object {
+              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+              "properties": Object {
+                "type": Object {
+                  "enum": Array [
+                    "TEST",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "type",
+              ],
+              "type": "object",
+            },
+            "User": Object {
+              "properties": Object {
+                "name": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "name",
+              ],
+              "type": "object",
+            },
+            "UserAndObj": Object {
+              "items": Array [
+                Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                  "type": "object",
+                },
+                Object {
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "type",
+                  ],
+                  "type": "object",
+                },
+                Object {
+                  "additionalProperties": Object {
+                    "anyOf": Array [
+                      Object {
+                        "type": "string",
+                      },
+                      Object {
+                        "type": "number",
+                      },
+                    ],
+                  },
+                  "type": "object",
+                },
+              ],
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array",
+            },
+          },
+          "title": "test_schema",
+          "type": "object",
+        },
+      },
+      "info": Object {
+        "description": "api",
+        "title": "api",
+        "version": "0.0.0",
+      },
+      "paths": Object {
+        "/": Object {
+          "get": Object {
+            "parameters": Array [
+              Object {
+                "in": "query",
+                "name": "getQueryParam",
+                "required": false,
+                "type": "boolean",
+              },
+              Object {
+                "in": "header",
+                "name": "authorization",
+                "required": true,
+                "type": "string",
+              },
+              Object {
+                "in": "header",
+                "name": "getHeader",
+                "required": true,
+                "type": "string",
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                },
+              },
+            },
+          },
+          "post": Object {
+            "parameters": Array [
+              Object {
+                "in": "body",
+                "name": "body",
+                "schema": Object {
+                  "properties": Object {
+                    "user": Object {
+                      "$ref": "#/definitions/def-0/properties/User",
+                    },
+                  },
+                  "required": Array [
+                    "user",
+                  ],
+                  "type": "object",
+                },
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "msg": Object {
+                      "type": "string",
+                    },
+                    "user": Object {
+                      "$ref": "#/definitions/def-0/properties/User",
+                    },
+                  },
+                  "required": Array [
+                    "msg",
+                    "user",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+          },
+        },
+        "/empty": Object {
+          "get": Object {
+            "responses": Object {},
+          },
+        },
+        "/inferredParams/{id}/{castedToNumber}": Object {
+          "get": Object {
+            "parameters": Array [
+              Object {
+                "in": "path",
+                "name": "castedToNumber",
+                "required": true,
+                "type": "number",
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "type": "string",
+                },
+              },
+            },
+          },
+        },
+        "/params/{id}/{subid}": Object {
+          "post": Object {
+            "parameters": Array [
+              Object {
+                "in": "path",
+                "name": "id",
+                "required": true,
+                "type": "number",
+              },
+              Object {
+                "in": "path",
+                "name": "subid",
+                "required": true,
+                "type": "string",
+              },
+            ],
+            "responses": Object {},
+          },
+        },
+        "/redirect": Object {
+          "post": Object {
+            "responses": Object {},
+          },
+        },
+        "/testframe": Object {
+          "post": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "frame": Object {
+                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                      "properties": Object {
+                        "type": Object {
+                          "enum": Array [
+                            "TEST",
+                          ],
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "type",
+                      ],
+                      "type": "object",
+                    },
+                  },
+                  "required": Array [
+                    "frame",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+          },
+        },
+        "/user_and_obj": Object {
+          "get": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "items": Array [
+                    Object {
+                      "$ref": "#/definitions/def-0/properties/User",
+                      "type": "object",
+                    },
+                    Object {
+                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                      "properties": Object {
+                        "type": Object {
+                          "enum": Array [
+                            "TEST",
+                          ],
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "type",
+                      ],
+                      "type": "object",
+                    },
+                    Object {
+                      "additionalProperties": Object {
+                        "anyOf": Array [
+                          Object {
+                            "type": "string",
+                          },
+                          Object {
+                            "type": "number",
+                          },
+                        ],
+                      },
+                      "type": "object",
+                    },
+                  ],
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array",
+                },
+              },
+            },
+          },
+        },
+      },
+      "swagger": "2.0",
+    },
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP swagger integration works > swagger openapi schema 1`] = `
+Object {
+  "basePath": "/",
+  "definitions": Object {
+    "def-0": Object {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": Object {
+        "Obj": Object {
+          "properties": Object {
+            "id": Object {
+              "format": "uuid",
+              "type": "string",
+            },
+            "type": Object {
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "id",
+            "type",
+          ],
+          "type": "object",
+        },
+        "Omit__Obj,\\"type\\"__": Object {
+          "properties": Object {
+            "id": Object {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "id",
+          ],
+          "type": "object",
+        },
+        "RecordStringString": Object {
+          "additionalProperties": Object {
+            "anyOf": Array [
+              Object {
+                "type": "string",
+              },
+              Object {
+                "type": "number",
+              },
+            ],
+          },
+          "type": "object",
+        },
+        "SharedRequest": Object {
+          "properties": Object {
+            "headers": Object {
+              "properties": Object {
+                "authorization": Object {
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+          },
+          "required": Array [
+            "headers",
+          ],
+          "type": "object",
+        },
+        "TestObj": Object {
+          "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+          "properties": Object {
+            "type": Object {
+              "enum": Array [
+                "TEST",
+              ],
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "type",
+          ],
+          "type": "object",
+        },
+        "User": Object {
+          "properties": Object {
+            "name": Object {
+              "type": "string",
+            },
+          },
+          "required": Array [
+            "name",
+          ],
+          "type": "object",
+        },
+        "UserAndObj": Object {
+          "items": Array [
+            Object {
+              "$ref": "#/definitions/def-0/properties/User",
+              "type": "object",
+            },
+            Object {
+              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+              "properties": Object {
+                "type": Object {
+                  "enum": Array [
+                    "TEST",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "type",
+              ],
+              "type": "object",
+            },
+            Object {
+              "additionalProperties": Object {
+                "anyOf": Array [
+                  Object {
+                    "type": "string",
+                  },
+                  Object {
+                    "type": "number",
+                  },
+                ],
+              },
+              "type": "object",
+            },
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+        },
+      },
+      "title": "test_schema",
+      "type": "object",
+    },
+  },
+  "info": Object {
+    "description": "api",
+    "title": "api",
+    "version": "0.0.0",
+  },
+  "paths": Object {
+    "/": Object {
+      "get": Object {
+        "parameters": Array [
+          Object {
+            "in": "query",
+            "name": "getQueryParam",
+            "required": false,
+            "type": "boolean",
+          },
+          Object {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "type": "string",
+          },
+          Object {
+            "in": "header",
+            "name": "getHeader",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "$ref": "#/definitions/def-0/properties/User",
+            },
+          },
+        },
+      },
+      "post": Object {
+        "parameters": Array [
+          Object {
+            "in": "body",
+            "name": "body",
+            "schema": Object {
+              "properties": Object {
+                "user": Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                },
+              },
+              "required": Array [
+                "user",
+              ],
+              "type": "object",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "msg": Object {
+                  "type": "string",
+                },
+                "user": Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                },
+              },
+              "required": Array [
+                "msg",
+                "user",
+              ],
+              "type": "object",
+            },
+          },
+        },
+      },
+    },
+    "/empty": Object {
+      "get": Object {
+        "responses": Object {},
+      },
+    },
+    "/inferredParams/{id}/{castedToNumber}": Object {
+      "get": Object {
+        "parameters": Array [
+          Object {
+            "in": "path",
+            "name": "castedToNumber",
+            "required": true,
+            "type": "number",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "/params/{id}/{subid}": Object {
+      "post": Object {
+        "parameters": Array [
+          Object {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "number",
+          },
+          Object {
+            "in": "path",
+            "name": "subid",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "responses": Object {},
+      },
+    },
+    "/redirect": Object {
+      "post": Object {
+        "responses": Object {},
+      },
+    },
+    "/testframe": Object {
+      "post": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "frame": Object {
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "type",
+                  ],
+                  "type": "object",
+                },
+              },
+              "required": Array [
+                "frame",
+              ],
+              "type": "object",
+            },
+          },
+        },
+      },
+    },
+    "/user_and_obj": Object {
+      "get": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "items": Array [
+                Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                  "type": "object",
+                },
+                Object {
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "type",
+                  ],
+                  "type": "object",
+                },
+                Object {
+                  "additionalProperties": Object {
+                    "anyOf": Array [
+                      Object {
+                        "type": "string",
+                      },
+                      Object {
+                        "type": "number",
+                      },
+                    ],
+                  },
+                  "type": "object",
+                },
+              ],
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array",
+            },
+          },
+        },
+      },
+    },
+  },
+  "swagger": "2.0",
 }
 `

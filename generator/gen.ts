@@ -10,16 +10,37 @@ import { JSONSchema7 } from 'json-schema';
 
 const revision = '__v' + require('../package.json').version; // + Date.now();
 
-function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: string, newRootId: string) {
-  const mergedSchema = mergeAllOf(originalSchema);
-  // @fastify/swagger just deletes `definitions` https://github.com/fastify/fastify-swagger/blob/master/lib/spec/swagger/utils.js#L325
-  // so we rename it to `namespace`
+async function normalizeSchema(originalSchema: JSONSchema7, rootId: string, newRootId: string) {
+  const mergedSchema: JSONSchema7 = mergeAllOf(originalSchema);
+
+  const rootKey = `${rootId}#`;
+
+  // Workaround for fastify-swagger mutations https://github.com/Coobaha/typed-fastify/pull/50
   rootId = `${rootId}#/definitions/`;
   newRootId = `${newRootId}#/properties/`;
 
   const escapeGenerics = (key: string) => key.replace(/</gim, '__').replace(/>/gim, '__');
 
+  const allValues = new Map<string, JSONSchema7>();
+
+  traverse(mergedSchema, (schema, jsonPtr) => {
+    allValues.set(jsonPtr, schema);
+  });
+
+  const getRef = ($ref: string) => allValues.get($ref.replace(rootKey, ''));
+
   traverse(mergedSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
+    // resolve $refs type for array items, otherwise fastify won't compile
+    if (schema.type === 'array' && schema.items) {
+      const items = schema.items as JSONSchema7['items'];
+      if (Array.isArray(items)) {
+        items.forEach((item) => {
+          if (typeof item === 'object' && item.$ref && !item.type) {
+            item.type = getRef(item.$ref)?.type ?? 'object';
+          }
+        });
+      }
+    }
     /*{
         "type": "array",
         "items": {
@@ -34,6 +55,13 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: strin
     if (schema.type === 'array' && schema.items.allOf && !schema.items.type) {
       schema.items.type = 'object';
     }
+
+    // The "type" keywords with multiple types (other than with "null") are prohibited. Read more https://ajv.js.org/strict-mode.html#strict-types
+    if (Array.isArray(schema.type)) {
+      schema.anyOf = schema.type.map((type) => ({ type }));
+      delete schema.type;
+    }
+
     if (parentSchema && keyIndex && parentKeyword === 'definitions' && jsonPtr.includes('<') && jsonPtr.endsWith('>')) {
       const escapedKey = escapeGenerics(String(keyIndex));
       parentSchema[parentKeyword][escapedKey] = parentSchema[parentKeyword][keyIndex];
@@ -75,8 +103,10 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: strin
     }
   });
 
-  const { definitions, ...rest } = mergedSchema;
-  return { properties: definitions, ...rest };
+  mergedSchema.properties = mergedSchema.definitions;
+  delete mergedSchema.definitions;
+
+  return mergeAllOf(mergedSchema);
 }
 export default async (params: { files: string[] }) => {
   const compilerOptions: TsConfigJson['compilerOptions'] = {
@@ -107,11 +137,13 @@ export default async (params: { files: string[] }) => {
     const contents = await fs.readFile(file, 'utf-8');
     const saved = `${dir}/${name}.gen.json`;
     const savedExists = nodeFs.existsSync(saved);
-    const hash = sha256(contents).toString() + revision;
+    const $hash = sha256(contents).toString() + revision;
     try {
       if (savedExists) {
         const existing = JSON.parse(await fs.readFile(saved, 'utf-8'));
-        if (existing.$hash === hash) 'continue';
+        if (existing.$hash === $hash) {
+          continue;
+        }
       }
     } catch (e) {
       console.log(e);
@@ -126,13 +158,14 @@ export default async (params: { files: string[] }) => {
     const symbols = generator?.getMainFileSymbols(program, [file]) ?? [];
 
     const jsonschema = generator?.getSchemaForSymbols(symbols, true);
-    const { properties = {}, $schema } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
+    const schema = await normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
 
     console.log('Generating', symbols, 'for', file);
 
-    const results: Record<string, { request: Object; response: Object }> = {};
+    const fastify: Record<string, { request: Object; response: Object }> = {};
 
-    for (const [defName, def] of Object.entries(properties)) {
+    const $defs = schema.properties ?? {};
+    for (const [defName, def] of Object.entries($defs)) {
       if (typeof def === 'boolean') continue;
       if (!def?.properties) continue;
       if (typeof def?.properties.paths === 'boolean') continue;
@@ -141,7 +174,7 @@ export default async (params: { files: string[] }) => {
       if (!tag || typeof tag === 'boolean') continue;
 
       if (tag.enum?.length === 1 && tag.enum?.[0] === 'BETTER-FASTIFY-SCHEMA') {
-        delete properties[defName];
+        delete $defs[defName];
       }
 
       const paths = Object.entries(def.properties.paths?.properties ?? {});
@@ -152,7 +185,7 @@ export default async (params: { files: string[] }) => {
 
         const key = path;
 
-        if (results[key]) {
+        if (fastify[key]) {
           throw Error('duplicate found');
         }
         if (typeof schema.response === 'boolean') continue;
@@ -164,7 +197,7 @@ export default async (params: { files: string[] }) => {
           }
           return acc;
         }, {} as Record<string, TJS.DefinitionOrBoolean>);
-        results[key] = {
+        fastify[key] = {
           // @ts-ignore
           security: schema.security ? true : undefined,
           request: schema.request || {},
@@ -173,11 +206,16 @@ export default async (params: { files: string[] }) => {
       }
     }
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
+
+    schema.$id = name;
+    schema.type = 'object';
+    schema.properties = $defs;
+
     const newContents = JSON.stringify(
       {
-        schema: { properties, $id: name, $schema, type: 'object' },
-        fastify: results,
-        $hash: hash,
+        schema,
+        fastify,
+        $hash,
       },
       null,
       2,

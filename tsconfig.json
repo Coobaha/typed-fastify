@@ -27,6 +27,7 @@
     "module": "commonjs",
     "noEmitOnError": true,
     "newLine": "lf",
-    "lib": ["esnext"]
+    "lib": ["esnext"],
+    "tsBuildInfoFile": ".tsbuildinfo"
   }
 }

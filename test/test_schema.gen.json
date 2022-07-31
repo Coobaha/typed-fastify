@@ -1,5 +1,7 @@
 {
   "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "test_schema",
     "properties": {
       "SharedRequest": {
         "type": "object",
@@ -46,12 +48,44 @@
       },
       "TestObj": {
         "type": "object",
-        "allOf": [
+        "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "TEST"
+            ]
+          }
+        }
+      },
+      "RecordStringString": {
+        "type": "object",
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "UserAndObj": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": [
           {
-            "$ref": "test_schema#/properties/Omit__Obj,\"type\"__"
+            "type": "object",
+            "$ref": "test_schema#/properties/User"
           },
           {
             "type": "object",
+            "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
             "required": [
               "type"
             ],
@@ -62,6 +96,19 @@
                   "TEST"
                 ]
               }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
             }
           }
         ]
@@ -79,8 +126,6 @@
         }
       }
     },
-    "$id": "test_schema",
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object"
   },
   "fastify": {
@@ -121,6 +166,50 @@
       "response": {
         "200": {
           "$ref": "test_schema#/properties/User"
+        }
+      }
+    },
+    "GET /user_and_obj": {
+      "request": {},
+      "response": {
+        "200": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": [
+            {
+              "type": "object",
+              "$ref": "test_schema#/properties/User"
+            },
+            {
+              "type": "object",
+              "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "TEST"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     },
@@ -207,25 +296,18 @@
           "properties": {
             "frame": {
               "type": "object",
-              "allOf": [
-                {
-                  "$ref": "test_schema#/properties/Omit__Obj,\"type\"__"
-                },
-                {
-                  "type": "object",
-                  "required": [
-                    "type"
-                  ],
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "TEST"
-                      ]
-                    }
-                  }
+              "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "TEST"
+                  ]
                 }
-              ]
+              }
             }
           }
         }
@@ -258,5 +340,5 @@
       }
     }
   },
-  "$hash": "c0e0481a3e03369a96f41b124dd2d9ad3fa1efd144dd9bf45a4c4fac7a15820b__v0.8.0"
+  "$hash": "c87bba209eaafb5b327340d4712bcb70d11f93016b0d1ca7418562b22e3ed060__v0.8.01659251734829"
 }
