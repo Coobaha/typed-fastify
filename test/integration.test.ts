@@ -182,6 +182,16 @@ t.test('it validates headers', async (t) => {
   );
 });
 
+t.test('GET /user_and_obj works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/user_and_obj',
+    method: 'GET',
+  });
+
+  t.matchSnapshot(res.json(), 'user_and_obj');
+});
+
 t.test('POST / works', async (t) => {
   const app = await buildApp(t);
   const res = await app.inject({

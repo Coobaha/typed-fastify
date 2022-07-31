@@ -14,6 +14,8 @@ things:
     forced to explicitly set status first, based on which response type will be inferred
 - JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
   transforms, all `@tjs` annotations can be used to fine-tune output)
+  - since we use `typejescript-json-schema`: all known limitations of lib are inhereted:
+    - Records are not transforrmed correctly, use `{ [k: string]: string }` instead or hint with `@tjs`
 - Runtime validation using generated JSON schema (optional but strongly recommended as it brings extra safety to runtime and ensures that code assumptions about data are correct)
 
 [demo video](https://user-images.githubusercontent.com/2446638/108409543-08b45f00-722f-11eb-905c-06505b57f5fe.mp4)

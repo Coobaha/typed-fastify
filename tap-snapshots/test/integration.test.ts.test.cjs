@@ -79,6 +79,100 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP GET /user_and_obj works > request path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "items": Array [
+          Object {
+            "$ref": "test_schema#/properties/User",
+            "type": "object",
+          },
+          Object {
+            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
+            "properties": Object {
+              "type": Object {
+                "enum": Array [
+                  "TEST",
+                ],
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "type",
+            ],
+            "type": "object",
+          },
+          Object {
+            "additionalProperties": Object {
+              "anyOf": Array [
+                Object {
+                  "type": "string",
+                },
+                Object {
+                  "type": "number",
+                },
+              ],
+            },
+            "type": "object",
+          },
+        ],
+        "maxItems": 3,
+        "minItems": 3,
+        "type": "array",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP GET /user_and_obj works > response path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 45",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Array [
+      Object {
+        "name": "user1",
+      },
+      Object {
+        "id": "1",
+      },
+      Object {
+        "any": "thing",
+      },
+    ],
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP GET /user_and_obj works > user_and_obj 1`] = `
+Array [
+  Object {
+    "name": "user1",
+  },
+  Object {
+    "id": "1",
+  },
+  Object {
+    "any": "thing",
+  },
+]
+`
+
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
 Error: body/user/name must be string {
   "statusCode": 400,
@@ -407,24 +501,17 @@ Object {
       "200": Object {
         "properties": Object {
           "frame": Object {
-            "allOf": Array [
-              Object {
-                "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
-              },
-              Object {
-                "properties": Object {
-                  "type": Object {
-                    "enum": Array [
-                      "TEST",
-                    ],
-                    "type": "string",
-                  },
-                },
-                "required": Array [
-                  "type",
+            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
+            "properties": Object {
+              "type": Object {
+                "enum": Array [
+                  "TEST",
                 ],
-                "type": "object",
+                "type": "string",
               },
+            },
+            "required": Array [
+              "type",
             ],
             "type": "object",
           },
@@ -444,7 +531,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 39",
+    "content-length: 25",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -452,7 +539,6 @@ Object {
     Object {
       "frame": Object {
         "id": "string",
-        "type": "TEST",
       },
     },
   ],
@@ -1010,7 +1096,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 2434",
+    "content-length: 3311",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1049,6 +1135,19 @@ Object {
               ],
               "type": "object",
             },
+            "RecordStringString": Object {
+              "additionalProperties": Object {
+                "anyOf": Array [
+                  Object {
+                    "type": "string",
+                  },
+                  Object {
+                    "type": "number",
+                  },
+                ],
+              },
+              "type": "object",
+            },
             "SharedRequest": Object {
               "properties": Object {
                 "headers": Object {
@@ -1066,24 +1165,17 @@ Object {
               "type": "object",
             },
             "TestObj": Object {
-              "allOf": Array [
-                Object {
-                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                },
-                Object {
-                  "properties": Object {
-                    "type": Object {
-                      "enum": Array [
-                        "TEST",
-                      ],
-                      "type": "string",
-                    },
-                  },
-                  "required": Array [
-                    "type",
+              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+              "properties": Object {
+                "type": Object {
+                  "enum": Array [
+                    "TEST",
                   ],
-                  "type": "object",
+                  "type": "string",
                 },
+              },
+              "required": Array [
+                "type",
               ],
               "type": "object",
             },
@@ -1097,6 +1189,45 @@ Object {
                 "name",
               ],
               "type": "object",
+            },
+            "UserAndObj": Object {
+              "items": Array [
+                Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                  "type": "object",
+                },
+                Object {
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "type",
+                  ],
+                  "type": "object",
+                },
+                Object {
+                  "additionalProperties": Object {
+                    "anyOf": Array [
+                      Object {
+                        "type": "string",
+                      },
+                      Object {
+                        "type": "number",
+                      },
+                    ],
+                  },
+                  "type": "object",
+                },
+              ],
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array",
             },
           },
           "title": "test_schema",
@@ -1237,24 +1368,17 @@ Object {
                 "schema": Object {
                   "properties": Object {
                     "frame": Object {
-                      "allOf": Array [
-                        Object {
-                          "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                        },
-                        Object {
-                          "properties": Object {
-                            "type": Object {
-                              "enum": Array [
-                                "TEST",
-                              ],
-                              "type": "string",
-                            },
-                          },
-                          "required": Array [
-                            "type",
+                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                      "properties": Object {
+                        "type": Object {
+                          "enum": Array [
+                            "TEST",
                           ],
-                          "type": "object",
+                          "type": "string",
                         },
+                      },
+                      "required": Array [
+                        "type",
                       ],
                       "type": "object",
                     },
@@ -1263,6 +1387,54 @@ Object {
                     "frame",
                   ],
                   "type": "object",
+                },
+              },
+            },
+          },
+        },
+        "/user_and_obj": Object {
+          "get": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "items": Array [
+                    Object {
+                      "$ref": "#/definitions/def-0/properties/User",
+                      "type": "object",
+                    },
+                    Object {
+                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                      "properties": Object {
+                        "type": Object {
+                          "enum": Array [
+                            "TEST",
+                          ],
+                          "type": "string",
+                        },
+                      },
+                      "required": Array [
+                        "type",
+                      ],
+                      "type": "object",
+                    },
+                    Object {
+                      "additionalProperties": Object {
+                        "anyOf": Array [
+                          Object {
+                            "type": "string",
+                          },
+                          Object {
+                            "type": "number",
+                          },
+                        ],
+                      },
+                      "type": "object",
+                    },
+                  ],
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array",
                 },
               },
             },
@@ -1310,6 +1482,19 @@ Object {
           ],
           "type": "object",
         },
+        "RecordStringString": Object {
+          "additionalProperties": Object {
+            "anyOf": Array [
+              Object {
+                "type": "string",
+              },
+              Object {
+                "type": "number",
+              },
+            ],
+          },
+          "type": "object",
+        },
         "SharedRequest": Object {
           "properties": Object {
             "headers": Object {
@@ -1327,24 +1512,17 @@ Object {
           "type": "object",
         },
         "TestObj": Object {
-          "allOf": Array [
-            Object {
-              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-            },
-            Object {
-              "properties": Object {
-                "type": Object {
-                  "enum": Array [
-                    "TEST",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "type",
+          "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+          "properties": Object {
+            "type": Object {
+              "enum": Array [
+                "TEST",
               ],
-              "type": "object",
+              "type": "string",
             },
+          },
+          "required": Array [
+            "type",
           ],
           "type": "object",
         },
@@ -1358,6 +1536,45 @@ Object {
             "name",
           ],
           "type": "object",
+        },
+        "UserAndObj": Object {
+          "items": Array [
+            Object {
+              "$ref": "#/definitions/def-0/properties/User",
+              "type": "object",
+            },
+            Object {
+              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+              "properties": Object {
+                "type": Object {
+                  "enum": Array [
+                    "TEST",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "type",
+              ],
+              "type": "object",
+            },
+            Object {
+              "additionalProperties": Object {
+                "anyOf": Array [
+                  Object {
+                    "type": "string",
+                  },
+                  Object {
+                    "type": "number",
+                  },
+                ],
+              },
+              "type": "object",
+            },
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
         },
       },
       "title": "test_schema",
@@ -1498,24 +1715,17 @@ Object {
             "schema": Object {
               "properties": Object {
                 "frame": Object {
-                  "allOf": Array [
-                    Object {
-                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                    },
-                    Object {
-                      "properties": Object {
-                        "type": Object {
-                          "enum": Array [
-                            "TEST",
-                          ],
-                          "type": "string",
-                        },
-                      },
-                      "required": Array [
-                        "type",
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
                       ],
-                      "type": "object",
+                      "type": "string",
                     },
+                  },
+                  "required": Array [
+                    "type",
                   ],
                   "type": "object",
                 },
@@ -1524,6 +1734,54 @@ Object {
                 "frame",
               ],
               "type": "object",
+            },
+          },
+        },
+      },
+    },
+    "/user_and_obj": Object {
+      "get": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "items": Array [
+                Object {
+                  "$ref": "#/definitions/def-0/properties/User",
+                  "type": "object",
+                },
+                Object {
+                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+                  "properties": Object {
+                    "type": Object {
+                      "enum": Array [
+                        "TEST",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "type",
+                  ],
+                  "type": "object",
+                },
+                Object {
+                  "additionalProperties": Object {
+                    "anyOf": Array [
+                      Object {
+                        "type": "string",
+                      },
+                      Object {
+                        "type": "number",
+                      },
+                    ],
+                  },
+                  "type": "object",
+                },
+              ],
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array",
             },
           },
         },

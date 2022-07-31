@@ -11,6 +11,9 @@ export const defaultService: Service<TestSchema> = {
       .headers({ 'x-custom': '1' })
       .send({ name: `hello, getQueryParam=${req.query.getQueryParam}` });
   },
+  'GET /user_and_obj': (req, reply) => {
+    return reply.status(200).send([{ name: 'user1' }, { id: '1', type: 'TEST' }, { any: 'thing' }]);
+  },
   'POST /': (req, reply) => {
     if (req.operationPath !== 'POST /') {
       throw new Error('Should never happen');
