@@ -6,6 +6,7 @@ import {
   ResolveFastifyRequestType,
 } from 'fastify/types/type-provider';
 import { Operation, Schema } from './schema';
+
 const addSchema = <
   ServiceSchema extends Schema,
   RawServer extends F.RawServerBase = F.RawServerDefault,

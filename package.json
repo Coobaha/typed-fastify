@@ -61,7 +61,7 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "fastify": "^3"
+    "fastify": "^4"
   },
   "private": false,
   "repository": "ssh://git@github.com/Coobaha/typed-fastify.git",

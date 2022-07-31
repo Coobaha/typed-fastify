@@ -137,7 +137,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
@@ -211,7 +211,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
@@ -286,7 +286,7 @@ Object {
             "type": "string",
           },
           "user": Object {
-            "$ref": "test_schema#/definitions/User",
+            "$ref": "test_schema#/properties/User",
           },
         },
         "required": Array [
