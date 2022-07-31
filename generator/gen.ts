@@ -4,19 +4,22 @@ import { promises as fs, default as nodeFs } from 'fs';
 import path from 'path';
 import sha256 from 'crypto-js/sha256';
 import type { TsConfigJson } from 'type-fest';
-import escapeRegexp from 'escape-string-regexp';
 import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
 import { JSONSchema7 } from 'json-schema';
 
 const revision = '__v' + require('../package.json').version; // + Date.now();
 
-function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
-  const mergedAllOfSchema = mergeAllOf(originalSchema);
+function normalizeSchema<T extends JSONSchema7>(originalSchema: T, rootId: string, newRootId: string) {
+  const mergedSchema = mergeAllOf(originalSchema);
+  // @fastify/swagger just deletes `definitions` https://github.com/fastify/fastify-swagger/blob/master/lib/spec/swagger/utils.js#L325
+  // so we rename it to `namespace`
+  rootId = `${rootId}#/definitions/`;
+  newRootId = `${newRootId}#/properties/`;
 
   const escapeGenerics = (key: string) => key.replace(/</gim, '__').replace(/>/gim, '__');
 
-  traverse(mergedAllOfSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
+  traverse(mergedSchema, (schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) => {
     /*{
         "type": "array",
         "items": {
@@ -37,10 +40,12 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
       delete parentSchema[parentKeyword][keyIndex];
     }
 
-    if (schema.type && schema.$ref) {
-      schema.$ref = escapeGenerics(schema.$ref);
+    if (schema.$ref) {
+      schema.$ref = schema.$ref.replace(rootId, newRootId);
+      if (schema.type) {
+        schema.$ref = escapeGenerics(schema.$ref);
+      }
     }
-
     /* fixes schema extension for response only
      *
      *   type
@@ -69,7 +74,9 @@ function normalizeSchema<T extends JSONSchema7>(originalSchema: T) {
       }
     }
   });
-  return mergedAllOfSchema;
+
+  const { definitions, ...rest } = mergedSchema;
+  return { properties: definitions, ...rest };
 }
 export default async (params: { files: string[] }) => {
   const compilerOptions: TsConfigJson['compilerOptions'] = {
@@ -118,15 +125,14 @@ export default async (params: { files: string[] }) => {
 
     const symbols = generator?.getMainFileSymbols(program, [file]) ?? [];
 
-    let schema = generator?.getSchemaForSymbols(symbols, true);
-    schema = normalizeSchema(schema as JSONSchema7);
+    const jsonschema = generator?.getSchemaForSymbols(symbols, true);
+    const { properties = {}, $schema } = normalizeSchema(jsonschema as JSONSchema7, PLACEHOLDER_ID, name);
 
     console.log('Generating', symbols, 'for', file);
 
-    const defs = schema?.definitions ?? {};
     const results: Record<string, { request: Object; response: Object }> = {};
 
-    for (const [defName, def] of Object.entries(defs)) {
+    for (const [defName, def] of Object.entries(properties)) {
       if (typeof def === 'boolean') continue;
       if (!def?.properties) continue;
       if (typeof def?.properties.paths === 'boolean') continue;
@@ -135,7 +141,7 @@ export default async (params: { files: string[] }) => {
       if (!tag || typeof tag === 'boolean') continue;
 
       if (tag.enum?.length === 1 && tag.enum?.[0] === 'BETTER-FASTIFY-SCHEMA') {
-        delete defs[defName];
+        delete properties[defName];
       }
 
       const paths = Object.entries(def.properties.paths?.properties ?? {});
@@ -166,21 +172,16 @@ export default async (params: { files: string[] }) => {
         };
       }
     }
-    if (schema) {
-      schema = JSON.parse(
-        JSON.stringify(schema).replace(new RegExp(`${escapeRegexp(PLACEHOLDER_ID)}#\/`, 'gmi'), '#/'),
-      );
-    }
     const existing = savedExists ? await fs.readFile(saved, { encoding: 'utf8' }).catch(() => {}) : '';
     const newContents = JSON.stringify(
       {
-        schema: schema,
+        schema: { properties, $id: name, $schema, type: 'object' },
         fastify: results,
         $hash: hash,
       },
       null,
       2,
-    ).replace(new RegExp(escapeRegexp(PLACEHOLDER_ID), 'gmi'), name);
+    );
     if (existing !== newContents) {
       await fs.writeFile(saved, newContents, { encoding: 'utf8', flag: 'w' });
     }

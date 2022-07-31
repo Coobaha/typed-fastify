@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
-    "escape-string-regexp": "4.0.0",
     "glob": "^8.0.3",
     "json-schema-merge-allof": "^0.8.1",
     "json-schema-traverse": "^1.0.0",

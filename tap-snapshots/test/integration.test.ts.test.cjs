@@ -90,7 +90,7 @@ Error: body/user/name must be string {
       "params": Object {
         "type": "string",
       },
-      "schemaPath": "test_schema#/definitions/User/properties/name/type",
+      "schemaPath": "test_schema#/properties/User/properties/name/type",
     },
   ],
   "validationContext": "body",
@@ -122,7 +122,7 @@ Object {
     "body": Object {
       "properties": Object {
         "user": Object {
-          "$ref": "test_schema#/definitions/User",
+          "$ref": "test_schema#/properties/User",
         },
       },
       "required": Array [
@@ -196,7 +196,7 @@ Object {
     "body": Object {
       "properties": Object {
         "user": Object {
-          "$ref": "test_schema#/definitions/User",
+          "$ref": "test_schema#/properties/User",
         },
       },
       "required": Array [
@@ -271,7 +271,7 @@ Object {
     "body": Object {
       "properties": Object {
         "user": Object {
-          "$ref": "test_schema#/definitions/User",
+          "$ref": "test_schema#/properties/User",
         },
       },
       "required": Array [
@@ -409,7 +409,7 @@ Object {
           "frame": Object {
             "allOf": Array [
               Object {
-                "$ref": "test_schema#/definitions/Omit__Obj,\\"type\\"__",
+                "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
               },
               Object {
                 "properties": Object {
@@ -502,7 +502,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -564,7 +564,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -656,7 +656,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -777,7 +777,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -820,7 +820,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -919,7 +919,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
@@ -963,7 +963,7 @@ Object {
     },
     "response": Object {
       "200": Object {
-        "$ref": "test_schema#/definitions/User",
+        "$ref": "test_schema#/properties/User",
       },
     },
   },
