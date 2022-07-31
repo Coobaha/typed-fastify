@@ -1,57 +1,17 @@
+import swagger from '@fastify/swagger';
 import fastify from 'fastify';
+import split from 'split2';
 import tap from 'tap';
 import t from 'tap';
 import addSchema, { Service } from '../src';
+import { defaultService } from './fixtures';
 import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
-import split from 'split2';
 
 type Test = typeof tap['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
-};
-
-const defaultService: Service<TestSchema> = {
-  'GET /': (req, reply) => {
-    console.log('get');
-    if (req.operationPath !== 'GET /') {
-      throw new Error('Should never happen');
-    }
-    return reply.status(200).headers({ 'x-custom': '1' }).send({ name: 'hello' });
-  },
-  'POST /': (req, reply) => {
-    if (req.operationPath !== 'POST /') {
-      throw new Error('Should never happen');
-    }
-    const { user: userData } = req.body;
-    return reply.status(200).send({
-      user: userData,
-      msg: `Hello, ${userData.name}, ${typeof userData.name}`,
-    });
-  },
-  'GET /empty': async (req, reply) => {
-    const fastifyReply = reply.status(204);
-    return fastifyReply.send();
-  },
-  'POST /redirect': async (req, reply) => {
-    return reply.redirect('example.com');
-  },
-  'POST /params/:id/:subid': (req, reply) => {
-    return reply.status(200).send();
-  },
-  'GET /inferredParams/:id/:castedToNumber': (req, reply) => {
-    const payload = `id type is ${typeof req.params.id} and castedToNumber type is ${typeof req.params.castedToNumber}`;
-    return reply.status(200).send(payload);
-  },
-  'POST /testframe': (req, reply) => {
-    return reply.status(200).send({
-      frame: {
-        type: 'TEST',
-        id: 'string',
-      },
-    });
-  },
 };
 
 const buildApp = async (t: Test, service?: Service<TestSchema>) => {
@@ -113,6 +73,20 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
   });
 
   service ??= defaultService;
+
+  await app.register(swagger, {
+    routePrefix: '/openapi',
+    swagger: {
+      info: {
+        title: 'api',
+        description: 'api',
+        version: '0.0.0',
+      },
+      basePath: '/',
+    },
+    hideUntagged: false,
+    exposeRoute: true,
+  });
 
   addSchema(app, {
     jsonSchema: jsonSchema,
@@ -305,4 +279,14 @@ t.test('GET /inferredParams/:id', async (t) => {
   });
 
   t.equal(res.body, 'id type is string and castedToNumber type is number');
+});
+
+t.test('swagger integration works', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/openapi/json',
+    method: 'GET',
+  });
+
+  t.matchSnapshot(res.json(), 'swagger openapi schema');
 });

@@ -19,7 +19,6 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: release-pr
-          bump-minor-pre-major: true
       - id: label
         if: ${{ steps.release-pr.outputs.pr }}
         uses: actions/github-script@v3
