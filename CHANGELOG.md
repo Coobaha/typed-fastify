@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0](https://github.com/Coobaha/typed-fastify/compare/v0.8.0...v1.0.0) (2022-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* bump fastify and fix types
+
+### Bug Fixes
+
+* $ref id replacement ([482cbd4](https://github.com/Coobaha/typed-fastify/commit/482cbd4c412f43df015ccb4b9bec09f0e15514eb))
+* bump fastify and fix types ([eab5750](https://github.com/Coobaha/typed-fastify/commit/eab5750d1f30b8e1d414742fe314ff1f800d4b70))
+* rename definitions to namespace ([f887706](https://github.com/Coobaha/typed-fastify/commit/f887706fed340a5943212984b7cdb0d7352f72a6))
+* rename namespace to properties ([89da88c](https://github.com/Coobaha/typed-fastify/commit/89da88c49967eaa5c53db88b848f509e31ae172d))
+
 ## [0.8.0](https://github.com/Coobaha/typed-fastify/compare/v0.7.0...v0.8.0) (2022-07-03)
 
 
