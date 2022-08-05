@@ -13,9 +13,12 @@ const addSchema = <
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, Logger>,
+  SchemaCompiler extends F.FastifySchema = F.FastifySchema,
+  TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
+  ContextConfig = F.ContextConfigDefault,
+  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, TypeProvider, Logger>,
 >(
-  fastify: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
+  fastify: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger, TypeProvider>,
   opts: {
     jsonSchema: {
       schema: Record<string, any>;
@@ -72,7 +75,15 @@ const addSchema = <
       };
     }
   });
-  const httpMethods: Set<F.HTTPMethods> = new Set(['DELETE', 'GET', 'HEAD', 'PATCH', 'POST', 'PUT', 'OPTIONS']);
+  const httpMethods: Set<F.HTTPMethods> = new Set([
+    'DELETE',
+    'GET',
+    'HEAD',
+    'PATCH',
+    'POST',
+    'PUT',
+    'OPTIONS',
+  ] as const);
 
   for (const path in opts.service) {
     if (!Object.hasOwnProperty.call(opts.service, path)) continue;
@@ -447,7 +458,7 @@ export type RequestHandler<
   SchemaCompiler = F.FastifySchema,
   TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
   Logger extends F.FastifyLoggerInstance = F.FastifyLoggerInstance,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, Logger>,
+  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, TypeProvider, Logger>,
   Paths = ServiceSchema['paths'],
   OpHandler = {
     [Path in HandlerPaths]: Handler<
