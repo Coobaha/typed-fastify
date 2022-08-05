@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Coobaha/typed-fastify/compare/v1.0.0...v1.0.1) (2022-08-05)
+
+
+### Bug Fixes
+
+* fix type missmatch ([#57](https://github.com/Coobaha/typed-fastify/issues/57)) ([72e8d9b](https://github.com/Coobaha/typed-fastify/commit/72e8d9b61cad07ff3e39ced44b8b952ce6e5260c))
+
 ## [1.0.0](https://github.com/Coobaha/typed-fastify/compare/v0.8.0...v1.0.0) (2022-07-31)
 
 
