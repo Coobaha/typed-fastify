@@ -2,6 +2,7 @@ import swagger, { FastifyDynamicSwaggerOptions } from '@fastify/swagger';
 import fastify from 'fastify';
 import addSchema from '../src';
 import { defaultService } from './fixtures';
+import type { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
 
 async function init(): Promise<void> {
@@ -28,7 +29,7 @@ async function init(): Promise<void> {
     exposeRoute: true,
   } as FastifyDynamicSwaggerOptions);
 
-  addSchema(app, {
+  addSchema<TestSchema>(app, {
     jsonSchema: jsonSchema,
     service: defaultService,
   });
