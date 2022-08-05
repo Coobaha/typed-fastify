@@ -951,6 +951,56 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP objectid > request path:GET /objectid id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "id": Object {
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "id",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP objectid > response path:GET /objectid id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 12",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "id": "123",
+    },
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP objectid > swagger openapi schema 1`] = `
+Object {
+  "id": "123",
+}
+`
+
 exports[`test/integration.test.ts TAP response is validated > error logs 1`] = `
 Error: "name" is required! {
   "serialization": Object {
@@ -1096,7 +1146,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3311",
+    "content-length: 3500",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1122,6 +1172,9 @@ Object {
                 "type",
               ],
               "type": "object",
+            },
+            "ObjectId": Object {
+              "type": "string",
             },
             "Omit__Obj,\\"type\\"__": Object {
               "properties": Object {
@@ -1336,6 +1389,26 @@ Object {
             },
           },
         },
+        "/objectid": Object {
+          "get": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "id": Object {
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "id",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+          },
+        },
         "/params/{id}/{subid}": Object {
           "post": Object {
             "parameters": Array [
@@ -1469,6 +1542,9 @@ Object {
             "type",
           ],
           "type": "object",
+        },
+        "ObjectId": Object {
+          "type": "string",
         },
         "Omit__Obj,\\"type\\"__": Object {
           "properties": Object {
@@ -1678,6 +1754,26 @@ Object {
             "description": "Default Response",
             "schema": Object {
               "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "/objectid": Object {
+      "get": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "id": Object {
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "id",
+              ],
+              "type": "object",
             },
           },
         },

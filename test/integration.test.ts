@@ -300,3 +300,13 @@ t.test('swagger integration works', async (t) => {
 
   t.matchSnapshot(res.json(), 'swagger openapi schema');
 });
+
+t.test('objectid', async (t) => {
+  const app = await buildApp(t);
+  const res = await app.inject({
+    url: '/objectid',
+    method: 'GET',
+  });
+
+  t.matchSnapshot(res.json(), 'swagger openapi schema');
+});

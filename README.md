@@ -14,8 +14,8 @@ things:
     forced to explicitly set status first, based on which response type will be inferred
 - JSON schema generation from TS Schema (using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
   transforms, all `@tjs` annotations can be used to fine-tune output)
-  - since we use `typejescript-json-schema`: all known limitations of lib are inhereted:
-    - Records are not transforrmed correctly, use `{ [k: string]: string }` instead or hint with `@tjs`
+  - since we use `typejescript-json-schema`: all known limitations of lib are inherited:
+    - Records are not transformed correctly, use `{ [k: string]: string }` instead or hint with `@tjs`
 - Runtime validation using generated JSON schema (optional but strongly recommended as it brings extra safety to runtime and ensures that code assumptions about data are correct)
 
 [demo video](https://user-images.githubusercontent.com/2446638/108409543-08b45f00-722f-11eb-905c-06505b57f5fe.mp4)
@@ -87,7 +87,7 @@ app.listen(3000, (err: any) => {
 });
 ```
 
-Complex examples can be found [typescript tests](./test/better-fastify.test-d.ts) and
+Complex examples can be found [typescript tests](./test/typed-fastify.test-d.ts) and
 in [integration.test.ts](./test/integration.test.ts).
 
 ## JSON schema generation
@@ -132,13 +132,9 @@ addSchema(app, {
 ### Writing service
 
 1. Handlers in one object
+   Type inference will work nicely in this case, you just make TS happy and things are working 🥳
 
-Type inference will work nicely in this case, you just make TS happy and things are working 🥳
-
-2. Handlers in a different file or separate functions - you will need to hint TS with exact type of
-   handler
-
-The Easiest way to do it is
+2. Handlers in a different file or separate functions - you will need to hint TS with exact type of handler.
 
 ```typescript
 import { RequestHandler, Schema } from '@coobaha/typed-fastify';
@@ -159,8 +155,7 @@ interface MySchema extends Schema {}
 const myHandlers: RequestHandler<MySchema, 'GET /hello' | `GET /hello2`>['AsRoute'] = (req, reply) => {};
 ```
 
-4. Sometimes properties won't be the same (for instance GET never has body and POST will). In this
-   case you will probably be asked to add types to function params
+4. Sometimes properties won't be the same (for instance GET never has body and POST will). In this case you will probably be asked to add types to function params
 
 ```typescript
 import { RequestHandler, Schema } from '@coobaha/typed-fastify';
@@ -194,3 +189,12 @@ addSchema(app, {
   },
 });
 ```
+
+### Annotating types
+
+This library is using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
+transforms for schema generation. All `@tjs` [annotations](https://github.com/YousefED/typescript-json-schema#annotations) can be used to fine-tune schema output
+
+- `@type` can be used to specify end type after using `toJSON, toString` methods of objects like `ObjectID` from MogoDB
+
+- since we use `typejescript-json-schema`: all known limitations are also inherited: - Records are not transformed correctly, use `{ [k: string]: string }` instead or hint with `@tjs`

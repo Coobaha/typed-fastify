@@ -16,6 +16,14 @@ interface Obj {
   id: string;
 }
 
+/**
+ @type string
+*/
+export interface ObjectId extends String {
+  toString(): string;
+  toJSON(): string;
+}
+
 type TestObj = Omit<Obj, 'type'> & { type: 'TEST' };
 
 type RecordStringString = { [k: string]: string | number };
@@ -102,6 +110,16 @@ export interface TestSchema extends Schema {
       response: {
         200: {
           content: string;
+        };
+      };
+    };
+
+    'GET /objectid': {
+      response: {
+        200: {
+          content: {
+            id: ObjectId;
+          };
         };
       };
     };

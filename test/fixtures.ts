@@ -1,5 +1,17 @@
 import { Service } from '../src';
-import { TestSchema } from './test_schema';
+import type { ObjectId, TestSchema } from './test_schema';
+
+class MyObjectId extends String implements ObjectId {
+  constructor(private id: string) {
+    super(id);
+  }
+  toString() {
+    return this.id;
+  }
+  toJSON() {
+    return this.id;
+  }
+}
 
 export const defaultService: Service<TestSchema> = {
   'GET /': (req, reply) => {
@@ -45,5 +57,8 @@ export const defaultService: Service<TestSchema> = {
         id: 'string',
       },
     });
+  },
+  'GET /objectid': (req, reply) => {
+    return reply.status(200).send({ id: new MyObjectId('123') });
   },
 };
