@@ -46,6 +46,9 @@
           }
         }
       },
+      "ObjectId": {
+        "type": "string"
+      },
       "TestObj": {
         "type": "object",
         "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
@@ -338,7 +341,23 @@
           "type": "string"
         }
       }
+    },
+    "GET /objectid": {
+      "request": {},
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
-  "$hash": "c87bba209eaafb5b327340d4712bcb70d11f93016b0d1ca7418562b22e3ed060__v0.8.01659251734829"
+  "$hash": "c138d591328ddd9cc1b794e5e35447467e7c1f8d4129b8fc727c11d7e9b0ef02__v1.0.0"
 }
