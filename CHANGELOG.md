@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Coobaha/typed-fastify/compare/v1.0.1...v1.1.0) (2022-09-12)
+
+
+### Features
+
+* bump fastify / ts types and better type preHandler ([#61](https://github.com/Coobaha/typed-fastify/issues/61)) ([d7c8dce](https://github.com/Coobaha/typed-fastify/commit/d7c8dce5003f5b1d05819c819060b440c86a6613))
+
 ## [1.0.1](https://github.com/Coobaha/typed-fastify/compare/v1.0.0...v1.0.1) (2022-08-05)
 
 
