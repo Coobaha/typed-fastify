@@ -3,8 +3,8 @@
   "description": "opinionated types for fastify",
   "version": "1.1.0",
   "bin": {
-    "typed-fastify-schema": "bin/gen.bin.js",
-    "tfs": "bin/gen.bin.js"
+    "tfs": "bin/gen.bin.js",
+    "typed-fastify-schema": "bin/gen.bin.js"
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
@@ -19,12 +19,12 @@
     "@types/crypto-js": "^4.1.1",
     "@types/glob": "^8.0.0",
     "@types/json-schema-merge-allof": "^0.6.1",
-    "@types/node": "^18.7.16",
+    "@types/node": "^18.7.18",
     "@types/prettier": "^2.7.0",
     "@types/split2": "^3.2.1",
     "@types/tap": "^15.0.7",
     "@types/yargs": "^17.0.12",
-    "fastify": "^4.5.3",
+    "fastify": "^4.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "pino-pretty": "^9.1.0",
@@ -34,7 +34,7 @@
     "syncpack": "^8.2.4",
     "tap": "^16.3.0",
     "ts-node-dev": "^2.0.0",
-    "tsd": "^0.23.0",
+    "tsd": "^0.24.1",
     "type-fest": "^2.19.0",
     "typescript": "^4.8.3"
   },
@@ -62,10 +62,10 @@
     ]
   },
   "main": "lib/index.js",
+  "packageManager": "yarn@3.2.3",
   "peerDependencies": {
     "fastify": "^4"
   },
-  "private": false,
   "repository": "ssh://git@github.com/Coobaha/typed-fastify.git",
   "scripts": {
     "build": "tsc -p src && tsc -p generator",
