@@ -4,6 +4,7 @@ import addSchema from '../src';
 import { defaultService } from './fixtures';
 import type { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
+import fastifySwaggerUi from '@fastify/swagger-ui';
 
 async function init(): Promise<void> {
   const app = fastify({
@@ -17,7 +18,7 @@ async function init(): Promise<void> {
     },
   });
   await app.register(swagger, {
-    routePrefix: '/openapi',
+    exposeRoute: true,
     swagger: {
       info: {
         title: 'api',
@@ -26,8 +27,15 @@ async function init(): Promise<void> {
       },
       basePath: '/',
     },
-    exposeRoute: true,
+    hideUntagged: false,
   } as FastifyDynamicSwaggerOptions);
+
+  await app.register(fastifySwaggerUi, {
+    prefix: '/openapi',
+    uiConfig: {
+      docExpansion: 'full',
+    },
+  });
 
   addSchema<TestSchema>(app, {
     jsonSchema: jsonSchema,

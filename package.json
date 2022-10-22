@@ -12,22 +12,23 @@
     "json-schema-merge-allof": "^0.8.1",
     "json-schema-traverse": "^1.0.0",
     "typescript-json-schema": "^0.54.0",
-    "yargs": "^17.5.1"
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
-    "@fastify/swagger": "^7.5.1",
+    "@fastify/swagger": "^8.0.0",
+    "@fastify/swagger-ui": "^1.1.0",
     "@types/crypto-js": "^4.1.1",
     "@types/glob": "^8.0.0",
     "@types/json-schema-merge-allof": "^0.6.1",
-    "@types/node": "^18.7.18",
-    "@types/prettier": "^2.7.0",
+    "@types/node": "^18.11.3",
+    "@types/prettier": "^2.7.1",
     "@types/split2": "^3.2.1",
     "@types/tap": "^15.0.7",
-    "@types/yargs": "^17.0.12",
-    "fastify": "^4.6.0",
+    "@types/yargs": "^17.0.13",
+    "fastify": "^4.9.2",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "pino-pretty": "^9.1.0",
+    "pino-pretty": "^9.1.1",
     "pinst": "^3.0.0",
     "prettier": "^2.7.1",
     "split2": "^4.1.0",
@@ -35,8 +36,8 @@
     "tap": "^16.3.0",
     "ts-node-dev": "^2.0.0",
     "tsd": "^0.24.1",
-    "type-fest": "^2.19.0",
-    "typescript": "^4.8.3"
+    "type-fest": "^3.1.0",
+    "typescript": "^4.8.4"
   },
   "directories": {
     "test": "test/",
@@ -74,8 +75,8 @@
     "prepublishOnly": "pinst --disable",
     "preserver": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
     "pretest": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
-    "server": "tsnd test/server.ts",
-    "test": "yarn test:types && yarn test:integration",
+    "server": "yarn preserver && tsnd test/server.ts",
+    "test": "yarn pretest && yarn test:types && yarn test:integration",
     "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse --no-check-coverage",
     "test:types": "tsc -p test/tsconfig.test.json"
   }

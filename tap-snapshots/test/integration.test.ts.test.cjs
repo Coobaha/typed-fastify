@@ -713,7 +713,7 @@ Object {
     "user-agent": "lightMyRequest",
   },
   "Params": Object {},
-  "Query": Null Object {
+  "Query": Object {
     "getQueryParam": "1",
   },
   "schema": Object {

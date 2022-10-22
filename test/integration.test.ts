@@ -1,4 +1,4 @@
-import swagger from '@fastify/swagger';
+import swagger, { FastifyDynamicSwaggerOptions } from '@fastify/swagger';
 import fastify from 'fastify';
 import split from 'split2';
 import tap from 'tap';
@@ -7,6 +7,7 @@ import addSchema, { Service } from '../src';
 import { defaultService } from './fixtures';
 import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
+import fastifySwaggerUi from '@fastify/swagger-ui';
 
 type Test = typeof tap['Test']['prototype'];
 
@@ -75,7 +76,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
   service ??= defaultService;
 
   await app.register(swagger, {
-    routePrefix: '/openapi',
+    exposeRoute: true,
     swagger: {
       info: {
         title: 'api',
@@ -85,7 +86,13 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
       basePath: '/',
     },
     hideUntagged: false,
-    exposeRoute: true,
+  } as FastifyDynamicSwaggerOptions);
+
+  await app.register(fastifySwaggerUi, {
+    prefix: '/openapi',
+    uiConfig: {
+      docExpansion: 'full',
+    },
   });
 
   addSchema(app, {
