@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Coobaha/typed-fastify/compare/v1.1.0...v1.1.1) (2022-10-22)
+
+
+### Bug Fixes
+
+* bump deps ([#66](https://github.com/Coobaha/typed-fastify/issues/66)) ([03794d2](https://github.com/Coobaha/typed-fastify/commit/03794d2e5e8eca914194dec58bb681e07faa4a04))
+
 ## [1.1.0](https://github.com/Coobaha/typed-fastify/compare/v1.0.1...v1.1.0) (2022-09-12)
 
 
