@@ -88,18 +88,7 @@
           },
           {
             "type": "object",
-            "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "TEST"
-                ]
-              }
-            }
+            "$ref": "test_schema#/properties/TestObj"
           },
           {
             "type": "object",
@@ -186,18 +175,7 @@
             },
             {
               "type": "object",
-              "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
-              "required": [
-                "type"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "TEST"
-                  ]
-                }
-              }
+              "$ref": "test_schema#/properties/TestObj"
             },
             {
               "type": "object",
@@ -298,19 +276,7 @@
           ],
           "properties": {
             "frame": {
-              "type": "object",
-              "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
-              "required": [
-                "type"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "TEST"
-                  ]
-                }
-              }
+              "$ref": "test_schema#/properties/TestObj"
             }
           }
         }
@@ -359,5 +325,5 @@
       }
     }
   },
-  "$hash": "c138d591328ddd9cc1b794e5e35447467e7c1f8d4129b8fc727c11d7e9b0ef02__v1.1.1"
+  "$hash": "c138d591328ddd9cc1b794e5e35447467e7c1f8d4129b8fc727c11d7e9b0ef02__v1.1.2"
 }
