@@ -175,6 +175,7 @@ Array [
 
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
 Error: body/user/name must be string {
+  "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
   "validation": Array [
     Object {
@@ -193,6 +194,7 @@ Error: body/user/name must be string {
 
 exports[`test/integration.test.ts TAP POST / rejects invalid payload > invalid user name 1`] = `
 Object {
+  "code": "FST_ERR_VALIDATION",
   "error": "Bad Request",
   "message": "body/user/name must be string",
   "statusCode": 400,
@@ -250,12 +252,13 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 82",
+    "content-length: 110",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
+      "code": "FST_ERR_VALIDATION",
       "error": "Bad Request",
       "message": "body/user/name must be string",
       "statusCode": 400,
@@ -687,6 +690,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates get query param against schema > error logs 1`] = `
 Error: querystring/getQueryParam must be boolean {
+  "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
   "validation": Array [
     Object {
@@ -754,12 +758,13 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 94",
+    "content-length: 122",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
+      "code": "FST_ERR_VALIDATION",
       "error": "Bad Request",
       "message": "querystring/getQueryParam must be boolean",
       "statusCode": 400,
@@ -770,6 +775,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates get query param against schema > wrong type of query param 1`] = `
 Object {
+  "code": "FST_ERR_VALIDATION",
   "error": "Bad Request",
   "message": "querystring/getQueryParam must be boolean",
   "statusCode": 400,
@@ -778,6 +784,7 @@ Object {
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 1`] = `
 Error: headers must have required property 'authorization' {
+  "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
   "validation": Array [
     Object {
@@ -796,6 +803,7 @@ Error: headers must have required property 'authorization' {
 
 exports[`test/integration.test.ts TAP it validates headers > error logs 2`] = `
 Error: headers must have required property 'getheader' {
+  "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
   "validation": Array [
     Object {
@@ -815,11 +823,13 @@ Error: headers must have required property 'getheader' {
 exports[`test/integration.test.ts TAP it validates headers > missing headers 1`] = `
 Array [
   Object {
+    "code": "FST_ERR_VALIDATION",
     "error": "Bad Request",
     "message": "headers must have required property 'authorization'",
     "statusCode": 400,
   },
   Object {
+    "code": "FST_ERR_VALIDATION",
     "error": "Bad Request",
     "message": "headers must have required property 'getheader'",
     "statusCode": 400,
@@ -918,12 +928,13 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 104",
+    "content-length: 132",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
+      "code": "FST_ERR_VALIDATION",
       "error": "Bad Request",
       "message": "headers must have required property 'authorization'",
       "statusCode": 400,
@@ -937,12 +948,13 @@ Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
     "content-type: application/json; charset=utf-8",
-    "content-length: 100",
+    "content-length: 128",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
+      "code": "FST_ERR_VALIDATION",
       "error": "Bad Request",
       "message": "headers must have required property 'getheader'",
       "statusCode": 400,
@@ -1146,7 +1158,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3500",
+    "content-length: 3820",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1324,6 +1336,13 @@ Object {
               },
             },
           },
+          "head": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+              },
+            },
+          },
           "post": Object {
             "parameters": Array [
               Object {
@@ -1368,6 +1387,13 @@ Object {
           "get": Object {
             "responses": Object {},
           },
+          "head": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+              },
+            },
+          },
         },
         "/inferredParams/{id}/{castedToNumber}": Object {
           "get": Object {
@@ -1388,6 +1414,13 @@ Object {
               },
             },
           },
+          "head": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+              },
+            },
+          },
         },
         "/objectid": Object {
           "get": Object {
@@ -1405,6 +1438,13 @@ Object {
                   ],
                   "type": "object",
                 },
+              },
+            },
+          },
+          "head": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
               },
             },
           },
@@ -1509,6 +1549,13 @@ Object {
                   "minItems": 3,
                   "type": "array",
                 },
+              },
+            },
+          },
+          "head": Object {
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
               },
             },
           },
@@ -1694,6 +1741,13 @@ Object {
           },
         },
       },
+      "head": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+          },
+        },
+      },
       "post": Object {
         "parameters": Array [
           Object {
@@ -1738,6 +1792,13 @@ Object {
       "get": Object {
         "responses": Object {},
       },
+      "head": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+          },
+        },
+      },
     },
     "/inferredParams/{id}/{castedToNumber}": Object {
       "get": Object {
@@ -1758,6 +1819,13 @@ Object {
           },
         },
       },
+      "head": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+          },
+        },
+      },
     },
     "/objectid": Object {
       "get": Object {
@@ -1775,6 +1843,13 @@ Object {
               ],
               "type": "object",
             },
+          },
+        },
+      },
+      "head": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
           },
         },
       },
@@ -1879,6 +1954,13 @@ Object {
               "minItems": 3,
               "type": "array",
             },
+          },
+        },
+      },
+      "head": Object {
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
           },
         },
       },

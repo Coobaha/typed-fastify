@@ -4,9 +4,7 @@ import yargs from 'yargs';
 // @ts-ignore
 import { hideBin } from 'yargs/helpers';
 import gen from './gen';
-import glob from 'glob';
-import { promisify } from 'util';
-const resolveGlobFiles = promisify(glob);
+import { glob } from 'glob';
 
 yargs(hideBin(process.argv))
   .command<{ files: string }>(
@@ -22,7 +20,7 @@ yargs(hideBin(process.argv))
         .demandOption(['files']);
     },
     async (argv) => {
-      const files = await resolveGlobFiles(argv.files);
+      const files = await glob(argv.files);
 
       await gen({ files });
     },

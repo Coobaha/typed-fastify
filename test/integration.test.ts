@@ -9,7 +9,7 @@ import { TestSchema } from './test_schema';
 import jsonSchema from './test_schema.gen.json';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 
-type Test = typeof tap['Test']['prototype'];
+type Test = (typeof tap)['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
@@ -29,7 +29,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
               Query: req.query,
               Headers: req.headers,
               Body: req.body,
-              schema: Reflect.get(req.context, 'schema'),
+              schema: req.routeSchema,
             },
             `request path:${req.method} ${req.url} id:${req.id}`,
           );
