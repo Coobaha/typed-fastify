@@ -97,18 +97,7 @@ Object {
             "type": "object",
           },
           Object {
-            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
-            "properties": Object {
-              "type": Object {
-                "enum": Array [
-                  "TEST",
-                ],
-                "type": "string",
-              },
-            },
-            "required": Array [
-              "type",
-            ],
+            "$ref": "test_schema#/properties/TestObj",
             "type": "object",
           },
           Object {
@@ -504,19 +493,7 @@ Object {
       "200": Object {
         "properties": Object {
           "frame": Object {
-            "$ref": "test_schema#/properties/Omit__Obj,\\"type\\"__",
-            "properties": Object {
-              "type": Object {
-                "enum": Array [
-                  "TEST",
-                ],
-                "type": "string",
-              },
-            },
-            "required": Array [
-              "type",
-            ],
-            "type": "object",
+            "$ref": "test_schema#/properties/TestObj",
           },
         },
         "required": Array [
@@ -1158,7 +1135,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3820",
+    "content-length: 3531",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1262,18 +1239,7 @@ Object {
                   "type": "object",
                 },
                 Object {
-                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                  "properties": Object {
-                    "type": Object {
-                      "enum": Array [
-                        "TEST",
-                      ],
-                      "type": "string",
-                    },
-                  },
-                  "required": Array [
-                    "type",
-                  ],
+                  "$ref": "#/definitions/def-0/properties/TestObj",
                   "type": "object",
                 },
                 Object {
@@ -1481,19 +1447,7 @@ Object {
                 "schema": Object {
                   "properties": Object {
                     "frame": Object {
-                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                      "properties": Object {
-                        "type": Object {
-                          "enum": Array [
-                            "TEST",
-                          ],
-                          "type": "string",
-                        },
-                      },
-                      "required": Array [
-                        "type",
-                      ],
-                      "type": "object",
+                      "$ref": "#/definitions/def-0/properties/TestObj",
                     },
                   },
                   "required": Array [
@@ -1517,18 +1471,7 @@ Object {
                       "type": "object",
                     },
                     Object {
-                      "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                      "properties": Object {
-                        "type": Object {
-                          "enum": Array [
-                            "TEST",
-                          ],
-                          "type": "string",
-                        },
-                      },
-                      "required": Array [
-                        "type",
-                      ],
+                      "$ref": "#/definitions/def-0/properties/TestObj",
                       "type": "object",
                     },
                     Object {
@@ -1667,18 +1610,7 @@ Object {
               "type": "object",
             },
             Object {
-              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-              "properties": Object {
-                "type": Object {
-                  "enum": Array [
-                    "TEST",
-                  ],
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "type",
-              ],
+              "$ref": "#/definitions/def-0/properties/TestObj",
               "type": "object",
             },
             Object {
@@ -1886,19 +1818,7 @@ Object {
             "schema": Object {
               "properties": Object {
                 "frame": Object {
-                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                  "properties": Object {
-                    "type": Object {
-                      "enum": Array [
-                        "TEST",
-                      ],
-                      "type": "string",
-                    },
-                  },
-                  "required": Array [
-                    "type",
-                  ],
-                  "type": "object",
+                  "$ref": "#/definitions/def-0/properties/TestObj",
                 },
               },
               "required": Array [
@@ -1922,18 +1842,7 @@ Object {
                   "type": "object",
                 },
                 Object {
-                  "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
-                  "properties": Object {
-                    "type": Object {
-                      "enum": Array [
-                        "TEST",
-                      ],
-                      "type": "string",
-                    },
-                  },
-                  "required": Array [
-                    "type",
-                  ],
+                  "$ref": "#/definitions/def-0/properties/TestObj",
                   "type": "object",
                 },
                 Object {
