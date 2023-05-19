@@ -25,7 +25,10 @@ things:
 ```sh
 npm i @coobaha/typed-fastify
 
+pnpm i @coobaha/typed-fastify
+
 yarn add @coobaha/typed-fastify
+
 ```
 
 Example of service we want to build

@@ -7,6 +7,7 @@
     "typed-fastify-schema": "bin/gen.bin.js"
   },
   "dependencies": {
+    "@types/json-schema": "^7.0.11",
     "crypto-js": "^4.1.1",
     "glob": "^8.0.3",
     "json-schema-merge-allof": "^0.8.1",
@@ -63,7 +64,7 @@
     ]
   },
   "main": "lib/index.js",
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "pnpm@8.5.0",
   "peerDependencies": {
     "fastify": "^4"
   },
@@ -75,8 +76,8 @@
     "prepublishOnly": "pinst --disable",
     "preserver": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
     "pretest": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
-    "server": "yarn preserver && tsnd test/server.ts",
-    "test": "yarn pretest && yarn test:types && yarn test:integration",
+    "server": "pnpm preserver && tsnd test/server.ts",
+    "test": "pnpm pretest && pnpm test:types && pnpm test:integration",
     "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse --no-check-coverage",
     "test:types": "tsc -p test/tsconfig.test.json"
   }

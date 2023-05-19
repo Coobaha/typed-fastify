@@ -6,7 +6,7 @@ import sha256 from 'crypto-js/sha256';
 import type { TsConfigJson } from 'type-fest';
 import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
-import { JSONSchema7 } from 'json-schema';
+import type { JSONSchema7 } from 'json-schema';
 
 const revision = '__v' + require('../package.json').version; // + Date.now();
 
