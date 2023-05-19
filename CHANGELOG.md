@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/Coobaha/typed-fastify/compare/v1.1.2...v1.1.3) (2023-05-19)
+
+
+### Bug Fixes
+
+* bump 📸 ([2aa0ce6](https://github.com/Coobaha/typed-fastify/commit/2aa0ce641cf6fffa1d418715abf4c100f4965698))
+
 ## [1.1.2](https://github.com/Coobaha/typed-fastify/compare/v1.1.1...v1.1.2) (2023-05-19)
 
 
