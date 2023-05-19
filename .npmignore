@@ -3,6 +3,5 @@
 .gitignore
 .prettierrc
 .tsconfig
-.yarn-error.log
 .github
 .husky
