@@ -1135,7 +1135,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3211",
+    "content-length: 3210",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1210,9 +1210,7 @@ Object {
               "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
               "properties": Object {
                 "type": Object {
-                  "enum": Array [
-                    "TEST",
-                  ],
+                  "const": "TEST",
                   "type": "string",
                 },
               },
@@ -1546,9 +1544,7 @@ Object {
           "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
           "properties": Object {
             "type": Object {
-              "enum": Array [
-                "TEST",
-              ],
+              "const": "TEST",
               "type": "string",
             },
           },

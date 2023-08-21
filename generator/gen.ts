@@ -109,6 +109,11 @@ async function normalizeSchema(originalSchema: JSONSchema7, rootId: string, newR
 
   return mergeAllOf(mergedSchema);
 }
+
+function isSchemaTag(tag: JSONSchema7) {
+  return (tag.enum?.length === 1 && tag.enum?.[0] === 'BETTER-FASTIFY-SCHEMA') || tag.const === 'BETTER-FASTIFY-SCHEMA';
+}
+
 export default async (params: { files: string[] }) => {
   const compilerOptions: TsConfigJson['compilerOptions'] = {
     resolveJsonModule: false,
@@ -123,6 +128,7 @@ export default async (params: { files: string[] }) => {
     required: true,
     ref: true,
     aliasRef: false,
+    skipLibCheck: true,
     topRef: true,
     ignoreErrors: true,
     strictNullChecks: true,
@@ -173,7 +179,7 @@ export default async (params: { files: string[] }) => {
       const tag = def.properties['__SCHEMA_TAG__'];
       if (!tag || typeof tag === 'boolean') continue;
 
-      if (tag.enum?.length === 1 && tag.enum?.[0] === 'BETTER-FASTIFY-SCHEMA') {
+      if (isSchemaTag(tag)) {
         delete $defs[defName];
       }
 
