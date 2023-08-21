@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/Coobaha/typed-fastify/compare/v1.1.3...v1.1.4) (2023-08-21)
+
+
+### Bug Fixes
+
+* bump test and fix schema with const tag ([77d5a8b](https://github.com/Coobaha/typed-fastify/commit/77d5a8b57522dc4f2feea38d15aca8529cb3a213))
+
 ## [1.1.3](https://github.com/Coobaha/typed-fastify/compare/v1.1.2...v1.1.3) (2023-08-21)
 
 
