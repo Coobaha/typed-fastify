@@ -1135,7 +1135,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3531",
+    "content-length: 3211",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1302,13 +1302,6 @@ Object {
               },
             },
           },
-          "head": Object {
-            "responses": Object {
-              "200": Object {
-                "description": "Default Response",
-              },
-            },
-          },
           "post": Object {
             "parameters": Array [
               Object {
@@ -1353,13 +1346,6 @@ Object {
           "get": Object {
             "responses": Object {},
           },
-          "head": Object {
-            "responses": Object {
-              "200": Object {
-                "description": "Default Response",
-              },
-            },
-          },
         },
         "/inferredParams/{id}/{castedToNumber}": Object {
           "get": Object {
@@ -1380,13 +1366,6 @@ Object {
               },
             },
           },
-          "head": Object {
-            "responses": Object {
-              "200": Object {
-                "description": "Default Response",
-              },
-            },
-          },
         },
         "/objectid": Object {
           "get": Object {
@@ -1404,13 +1383,6 @@ Object {
                   ],
                   "type": "object",
                 },
-              },
-            },
-          },
-          "head": Object {
-            "responses": Object {
-              "200": Object {
-                "description": "Default Response",
               },
             },
           },
@@ -1492,13 +1464,6 @@ Object {
                   "minItems": 3,
                   "type": "array",
                 },
-              },
-            },
-          },
-          "head": Object {
-            "responses": Object {
-              "200": Object {
-                "description": "Default Response",
               },
             },
           },
@@ -1673,13 +1638,6 @@ Object {
           },
         },
       },
-      "head": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Default Response",
-          },
-        },
-      },
       "post": Object {
         "parameters": Array [
           Object {
@@ -1724,13 +1682,6 @@ Object {
       "get": Object {
         "responses": Object {},
       },
-      "head": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Default Response",
-          },
-        },
-      },
     },
     "/inferredParams/{id}/{castedToNumber}": Object {
       "get": Object {
@@ -1751,13 +1702,6 @@ Object {
           },
         },
       },
-      "head": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Default Response",
-          },
-        },
-      },
     },
     "/objectid": Object {
       "get": Object {
@@ -1775,13 +1719,6 @@ Object {
               ],
               "type": "object",
             },
-          },
-        },
-      },
-      "head": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Default Response",
           },
         },
       },
@@ -1863,13 +1800,6 @@ Object {
               "minItems": 3,
               "type": "array",
             },
-          },
-        },
-      },
-      "head": Object {
-        "responses": Object {
-          "200": Object {
-            "description": "Default Response",
           },
         },
       },

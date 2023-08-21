@@ -7,6 +7,7 @@ import type { TsConfigJson } from 'type-fest';
 import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
 import type { JSONSchema7 } from 'json-schema';
+import { JSONSchema7Definition } from 'json-schema';
 
 const revision = '__v' + require('../package.json').version; // + Date.now();
 
@@ -114,7 +115,6 @@ export default async (params: { files: string[] }) => {
     diagnostics: false,
     checkJs: true,
     skipLibCheck: true,
-    skipDefaultLibCheck: true,
     strict: true,
   };
 
@@ -191,12 +191,15 @@ export default async (params: { files: string[] }) => {
         if (typeof schema.response === 'boolean') continue;
         if (typeof schema.response?.properties?.content === 'boolean') continue;
 
-        const response = Object.entries(schema.response?.properties ?? {}).reduce((acc, [status, response]) => {
-          if (typeof response !== 'boolean' && response?.properties?.content) {
-            acc[status] = response.properties.content;
-          }
-          return acc;
-        }, {} as Record<string, TJS.DefinitionOrBoolean>);
+        const response = Object.entries(schema.response?.properties ?? {}).reduce(
+          (acc, [status, response]) => {
+            if (typeof response !== 'boolean' && response?.properties?.content) {
+              acc[status] = response.properties.content;
+            }
+            return acc;
+          },
+          {} as Record<string, JSONSchema7Definition>,
+        );
         fastify[key] = {
           // @ts-ignore
           security: schema.security ? true : undefined,

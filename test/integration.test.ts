@@ -36,7 +36,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
           return {};
         },
         res: (res) => {
-          if (res.raw.finished) {
+          if (res.raw?.finished) {
             t.matchSnapshot(
               {
                 Payload: (res.raw as any)._lightMyRequest.payloadChunks.map((x: any) => {
@@ -48,7 +48,7 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
                 }),
                 Headers: (res.raw as any)._header?.split('\r\n').filter(Boolean),
               },
-              `response path:${res.request.method} ${res.request.url} id:${res.request.id}`,
+              `response path:${res.request?.method} ${res.request?.url} id:${res.request?.id}`,
             );
           }
           return {
