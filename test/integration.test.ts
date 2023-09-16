@@ -29,10 +29,11 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
               Query: req.query,
               Headers: req.headers,
               Body: req.body,
-              schema: req.routeSchema,
+              schema: req.routeOptions.schema,
             },
             `request path:${req.method} ${req.url} id:${req.id}`,
           );
+
           return {};
         },
         res: (res) => {
