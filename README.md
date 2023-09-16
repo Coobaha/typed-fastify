@@ -1,5 +1,9 @@
 # Typed Fastify
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/coobaha/typed-fastify/ci.yml?branch=main&logo=github&style=for-the-badge)](https://github.com/coobaha/typed-fastify/actions/workflows/ci.yml)
+[![NPM Version](https://img.shields.io/npm/v/@coobaha/typed-fastify.svg?style=for-the-badge)](https://www.npmjs.com/package/@coobaha/typed-fastify)
+[![](https://img.shields.io/npm/dm/@coobaha/typed-fastify.svg?style=for-the-badge)](https://www.npmjs.com/package/@coobaha/typed-fastify)
+
 This package adds strong TypeScript support to Fastify request handlers and enforces
 handlers to have typed schema which is used to validate request params and replies. From this schema it does two
 things:
