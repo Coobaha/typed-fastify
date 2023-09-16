@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Coobaha/typed-fastify/compare/v1.1.4...v1.2.0) (2023-09-16)
+
+
+### Features
+
+* add request.routeOptions support ([#82](https://github.com/Coobaha/typed-fastify/issues/82)) ([1a49a6c](https://github.com/Coobaha/typed-fastify/commit/1a49a6cdf02e1afb4dff037286eecdd9b24257ad))
+
 ## [1.1.4](https://github.com/Coobaha/typed-fastify/compare/v1.1.3...v1.1.4) (2023-08-21)
 
 
