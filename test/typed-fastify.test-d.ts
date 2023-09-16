@@ -152,9 +152,13 @@ expectType<Service<ExampleSchema>>({
   'GET /': (req, reply) => {
     expectType<'GET'>(req.method);
     expectType<'GET'>(reply.request.method);
+    expectType<'GET'>(req.routeOptions.method);
+    expectType<'GET'>(reply.request.routeOptions.method);
     expectType<never>(req.body);
     expectType<'/'>(req.routerPath);
     expectType<'/'>(reply.request.routerPath);
+    expectType<'/'>(req.routeOptions.url);
+    expectType<'/'>(reply.request.routeOptions.url);
     return {
       name: 'works',
     };
@@ -260,7 +264,7 @@ const complexHandlers = (
     never(req);
   }
 
-  function testHeaders(headers: typeof req['headers'] | typeof reply['request']['headers']) {
+  function testHeaders(headers: (typeof req)['headers'] | (typeof reply)['request']['headers']) {
     if ('postHeader2' in headers) {
       headers.postHeader2;
       headers.postHeader;
@@ -293,9 +297,11 @@ const complexHandlers = (
       break;
     case 'PATCH':
       expectType<'/' | '/other' | '/other_empty'>(req.routerPath);
+      expectType<'/' | '/other' | '/other_empty'>(req.routeOptions.url);
       break;
     case 'PUT':
       expectType<'/' | '/other'>(req.routerPath);
+      expectType<'/' | '/other'>(req.routeOptions.url);
       break;
     default:
       never(req);
@@ -305,17 +311,50 @@ const complexHandlers = (
     case '/':
       expectType<'GET' | 'PATCH' | 'POST'>(req.method);
       expectType<'GET' | 'PATCH' | 'POST'>(req.routerMethod);
+      expectType<'GET' | 'PATCH' | 'POST'>(req.routeOptions.method);
+      expectType<'/'>(req.routeOptions.url);
       break;
     case '/other_empty':
       expectType<'PATCH'>(req.routerMethod);
+      expectType<'PATCH'>(req.routeOptions.method);
+      expectType<'/other_empty'>(req.routeOptions.url);
       break;
     case '/other':
       expectType<'PUT' | 'PATCH'>(req.method);
       expectType<'PUT' | 'PATCH'>(req.routerMethod);
+      expectType<'PUT' | 'PATCH'>(req.routeOptions.method);
       break;
     default:
       never(req);
   }
+
+  switch (req.routeOptions.url) {
+    case '/':
+      // @ts-expect-error
+      expectType<'GET' | 'PATCH' | 'POST'>(req.method);
+      // @ts-expect-error
+      expectType<'GET' | 'PATCH' | 'POST'>(req.routerMethod);
+      expectType<'GET' | 'PATCH' | 'POST'>(req.routeOptions.method);
+      expectType<'/'>(req.routeOptions.url);
+      expectType<'/'>(req.routeOptions.url);
+      break;
+    case '/other_empty':
+      // @ts-expect-error
+      expectType<'PATCH'>(req.routerMethod);
+      expectType<'PATCH'>(req.routeOptions.method);
+      expectType<'/other_empty'>(req.routeOptions.url);
+      break;
+    case '/other':
+      // @ts-expect-error
+      expectType<'PUT' | 'PATCH'>(req.method);
+      // @ts-expect-error
+      expectType<'PUT' | 'PATCH'>(req.routerMethod);
+      expectType<'PUT' | 'PATCH'>(req.routeOptions.method);
+      break;
+    default:
+      never(req.routeOptions);
+  }
+
   switch (reply.request.method) {
     case 'GET':
       reply.request.query.getQueryParam;
@@ -334,7 +373,7 @@ const complexHandlers = (
       never(reply.request);
   }
 
-  const routerPathWithMethod = `${reply.request.method} ${reply.request.routerPath}` as ComplexHandlers['Paths'];
+  const routerPathWithMethod = `${reply.request.method} ${reply.request.routeOptions.url}` as ComplexHandlers['Paths'];
   switch (routerPathWithMethod) {
     case 'GET /':
     case 'POST /':

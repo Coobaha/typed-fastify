@@ -1,5 +1,7 @@
 import type * as F from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
+import { RequestRouteOptions } from 'fastify/types/request';
+
 import {
   FastifyRequestType,
   FastifyTypeProvider,
@@ -37,11 +39,11 @@ const addSchema = <
   }
 
   fastify.decorateReply('matches', function (this: F.FastifyReply, routeWithMethod: string) {
-    return `${this.request.method} ${this.request.routerPath}` === routeWithMethod;
+    return `${this.request.method} ${this.request.routeOptions.url}` === routeWithMethod;
   });
   fastify.decorateRequest('operationPath', null);
   fastify.addHook('onRequest', function (req, reply, done) {
-    (req as {} as { operationPath: string }).operationPath = `${req.method} ${req.routerPath}`;
+    (req as {} as { operationPath: string }).operationPath = `${req.method} ${req.routeOptions.url}`;
     done();
   });
   fastify.decorateReply('asReply', function (this: F.FastifyReply) {
@@ -62,6 +64,7 @@ const addSchema = <
     }
 
     config.schema = config.schema || {};
+
     if (maybeSchema) {
       config.schema = {
         ...(config.schema ?? {}),
@@ -203,7 +206,6 @@ interface Reply<
 
   send<
     AllHeaders = Get2<Op['response'], Status, 'headers'>,
-    O = [Headers, AllHeaders],
     MissingHeaders = Missing<Headers, AllHeaders>,
     MissingStatus = [Status] extends [never] ? true : false,
   >(
@@ -320,6 +322,13 @@ interface Request<
     ? Omit<Router<Op>, 'Params'> & { Params: PathParams }
     : Omit<Router<Op>, 'Params'> & { Params: Id<PathParams & Router<Op>['Params']> },
   RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, RouteGeneric>,
+  ROptions extends Omit<RequestRouteOptions<ContextConfig, SchemaCompiler>, 'method' | 'url'> & {
+    method: MP<Path>[0];
+    url: MP<Path>[1];
+  } = Omit<RequestRouteOptions<ContextConfig, SchemaCompiler>, 'method' | 'url'> & {
+    method: MP<Path>[0];
+    url: MP<Path>[1];
+  },
 > extends Omit<
     F.FastifyRequest<
       RouteGeneric,
@@ -331,15 +340,16 @@ interface Request<
       Logger,
       RequestType
     >,
-    'headers' | 'method' | 'routerMethod' | 'routerPath'
+    'headers' | 'method' | 'routerMethod' | 'routerPath' | 'routeOptions'
   > {
   readonly operationPath: Path;
-  readonly method: MP<Path>[0];
+  readonly method: ROptions['method'];
   // A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
-  readonly body: MP<Path>[0] extends 'GET' ? never : Get<Op['request'], 'body'>;
-  readonly routerMethod: MP<Path>[0];
+  readonly body: ROptions['method'] extends 'GET' ? never : Get<Op['request'], 'body'>;
+  readonly routeOptions: Id<Readonly<ROptions>>;
+  readonly routerMethod: ROptions['method'];
   readonly headers: Get<Op['request'], 'headers'>;
-  readonly routerPath: MP<Path>[1];
+  readonly routerPath: ROptions['url'];
 }
 
 type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2 ? true : false;
@@ -368,7 +378,6 @@ type Handler<
   ContextConfig extends F.ContextConfigDefault = F.ContextConfigDefault,
   SchemaCompiler extends F.FastifySchema = F.FastifySchema,
   TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
-  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Op>>,
   Logger extends F.FastifyBaseLogger = F.FastifyBaseLogger,
   InvalidParams = GetInvalidParamsValidation<Op, Path, ServiceSchema>,
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
@@ -376,7 +385,6 @@ type Handler<
     : InvalidParams extends Invalid
     ? InvalidParams
     : true,
-  Status extends keyof Op['response'] = keyof Op['response'],
 > = ValidSchema extends true
   ? (
       this: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,
@@ -408,7 +416,6 @@ type HandlerObj<
   ContextConfig extends F.ContextConfigDefault = F.ContextConfigDefault,
   SchemaCompiler extends F.FastifySchema = F.FastifySchema,
   TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
-  RequestType extends FastifyRequestType = ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Op>>,
   Logger extends F.FastifyBaseLogger = F.FastifyBaseLogger,
   _Handler = Handler<
     Op,
@@ -420,7 +427,6 @@ type HandlerObj<
     ContextConfig,
     SchemaCompiler,
     TypeProvider,
-    RequestType,
     Logger
   >,
   _Request extends Request<any, any, any> = Parameters<Extract<_Handler, (...args: any) => any>>[0],
@@ -470,7 +476,6 @@ export type Service<
         ContextConfig,
         SchemaCompiler,
         TypeProvider,
-        ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Extract<S['paths'][P], Operation>>>,
         Logger
       >
     | HandlerObj<
@@ -483,7 +488,6 @@ export type Service<
         ContextConfig,
         SchemaCompiler,
         TypeProvider,
-        ResolveFastifyRequestType<TypeProvider, SchemaCompiler, Router<Extract<S['paths'][P], Operation>>>,
         Logger
       >;
 };
@@ -498,7 +502,6 @@ export type RequestHandler<
   SchemaCompiler extends F.FastifySchema = F.FastifySchema,
   TypeProvider extends FastifyTypeProvider = FastifyTypeProviderDefault,
   Logger extends F.FastifyBaseLogger = F.FastifyBaseLogger,
-  S = Service<ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig, SchemaCompiler, TypeProvider, Logger>,
   Paths = ServiceSchema['paths'],
   OpHandler = {
     [Path in HandlerPaths]: Handler<
@@ -511,11 +514,6 @@ export type RequestHandler<
       ContextConfig,
       SchemaCompiler,
       TypeProvider,
-      ResolveFastifyRequestType<
-        TypeProvider,
-        SchemaCompiler,
-        Router<Path extends keyof Paths ? Extract<Paths[Path], Operation> : never>
-      >,
       Logger
     >;
   }[HandlerPaths],
@@ -530,11 +528,6 @@ export type RequestHandler<
       ContextConfig,
       SchemaCompiler,
       TypeProvider,
-      ResolveFastifyRequestType<
-        TypeProvider,
-        SchemaCompiler,
-        Router<Path extends keyof Paths ? Extract<Paths[Path], Operation> : never>
-      >,
       Logger
     >;
   }[HandlerPaths],
