@@ -1,6 +1,7 @@
 # Typed Fastify
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/coobaha/typed-fastify/ci.yml?branch=main&logo=github&style=for-the-badge)](https://github.com/coobaha/typed-fastify/actions/workflows/ci.yml)
+[![Coverage Status](https://img.shields.io/coveralls/github/Coobaha/typed-fastify.svg?style=for-the-badge)](https://coveralls.io/github/Coobaha/typed-fastify?branch=main)
 [![NPM Version](https://img.shields.io/npm/v/@coobaha/typed-fastify.svg?style=for-the-badge)](https://www.npmjs.com/package/@coobaha/typed-fastify)
 [![](https://img.shields.io/npm/dm/@coobaha/typed-fastify.svg?style=for-the-badge)](https://www.npmjs.com/package/@coobaha/typed-fastify)
 
