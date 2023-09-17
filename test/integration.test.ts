@@ -393,7 +393,7 @@ t.test('valid GET /asReply', async (t) => {
   t.same(res.json(), { value: 'known' });
 });
 
-t.test('it does not infer with prefixed plugin', async (t) => {
+t.test('it does not interfere with prefixed plugin', async (t) => {
   const app = await buildApp({
     t,
     prepare: async (fastify) => {

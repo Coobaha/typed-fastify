@@ -654,7 +654,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it does not infer with prefixed plugin > request path:GET /prefixed id:req-1 1`] = `
+exports[`test/integration.test.ts TAP it does not interfere with prefixed plugin > request path:GET /prefixed id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -673,7 +673,7 @@ Object {
 }
 `
 
-exports[`test/integration.test.ts TAP it does not infer with prefixed plugin > response path:GET /prefixed id:req-1 1`] = `
+exports[`test/integration.test.ts TAP it does not interfere with prefixed plugin > response path:GET /prefixed id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -684,34 +684,6 @@ Object {
   ],
   "Payload": Array [
     true,
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP it handles empty path > request path:OPTIONS / id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {},
-}
-`
-
-exports[`test/integration.test.ts TAP it handles empty path > response path:OPTIONS / id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: text/plain; charset=utf-8",
-    "content-length: 1",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    "/",
   ],
 }
 `
