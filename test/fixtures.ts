@@ -1,5 +1,7 @@
-import { Service } from '../src';
+import { Service, asReply } from '../src';
 import type { ObjectId, TestSchema } from './test_schema';
+
+export { default as defaultJsonSchema } from './test_schema.gen.json';
 
 class MyObjectId extends String implements ObjectId {
   constructor(private id: string) {
@@ -60,5 +62,22 @@ export const defaultService: Service<TestSchema> = {
   },
   'GET /objectid': (req, reply) => {
     return reply.status(200).send({ id: new MyObjectId('123') });
+  },
+
+  'GET /matches': (req, reply) => {
+    if (req.query.match === '/matches' && reply.matches(`GET ${req.query.match}`)) {
+      return reply.status(200).send({ value: 'true' });
+    }
+    return reply.status(200).send({ value: 'false' });
+  },
+  'GET /asReply': {
+    handler: async (req, reply) => {
+      if (req.query.reply === 'known') {
+        reply.status(200).send({ value: req.query.reply });
+        return reply.asReply();
+      } else {
+        return asReply({ value: req.query.reply });
+      }
+    },
   },
 };

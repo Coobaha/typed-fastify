@@ -3,10 +3,8 @@ import fastify from 'fastify';
 import split from 'split2';
 import tap from 'tap';
 import t from 'tap';
-import addSchema, { Service } from '../src';
-import { defaultService } from './fixtures';
-import { TestSchema } from './test_schema';
-import jsonSchema from './test_schema.gen.json';
+import addSchema from '../src';
+import { defaultJsonSchema, defaultService } from './fixtures';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 
 type Test = (typeof tap)['Test']['prototype'];
@@ -15,7 +13,17 @@ t.cleanSnapshot = (s) => {
   return s.replace(/"date": ".* GMT"+/gim, '"date": "dateString"').replace(/"Date: .* GMT"+/gim, '"Date: dateString"');
 };
 
-const buildApp = async (t: Test, service?: Service<TestSchema>) => {
+const buildApp = async ({
+  t,
+  service,
+  jsonSchema = defaultJsonSchema,
+  prepare,
+}: {
+  t: Test;
+  service?: typeof defaultService;
+  jsonSchema?: typeof defaultJsonSchema;
+  prepare?: (app: ReturnType<typeof fastify>) => unknown;
+}) => {
   let stream = split(() => {});
 
   const app = fastify({
@@ -97,11 +105,15 @@ const buildApp = async (t: Test, service?: Service<TestSchema>) => {
   });
 
   addSchema(app, {
-    jsonSchema: jsonSchema,
+    jsonSchema,
     service,
   });
+
+  await Promise.resolve(prepare?.(app));
   await app.ready();
+
   t.teardown(async () => app.close());
+
   return app;
 };
 
@@ -111,7 +123,7 @@ const requiredHeaders = {
 };
 
 t.test('app starts and GET / works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/',
     headers: requiredHeaders,
@@ -121,7 +133,7 @@ t.test('app starts and GET / works', async (t) => {
 });
 
 t.test('it sends headers', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/',
     headers: requiredHeaders,
@@ -131,16 +143,19 @@ t.test('it sends headers', async (t) => {
 });
 
 t.test('response is validated', async (t) => {
-  const app = await buildApp(t, {
-    ...defaultService,
-    'GET /': (req, reply) => {
-      return (
-        reply
-          .status(200)
-          .header('x-custom', '1')
-          //@ts-expect-error
-          .send({ invalid: 1 })
-      );
+  const app = await buildApp({
+    t,
+    service: {
+      ...defaultService,
+      'GET /': (req, reply) => {
+        return (
+          reply
+            .status(200)
+            .header('x-custom', '1')
+            //@ts-expect-error
+            .send({ invalid: 1 })
+        );
+      },
     },
   });
 
@@ -153,7 +168,7 @@ t.test('response is validated', async (t) => {
 });
 
 t.test('it validates get query param against schema', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
 
   const res = await app.inject({
     url: '/',
@@ -167,7 +182,7 @@ t.test('it validates get query param against schema', async (t) => {
 });
 
 t.test('it validates headers', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
 
   const responses = await Promise.all([
     app.inject({
@@ -191,7 +206,7 @@ t.test('it validates headers', async (t) => {
 });
 
 t.test('GET /user_and_obj works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/user_and_obj',
     method: 'GET',
@@ -201,7 +216,7 @@ t.test('GET /user_and_obj works', async (t) => {
 });
 
 t.test('POST / works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/',
     method: 'POST',
@@ -217,7 +232,7 @@ t.test('POST / works', async (t) => {
 });
 
 t.test('POST / rejects invalid payload', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/',
     method: 'POST',
@@ -233,7 +248,7 @@ t.test('POST / rejects invalid payload', async (t) => {
 });
 
 t.test('POST / type casts payload when possible', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/',
     method: 'POST',
@@ -249,7 +264,7 @@ t.test('POST / type casts payload when possible', async (t) => {
 });
 
 t.test('POST /redirect works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/redirect',
     method: 'POST',
@@ -260,7 +275,7 @@ t.test('POST /redirect works', async (t) => {
 });
 
 t.test('GET /empty works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/empty',
     method: 'GET',
@@ -270,7 +285,7 @@ t.test('GET /empty works', async (t) => {
 });
 
 t.test('POST /params/:id/:subid works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/params/11/22',
     method: 'POST',
@@ -280,7 +295,7 @@ t.test('POST /params/:id/:subid works', async (t) => {
 });
 
 t.test('POST /testframe works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/testframe',
     method: 'POST',
@@ -290,7 +305,7 @@ t.test('POST /testframe works', async (t) => {
 });
 
 t.test('GET /inferredParams/:id', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/inferredParams/321/123',
     method: 'GET',
@@ -300,7 +315,7 @@ t.test('GET /inferredParams/:id', async (t) => {
 });
 
 t.test('swagger integration works', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/openapi/json',
     method: 'GET',
@@ -310,11 +325,97 @@ t.test('swagger integration works', async (t) => {
 });
 
 t.test('objectid', async (t) => {
-  const app = await buildApp(t);
+  const app = await buildApp({ t });
   const res = await app.inject({
     url: '/objectid',
     method: 'GET',
   });
 
   t.matchSnapshot(res.json(), 'swagger openapi schema');
+});
+
+t.test('invalid schema', async (t) => {
+  await t.rejects(
+    buildApp({
+      t,
+      service: defaultService,
+      jsonSchema: {} as typeof defaultJsonSchema,
+    }),
+  );
+});
+
+t.test('invalid GET /matches', async (t) => {
+  const app = await buildApp({ t });
+  const res = await app.inject({
+    url: '/matches',
+    method: 'GET',
+    query: {
+      match: '/invalid',
+    },
+  });
+  t.same(res.json(), { value: 'false' });
+});
+t.test('valid GET /matches', async (t) => {
+  const app = await buildApp({ t });
+  const res = await app.inject({
+    url: '/matches',
+    method: 'GET',
+    query: {
+      match: '/matches',
+    },
+  });
+  t.same(res.json(), { value: 'true' });
+});
+
+t.test('valid GET /asReply', async (t) => {
+  const app = await buildApp({ t });
+  const res = await app.inject({
+    url: '/asReply',
+    method: 'GET',
+    query: {
+      reply: 'unknown',
+    },
+  });
+  t.equal(res.statusCode, 200);
+  t.same(res.json(), { value: 'known' });
+});
+
+t.test('valid GET /asReply', async (t) => {
+  const app = await buildApp({ t });
+  const res = await app.inject({
+    url: '/asReply',
+    method: 'GET',
+    query: {
+      reply: 'known',
+    },
+  });
+  t.equal(res.statusCode, 200);
+  t.same(res.json(), { value: 'known' });
+});
+
+t.test('it does not infer with prefixed plugin', async (t) => {
+  const app = await buildApp({
+    t,
+    prepare: async (fastify) => {
+      await fastify.register(
+        (app, opts, done) => {
+          const schema = {
+            response: {
+              200: {
+                type: 'string',
+              },
+            },
+          };
+          app.get('/', { schema }, (req, reply) => {
+            return String(req.routeOptions.schema === schema);
+          });
+          done();
+        },
+        { prefix: '/prefixed' },
+      );
+    },
+  });
+
+  const res = await app.inject({ url: '/prefixed' });
+  t.same(res.body, 'true');
 });

@@ -306,6 +306,79 @@
         }
       }
     },
+    "GET /matches": {
+      "request": {
+        "type": "object",
+        "required": [
+          "querystring"
+        ],
+        "properties": {
+          "querystring": {
+            "type": "object",
+            "required": [
+              "match"
+            ],
+            "properties": {
+              "match": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "enum": [
+                "false",
+                "true"
+              ],
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "GET /asReply": {
+      "request": {
+        "type": "object",
+        "required": [
+          "querystring"
+        ],
+        "properties": {
+          "querystring": {
+            "type": "object",
+            "required": [
+              "reply"
+            ],
+            "properties": {
+              "reply": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "string",
+              "const": "known"
+            }
+          }
+        }
+      }
+    },
     "GET /objectid": {
       "request": {},
       "response": {
@@ -323,5 +396,5 @@
       }
     }
   },
-  "$hash": "c138d591328ddd9cc1b794e5e35447467e7c1f8d4129b8fc727c11d7e9b0ef02__v1.2.0"
+  "$hash": "55f23702a95be2a6d63340bde05157e37feed81b4eeb0badfccc120a27d59da5__v1.2.0"
 }

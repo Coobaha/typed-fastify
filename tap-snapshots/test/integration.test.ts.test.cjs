@@ -593,6 +593,129 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP invalid GET /matches > request path:GET /matches?match=%2Finvalid id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {
+    "match": "/invalid",
+  },
+  "schema": Object {
+    "querystring": Object {
+      "properties": Object {
+        "match": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "match",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "value": Object {
+            "enum": Array [
+              "false",
+              "true",
+            ],
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "value",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP invalid GET /matches > response path:GET /matches?match=%2Finvalid id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 17",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "value": "false",
+    },
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP it does not infer with prefixed plugin > request path:GET /prefixed id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "type": "string",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP it does not infer with prefixed plugin > response path:GET /prefixed id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: text/plain; charset=utf-8",
+    "content-length: 4",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    true,
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP it handles empty path > request path:OPTIONS / id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {},
+}
+`
+
+exports[`test/integration.test.ts TAP it handles empty path > response path:OPTIONS / id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: text/plain; charset=utf-8",
+    "content-length: 1",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    "/",
+  ],
+}
+`
+
 exports[`test/integration.test.ts TAP it sends headers > request path:GET / id:req-1 1`] = `
 Object {
   "Body": undefined,
@@ -1135,7 +1258,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3210",
+    "content-length: 3735",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1340,6 +1463,37 @@ Object {
             },
           },
         },
+        "/asReply": Object {
+          "get": Object {
+            "parameters": Array [
+              Object {
+                "in": "query",
+                "name": "reply",
+                "required": true,
+                "type": "string",
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "value": Object {
+                      "enum": Array [
+                        "known",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "value",
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+          },
+        },
         "/empty": Object {
           "get": Object {
             "responses": Object {},
@@ -1360,6 +1514,38 @@ Object {
                 "description": "Default Response",
                 "schema": Object {
                   "type": "string",
+                },
+              },
+            },
+          },
+        },
+        "/matches": Object {
+          "get": Object {
+            "parameters": Array [
+              Object {
+                "in": "query",
+                "name": "match",
+                "required": true,
+                "type": "string",
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "value": Object {
+                      "enum": Array [
+                        "false",
+                        "true",
+                      ],
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "value",
+                  ],
+                  "type": "object",
                 },
               },
             },
@@ -1674,6 +1860,37 @@ Object {
         },
       },
     },
+    "/asReply": Object {
+      "get": Object {
+        "parameters": Array [
+          Object {
+            "in": "query",
+            "name": "reply",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "value": Object {
+                  "enum": Array [
+                    "known",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "value",
+              ],
+              "type": "object",
+            },
+          },
+        },
+      },
+    },
     "/empty": Object {
       "get": Object {
         "responses": Object {},
@@ -1694,6 +1911,38 @@ Object {
             "description": "Default Response",
             "schema": Object {
               "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "/matches": Object {
+      "get": Object {
+        "parameters": Array [
+          Object {
+            "in": "query",
+            "name": "match",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "value": Object {
+                  "enum": Array [
+                    "false",
+                    "true",
+                  ],
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "value",
+              ],
+              "type": "object",
             },
           },
         },
@@ -1802,5 +2051,182 @@ Object {
     },
   },
   "swagger": "2.0",
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /asReply > request path:GET /asReply?reply=known id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {
+    "reply": "known",
+  },
+  "schema": Object {
+    "querystring": Object {
+      "properties": Object {
+        "reply": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "reply",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "value": Object {
+            "const": "known",
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "value",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /asReply > request path:GET /asReply?reply=unknown id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {
+    "reply": "unknown",
+  },
+  "schema": Object {
+    "querystring": Object {
+      "properties": Object {
+        "reply": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "reply",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "value": Object {
+            "const": "known",
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "value",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /asReply > response path:GET /asReply?reply=known id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 17",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "value": "known",
+    },
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /asReply > response path:GET /asReply?reply=unknown id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 17",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "value": "known",
+    },
+  ],
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /matches > request path:GET /matches?match=%2Fmatches id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {
+    "match": "/matches",
+  },
+  "schema": Object {
+    "querystring": Object {
+      "properties": Object {
+        "match": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "match",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "properties": Object {
+          "value": Object {
+            "enum": Array [
+              "false",
+              "true",
+            ],
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "value",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP valid GET /matches > response path:GET /matches?match=%2Fmatches id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 16",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "value": "true",
+    },
+  ],
 }
 `

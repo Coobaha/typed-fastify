@@ -26,6 +26,7 @@
     "@types/split2": "^4.2.0",
     "@types/tap": "^15.0.9",
     "@types/yargs": "^17.0.24",
+    "coveralls": "3.1.1",
     "fastify": "^4.23.2",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
@@ -78,7 +79,7 @@
     "pretest": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
     "server": "pnpm preserver && tsnd test/server.ts",
     "test": "pnpm pretest && pnpm test:types && pnpm test:integration",
-    "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse --no-check-coverage",
+    "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse",
     "test:types": "tsc -p test/tsconfig.test.json"
   }
 }
