@@ -26,6 +26,7 @@
     "@types/split2": "^4.2.0",
     "@types/tap": "^15.0.9",
     "@types/yargs": "^17.0.24",
+    "coveralls": "3.1.1",
     "fastify": "^4.23.2",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
