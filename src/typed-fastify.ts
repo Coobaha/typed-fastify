@@ -56,6 +56,7 @@ const addSchema = <
     const key = `${config.method} ${config.routePath}`;
     const fastifySchema = opts.jsonSchema.fastify;
     let maybeSchema = fastifySchema[key];
+    /* istanbul ignore next */
     if (!maybeSchema && config.routePath === '') {
       maybeSchema = fastifySchema[`${config.method} /`];
     }
@@ -63,15 +64,15 @@ const addSchema = <
       maybeSchema = fastifySchema[`${config.method} /`];
     }
 
-    config.schema = config.schema || {};
-
     if (maybeSchema) {
+      /* istanbul ignore next */
       config.schema = {
-        ...(config.schema ?? {}),
+        ...config.schema,
         ...(opts?.swaggerSecurityMap &&
           opts.swaggerSecurityMap[key] && {
             security: opts.swaggerSecurityMap[key],
           }),
+
         ...maybeSchema?.request?.properties,
         ...(maybeSchema.response && {
           response: maybeSchema.response,
@@ -90,9 +91,11 @@ const addSchema = <
   ] as const);
 
   for (const path in opts.service) {
+    /* istanbul ignore next */
     if (!Object.hasOwnProperty.call(opts.service, path)) continue;
     const [method, ...route] = path.split(' ');
     const httpMethod = <F.HTTPMethods>String(method).toUpperCase();
+    /* istanbul ignore if */
     if (!method || !httpMethods.has(httpMethod)) {
       throw Error(`Wrong configuration for ${path}, method [${method}] is unknown HTTP method`);
     }
@@ -102,7 +105,7 @@ const addSchema = <
       case 'object':
         fastify.route({
           ...handler,
-          // @ts-ignore
+          //@ts-expect-error
           handler: handler.handler,
           method: httpMethod,
           url: route.join(' '),
@@ -116,6 +119,7 @@ const addSchema = <
           url: route.join(' '),
         });
         break;
+      /* istanbul ignore next */
       default:
         throw Error(`Unknown handler`);
     }

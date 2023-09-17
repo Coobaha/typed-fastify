@@ -114,6 +114,34 @@ export interface TestSchema extends Schema {
       };
     };
 
+    'GET /matches': {
+      request: {
+        querystring: {
+          match: string;
+        };
+      };
+      response: {
+        200: {
+          content: {
+            value: 'true' | 'false';
+          };
+        };
+      };
+    };
+    'GET /asReply': {
+      request: {
+        querystring: {
+          reply: string;
+        };
+      };
+      response: {
+        200: {
+          content: {
+            value: 'known';
+          };
+        };
+      };
+    };
     'GET /objectid': {
       response: {
         200: {
