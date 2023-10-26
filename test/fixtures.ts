@@ -30,7 +30,8 @@ export const defaultService: Service<TestSchema> = {
   },
   'POST /jsonify': (req, reply) => {
     const { date } = req.body;
-    return reply.status(200).send({ date: date.toJSON() });
+    date.charAt; // ok for string, not ok for Date
+    return reply.status(200).send({ date: new Date(date).toJSON() });
   },
   'POST /': (req, reply) => {
     if (req.operationPath !== 'POST /') {

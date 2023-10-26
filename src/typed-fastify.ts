@@ -350,7 +350,7 @@ interface Request<
   readonly operationPath: Path;
   readonly method: ROptions['method'];
   // A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
-  readonly body: ROptions['method'] extends 'GET' ? never : Get<Op['request'], 'body'>;
+  readonly body: ROptions['method'] extends 'GET' ? never : Jsonify<Get<Op['request'], 'body'>>;
   readonly routeOptions: Id<Readonly<ROptions>>;
   readonly routerMethod: ROptions['method'];
   readonly headers: Get<Op['request'], 'headers'>;
