@@ -1230,7 +1230,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 3735",
+    "content-length: 4071",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1486,6 +1486,45 @@ Object {
                 "description": "Default Response",
                 "schema": Object {
                   "type": "string",
+                },
+              },
+            },
+          },
+        },
+        "/jsonify": Object {
+          "post": Object {
+            "parameters": Array [
+              Object {
+                "in": "body",
+                "name": "body",
+                "schema": Object {
+                  "properties": Object {
+                    "date": Object {
+                      "format": "date-time",
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "date",
+                  ],
+                  "type": "object",
+                },
+              },
+            ],
+            "responses": Object {
+              "200": Object {
+                "description": "Default Response",
+                "schema": Object {
+                  "properties": Object {
+                    "date": Object {
+                      "format": "date-time",
+                      "type": "string",
+                    },
+                  },
+                  "required": Array [
+                    "date",
+                  ],
+                  "type": "object",
                 },
               },
             },
@@ -1883,6 +1922,45 @@ Object {
             "description": "Default Response",
             "schema": Object {
               "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "/jsonify": Object {
+      "post": Object {
+        "parameters": Array [
+          Object {
+            "in": "body",
+            "name": "body",
+            "schema": Object {
+              "properties": Object {
+                "date": Object {
+                  "format": "date-time",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "date",
+              ],
+              "type": "object",
+            },
+          },
+        ],
+        "responses": Object {
+          "200": Object {
+            "description": "Default Response",
+            "schema": Object {
+              "properties": Object {
+                "date": Object {
+                  "format": "date-time",
+                  "type": "string",
+                },
+              },
+              "required": Array [
+                "date",
+              ],
+              "type": "object",
             },
           },
         },
