@@ -28,6 +28,10 @@ export const defaultService: Service<TestSchema> = {
   'GET /user_and_obj': (req, reply) => {
     return reply.status(200).send([{ name: 'user1' }, { id: '1', type: 'TEST' }, { any: 'thing' }]);
   },
+  'POST /jsonify': (req, reply) => {
+    const { date } = req.body;
+    return reply.status(200).send({ date: date.toJSON() });
+  },
   'POST /': (req, reply) => {
     if (req.operationPath !== 'POST /') {
       throw new Error('Should never happen');

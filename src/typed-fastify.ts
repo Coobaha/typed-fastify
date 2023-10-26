@@ -1,4 +1,5 @@
 import type * as F from 'fastify';
+import type { Jsonify } from 'type-fest';
 import { RouteGenericInterface } from 'fastify/types/route';
 import { RequestRouteOptions } from 'fastify/types/request';
 
@@ -224,7 +225,7 @@ interface Reply<
         ]
       : [Get2<Op['response'], Status, 'content'>] extends [never]
       ? []
-      : [Get2<Op['response'], Status, 'content'>]
+      : [Get2<Op['response'], Status, 'content'> | Jsonify<Get2<Op['response'], Status, 'content'>>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;
