@@ -127,6 +127,7 @@ export default async (params: { files: string[] }) => {
   const settings: TJS.PartialArgs = {
     required: true,
     ref: true,
+    noExtraProps: true,
     aliasRef: false,
     skipLibCheck: true,
     topRef: true,
