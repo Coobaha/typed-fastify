@@ -45,6 +45,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "params": Object {
+      "additionalProperties": true,
       "properties": Object {
         "castedToNumber": Object {
           "type": "number",
@@ -128,7 +129,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 45",
+    "content-length: 59",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -139,6 +140,7 @@ Object {
       },
       Object {
         "id": "1",
+        "type": "TEST",
       },
       Object {
         "any": "thing",
@@ -155,6 +157,7 @@ Array [
   },
   Object {
     "id": "1",
+    "type": "TEST",
   },
   Object {
     "any": "thing",
@@ -205,6 +208,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "body": Object {
+      "additionalProperties": false,
       "properties": Object {
         "user": Object {
           "$ref": "test_schema#/properties/User",
@@ -217,6 +221,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "msg": Object {
             "type": "string",
@@ -280,6 +285,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "body": Object {
+      "additionalProperties": false,
       "properties": Object {
         "user": Object {
           "$ref": "test_schema#/properties/User",
@@ -292,6 +298,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "msg": Object {
             "type": "string",
@@ -355,6 +362,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "body": Object {
+      "additionalProperties": false,
       "properties": Object {
         "user": Object {
           "$ref": "test_schema#/properties/User",
@@ -367,6 +375,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "msg": Object {
             "type": "string",
@@ -420,6 +429,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "params": Object {
+      "additionalProperties": false,
       "properties": Object {
         "id": Object {
           "type": "number",
@@ -491,6 +501,7 @@ Object {
   "schema": Object {
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "frame": Object {
             "$ref": "test_schema#/properties/TestObj",
@@ -511,7 +522,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 25",
+    "content-length: 39",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -519,6 +530,7 @@ Object {
     Object {
       "frame": Object {
         "id": "string",
+        "type": "TEST",
       },
     },
   ],
@@ -544,6 +556,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -559,6 +572,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -606,6 +620,7 @@ Object {
   },
   "schema": Object {
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "match": Object {
           "type": "string",
@@ -618,6 +633,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "value": Object {
             "enum": Array [
@@ -701,6 +717,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -716,6 +733,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -794,6 +812,7 @@ Object {
   },
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -809,6 +828,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -921,6 +941,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -936,6 +957,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -964,6 +986,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -979,6 +1002,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -1035,6 +1059,67 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP it works with /jsonify > request path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "content-length": "35",
+    "content-type": "application/json",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "date": Object {
+          "format": "date-time",
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "date",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "date": Object {
+            "format": "date-time",
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "date",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP it works with /jsonify > response path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 35",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "date": "2023-10-28T13:31:57.949Z",
+    },
+  ],
+}
+`
+
 exports[`test/integration.test.ts TAP objectid > request path:GET /objectid id:req-1 1`] = `
 Object {
   "Body": undefined,
@@ -1047,6 +1132,7 @@ Object {
   "schema": Object {
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "id": Object {
             "type": "string",
@@ -1115,6 +1201,7 @@ Object {
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -1130,6 +1217,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -1152,13 +1240,12 @@ Object {
   "Headers": Object {
     "authorization": "required",
     "getheader": "isHere",
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
   },
   "Params": Object {},
   "Query": Object {},
   "schema": Object {
     "headers": Object {
+      "additionalProperties": false,
       "properties": Object {
         "authorization": Object {
           "type": "string",
@@ -1174,6 +1261,7 @@ Object {
       "type": "object",
     },
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "getQueryParam": Object {
           "type": "boolean",
@@ -1230,7 +1318,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 4071",
+    "content-length: 4316",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1242,6 +1330,7 @@ Object {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "properties": Object {
             "Obj": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "id": Object {
                   "format": "uuid",
@@ -1260,18 +1349,6 @@ Object {
             "ObjectId": Object {
               "type": "string",
             },
-            "Omit__Obj,\\"type\\"__": Object {
-              "properties": Object {
-                "id": Object {
-                  "format": "uuid",
-                  "type": "string",
-                },
-              },
-              "required": Array [
-                "id",
-              ],
-              "type": "object",
-            },
             "RecordStringString": Object {
               "additionalProperties": Object {
                 "anyOf": Array [
@@ -1286,8 +1363,10 @@ Object {
               "type": "object",
             },
             "SharedRequest": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "headers": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "authorization": Object {
                       "type": "string",
@@ -1302,19 +1381,25 @@ Object {
               "type": "object",
             },
             "TestObj": Object {
-              "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+              "additionalProperties": false,
               "properties": Object {
+                "id": Object {
+                  "format": "uuid",
+                  "type": "string",
+                },
                 "type": Object {
                   "const": "TEST",
                   "type": "string",
                 },
               },
               "required": Array [
+                "id",
                 "type",
               ],
               "type": "object",
             },
             "User": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "name": Object {
                   "type": "string",
@@ -1401,6 +1486,7 @@ Object {
                 "in": "body",
                 "name": "body",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "user": Object {
                       "$ref": "#/definitions/def-0/properties/User",
@@ -1417,6 +1503,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "msg": Object {
                       "type": "string",
@@ -1449,6 +1536,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "value": Object {
                       "enum": Array [
@@ -1498,6 +1586,7 @@ Object {
                 "in": "body",
                 "name": "body",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "date": Object {
                       "format": "date-time",
@@ -1515,6 +1604,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "date": Object {
                       "format": "date-time",
@@ -1544,6 +1634,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "value": Object {
                       "enum": Array [
@@ -1568,6 +1659,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "id": Object {
                       "type": "string",
@@ -1612,6 +1704,7 @@ Object {
               "200": Object {
                 "description": "Default Response",
                 "schema": Object {
+                  "additionalProperties": false,
                   "properties": Object {
                     "frame": Object {
                       "$ref": "#/definitions/def-0/properties/TestObj",
@@ -1678,6 +1771,7 @@ Object {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "properties": Object {
         "Obj": Object {
+          "additionalProperties": false,
           "properties": Object {
             "id": Object {
               "format": "uuid",
@@ -1696,18 +1790,6 @@ Object {
         "ObjectId": Object {
           "type": "string",
         },
-        "Omit__Obj,\\"type\\"__": Object {
-          "properties": Object {
-            "id": Object {
-              "format": "uuid",
-              "type": "string",
-            },
-          },
-          "required": Array [
-            "id",
-          ],
-          "type": "object",
-        },
         "RecordStringString": Object {
           "additionalProperties": Object {
             "anyOf": Array [
@@ -1722,8 +1804,10 @@ Object {
           "type": "object",
         },
         "SharedRequest": Object {
+          "additionalProperties": false,
           "properties": Object {
             "headers": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "authorization": Object {
                   "type": "string",
@@ -1738,19 +1822,25 @@ Object {
           "type": "object",
         },
         "TestObj": Object {
-          "$ref": "#/definitions/def-0/properties/Omit__Obj,%22type%22__",
+          "additionalProperties": false,
           "properties": Object {
+            "id": Object {
+              "format": "uuid",
+              "type": "string",
+            },
             "type": Object {
               "const": "TEST",
               "type": "string",
             },
           },
           "required": Array [
+            "id",
             "type",
           ],
           "type": "object",
         },
         "User": Object {
+          "additionalProperties": false,
           "properties": Object {
             "name": Object {
               "type": "string",
@@ -1837,6 +1927,7 @@ Object {
             "in": "body",
             "name": "body",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "user": Object {
                   "$ref": "#/definitions/def-0/properties/User",
@@ -1853,6 +1944,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "msg": Object {
                   "type": "string",
@@ -1885,6 +1977,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "value": Object {
                   "enum": Array [
@@ -1934,6 +2027,7 @@ Object {
             "in": "body",
             "name": "body",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "date": Object {
                   "format": "date-time",
@@ -1951,6 +2045,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "date": Object {
                   "format": "date-time",
@@ -1980,6 +2075,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "value": Object {
                   "enum": Array [
@@ -2004,6 +2100,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "id": Object {
                   "type": "string",
@@ -2048,6 +2145,7 @@ Object {
           "200": Object {
             "description": "Default Response",
             "schema": Object {
+              "additionalProperties": false,
               "properties": Object {
                 "frame": Object {
                   "$ref": "#/definitions/def-0/properties/TestObj",
@@ -2117,6 +2215,7 @@ Object {
   },
   "schema": Object {
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "reply": Object {
           "type": "string",
@@ -2129,6 +2228,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "value": Object {
             "const": "known",
@@ -2158,6 +2258,7 @@ Object {
   },
   "schema": Object {
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "reply": Object {
           "type": "string",
@@ -2170,6 +2271,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "value": Object {
             "const": "known",
@@ -2233,6 +2335,7 @@ Object {
   },
   "schema": Object {
     "querystring": Object {
+      "additionalProperties": false,
       "properties": Object {
         "match": Object {
           "type": "string",
@@ -2245,6 +2348,7 @@ Object {
     },
     "response": Object {
       "200": Object {
+        "additionalProperties": false,
         "properties": Object {
           "value": Object {
             "enum": Array [
