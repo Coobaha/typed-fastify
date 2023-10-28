@@ -103,6 +103,7 @@ export interface TestSchema extends Schema {
     };
     'GET /inferredParams/:id/:castedToNumber': {
       request: {
+        /** @additionalProperties true */
         params: {
           castedToNumber: number;
         };
