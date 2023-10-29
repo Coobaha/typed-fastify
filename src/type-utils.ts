@@ -1,10 +1,14 @@
-import { PositiveInfinity, NegativeInfinity } from 'type-fest/source/numeric';
-import { JsonPrimitive, JsonValue } from 'type-fest/source/basic';
-import { EmptyObject } from 'type-fest/source/empty-object';
-import { TypedArray } from 'type-fest/source/typed-array';
-import { JsonifyList } from 'type-fest/source/jsonify';
-import { WritableDeep } from 'type-fest/source/writable-deep';
-
+import type {
+  PositiveInfinity,
+  NegativeInfinity,
+  JsonPrimitive,
+  JsonValue,
+  EmptyObject,
+  TypedArray,
+  WritableDeep,
+  IsNever,
+  IsUnknown,
+} from 'type-fest';
 export type Id<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 export type Get<T, P> = P extends keyof T ? T[P] : never;
 export type Get2<T, P, P2> = Get<Get<T, P>, P2>;
@@ -13,6 +17,17 @@ export type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G ex
 type IsNotJsonableError<T> = Invalid<`${Extract<T, string>} is not Json-like`> & {};
 
 type NotJsonable = ((...arguments_: any[]) => any) | undefined | symbol | RegExp | Function;
+
+type NeverToNull<T> = IsNever<T> extends true ? null : T;
+
+// Handles tuples and arrays
+type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends boolean> = T extends []
+  ? []
+  : T extends [infer F, ...infer R]
+  ? [NeverToNull<Jsonlike<F, DoNotCastToPrimitive>>, ...JsonlikeList<R, DoNotCastToPrimitive>]
+  : IsUnknown<T[number]> extends true
+  ? []
+  : Array<T[number] extends NotJsonable ? null : Jsonlike<T[number], DoNotCastToPrimitive>>;
 
 // tweaked version of Jsonify from type-fest
 export type Jsonlike<T, DoNotCastToPrimitive extends boolean = false> = T extends PositiveInfinity | NegativeInfinity
@@ -44,9 +59,9 @@ export type Jsonlike<T, DoNotCastToPrimitive extends boolean = false> = T extend
   : T extends []
   ? []
   : T extends unknown[]
-  ? JsonifyList<T>
+  ? JsonlikeList<T, DoNotCastToPrimitive>
   : T extends readonly unknown[]
-  ? JsonifyList<WritableDeep<T>>
+  ? JsonlikeList<WritableDeep<T>, DoNotCastToPrimitive>
   : T extends object
   ? {
       [K in keyof T]: [T[K]] extends [NotJsonable] | [never]
