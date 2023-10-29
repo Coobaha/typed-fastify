@@ -203,6 +203,13 @@ addSchema(app, {
 This library is using [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) with custom
 transforms for schema generation. All `@tjs` [annotations](https://github.com/YousefED/typescript-json-schema#annotations) can be used to fine-tune schema output
 
-- `@type` can be used to specify end type after using `toJSON, toString` methods of objects like `ObjectID` from MogoDB
+- `@type` can be used to specify end type after using `toJSON, toString` methods of objects like `ObjectID` from MongoDB
 
 - since we use `typejescript-json-schema`: all known limitations are also inherited: - Records are not transformed correctly, use `{ [k: string]: string }` instead or hint with `@tjs`
+
+- [additionalProperties](https://json-schema.org/understanding-json-schema/reference/object#additionalproperties) are set to `false` by default
+  - use `{ [k: string]: T }` index to explicitly define type for `additionalProperties`
+  - or add `/** @additionalProperties true */` annotation to allow anything
+  - for details see:
+    - [default fastify AJV options](https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/#validator-compiler)
+    - [removeAddtitional in AJV](https://ajv.js.org/options.html#removeadditional)
