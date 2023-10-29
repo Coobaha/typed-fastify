@@ -1,5 +1,6 @@
 import { expectAssignable, expectType, expectNotType } from 'tsd';
 import type { RequestHandler, Schema, Service } from '../src';
+import { Jsonlike, Invalid } from '../src/type-utils';
 
 type User = {
   name: string;
@@ -720,3 +721,52 @@ expectType<Service<Params>>({
     return reply.status(200).send();
   },
 });
+
+function verifyJsonlike<
+  Input,
+  Expected extends Jsonlike<Input, DoNotCastToPrimitive>,
+  DoNotCastToPrimitive extends boolean = false,
+>() {}
+
+verifyJsonlike<
+  {
+    a: string;
+    b: {
+      toJSON(): number;
+    };
+    c: {
+      toJSON(): {
+        toJSON(): string;
+      };
+    };
+    d: Date;
+    A: RegExp;
+    B: Function;
+    C: () => 1;
+    D: undefined;
+  },
+  {
+    a: string;
+    b: number;
+    c: string;
+    d: string;
+    A: Invalid<'A is not Json-like'>;
+    B: Invalid<'B is not Json-like'>;
+    C: Invalid<'C is not Json-like'>;
+    D: Invalid<'D is not Json-like'>;
+  }
+>();
+
+verifyJsonlike<
+  {
+    a: Date;
+    b: Number;
+    A: RegExp;
+  },
+  {
+    a: Date;
+    b: number;
+    A: Invalid<'A is not Json-like'>;
+  },
+  true
+>();

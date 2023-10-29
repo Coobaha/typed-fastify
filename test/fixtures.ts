@@ -14,7 +14,6 @@ class MyObjectId extends String implements ObjectId {
     return this.id;
   }
 }
-
 export const defaultService: Service<TestSchema> = {
   'GET /': (req, reply) => {
     if (req.operationPath !== 'GET /') {
@@ -29,9 +28,13 @@ export const defaultService: Service<TestSchema> = {
     return reply.status(200).send([{ name: 'user1' }, { id: '1', type: 'TEST' }, { any: 'thing' }]);
   },
   'POST /jsonify': (req, reply) => {
-    const { date } = req.body;
-    date.charAt; // ok for string, not ok for Date
-    return reply.status(200).send({ date: new Date(date).toJSON() });
+    const { date, regexp } = req.body;
+
+    return reply.status(200).send({
+      date: new Date(date),
+      type: typeof date,
+      regexpType: typeof regexp,
+    });
   },
   'POST /': (req, reply) => {
     if (req.operationPath !== 'POST /') {

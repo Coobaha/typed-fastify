@@ -20,6 +20,9 @@ dependencies:
   json-schema-traverse:
     specifier: ^1.0.0
     version: 1.0.0
+  type-fest:
+    specifier: ^4.6.0
+    version: 4.6.0
   typescript-json-schema:
     specifier: ^0.61.0
     version: 0.61.0
@@ -58,6 +61,12 @@ devDependencies:
   '@types/yargs':
     specifier: ^17.0.24
     version: 17.0.24
+  ajv-formats:
+    specifier: 2.1.1
+    version: 2.1.1(ajv@8.12.0)
+  ajv-keywords:
+    specifier: 5.1.0
+    version: 5.1.0(ajv@8.12.0)
   coveralls:
     specifier: 3.1.1
     version: 3.1.1
@@ -94,9 +103,6 @@ devDependencies:
   tsd:
     specifier: ^0.29.0
     version: 0.29.0
-  type-fest:
-    specifier: ^4.3.1
-    version: 4.3.1
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
@@ -687,6 +693,15 @@ packages:
         optional: true
     dependencies:
       ajv: 8.12.0
+    dev: true
+
+  /ajv-keywords@5.1.0(ajv@8.12.0):
+    resolution: {integrity: sha512-YCS/JNFAUyr5vAuhk1DWm1CBxRHW9LbJ2ozWeemrIqpbsqKjHVxYPyi5GC0rjZIT5JxJ3virVTS8wk4i/Z+krw==}
+    peerDependencies:
+      ajv: ^8.8.2
+    dependencies:
+      ajv: 8.12.0
+      fast-deep-equal: 3.1.3
     dev: true
 
   /ajv@6.12.6:
@@ -3617,10 +3632,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /type-fest@4.3.1:
-    resolution: {integrity: sha512-pphNW/msgOUSkJbH58x8sqpq8uQj6b0ZKGxEsLKMUnGorRcDjrUaLS+39+/ub41JNTwrrMyJcUB8+YZs3mbwqw==}
+  /type-fest@4.6.0:
+    resolution: {integrity: sha512-rLjWJzQFOq4xw7MgJrCZ6T1jIOvvYElXT12r+y0CC6u67hegDHaxcPqb2fZHOGlqxugGQPNB1EnTezjBetkwkw==}
     engines: {node: '>=16'}
-    dev: true
+    dev: false
 
   /typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}

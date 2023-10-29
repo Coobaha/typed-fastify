@@ -8,9 +8,11 @@
         "required": [
           "headers"
         ],
+        "additionalProperties": false,
         "properties": {
           "headers": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "authorization": {
                 "type": "string"
@@ -24,6 +26,7 @@
         "required": [
           "name"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string"
@@ -36,6 +39,7 @@
           "id",
           "type"
         ],
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string"
@@ -51,11 +55,16 @@
       },
       "TestObj": {
         "type": "object",
-        "$ref": "test_schema#/properties/Omit__Obj,\"type\"__",
         "required": [
+          "id",
           "type"
         ],
+        "additionalProperties": false,
         "properties": {
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
           "type": {
             "type": "string",
             "const": "TEST"
@@ -102,18 +111,6 @@
             }
           }
         ]
-      },
-      "Omit__Obj,\"type\"__": {
-        "type": "object",
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "format": "uuid",
-            "type": "string"
-          }
-        }
       }
     },
     "type": "object"
@@ -121,15 +118,16 @@
   "fastify": {
     "GET /": {
       "request": {
-        "$ref": "test_schema#/properties/SharedRequest",
         "type": "object",
         "required": [
           "headers",
           "querystring"
         ],
+        "additionalProperties": false,
         "properties": {
           "querystring": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "getQueryParam": {
                 "type": "boolean"
@@ -142,6 +140,7 @@
               "authorization",
               "getHeader"
             ],
+            "additionalProperties": false,
             "properties": {
               "authorization": {
                 "type": "string"
@@ -198,12 +197,14 @@
         "required": [
           "body"
         ],
+        "additionalProperties": false,
         "properties": {
           "body": {
             "type": "object",
             "required": [
               "user"
             ],
+            "additionalProperties": false,
             "properties": {
               "user": {
                 "$ref": "test_schema#/properties/User"
@@ -219,6 +220,7 @@
             "msg",
             "user"
           ],
+          "additionalProperties": false,
           "properties": {
             "user": {
               "$ref": "test_schema#/properties/User"
@@ -236,16 +238,23 @@
         "required": [
           "body"
         ],
+        "additionalProperties": false,
         "properties": {
           "body": {
             "type": "object",
             "required": [
-              "date"
+              "date",
+              "regexp"
             ],
+            "additionalProperties": false,
             "properties": {
               "date": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "regexp": {
+                "type": "string",
+                "format": "regex"
               }
             }
           }
@@ -255,12 +264,21 @@
         "200": {
           "type": "object",
           "required": [
-            "date"
+            "date",
+            "regexpType",
+            "type"
           ],
+          "additionalProperties": false,
           "properties": {
             "date": {
               "type": "string",
               "format": "date-time"
+            },
+            "type": {
+              "type": "string"
+            },
+            "regexpType": {
+              "type": "string"
             }
           }
         }
@@ -280,6 +298,7 @@
         "required": [
           "params"
         ],
+        "additionalProperties": false,
         "properties": {
           "params": {
             "type": "object",
@@ -287,6 +306,7 @@
               "id",
               "subid"
             ],
+            "additionalProperties": false,
             "properties": {
               "id": {
                 "type": "number"
@@ -308,6 +328,7 @@
           "required": [
             "frame"
           ],
+          "additionalProperties": false,
           "properties": {
             "frame": {
               "$ref": "test_schema#/properties/TestObj"
@@ -322,12 +343,14 @@
         "required": [
           "params"
         ],
+        "additionalProperties": false,
         "properties": {
           "params": {
             "type": "object",
             "required": [
               "castedToNumber"
             ],
+            "additionalProperties": true,
             "properties": {
               "castedToNumber": {
                 "type": "number"
@@ -348,12 +371,14 @@
         "required": [
           "querystring"
         ],
+        "additionalProperties": false,
         "properties": {
           "querystring": {
             "type": "object",
             "required": [
               "match"
             ],
+            "additionalProperties": false,
             "properties": {
               "match": {
                 "type": "string"
@@ -368,6 +393,7 @@
           "required": [
             "value"
           ],
+          "additionalProperties": false,
           "properties": {
             "value": {
               "enum": [
@@ -386,12 +412,14 @@
         "required": [
           "querystring"
         ],
+        "additionalProperties": false,
         "properties": {
           "querystring": {
             "type": "object",
             "required": [
               "reply"
             ],
+            "additionalProperties": false,
             "properties": {
               "reply": {
                 "type": "string"
@@ -406,6 +434,7 @@
           "required": [
             "value"
           ],
+          "additionalProperties": false,
           "properties": {
             "value": {
               "type": "string",
@@ -423,6 +452,7 @@
           "required": [
             "id"
           ],
+          "additionalProperties": false,
           "properties": {
             "id": {
               "type": "string"
@@ -432,5 +462,5 @@
       }
     }
   },
-  "$hash": "1252b062241bb72c9f02a27d8f3c6cee7f3bd8a1e7a8142a5a4b88038790d19f__v1.2.0"
+  "$hash": "38609094e259b0406fb6727e3c67af0ce5bad2bc2e945b8df8762d7f3bdf61c7__v1.2.0"
 }

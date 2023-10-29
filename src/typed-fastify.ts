@@ -1,5 +1,4 @@
 import type * as F from 'fastify';
-import type { Jsonify } from 'type-fest';
 import { RouteGenericInterface } from 'fastify/types/route';
 import { RequestRouteOptions } from 'fastify/types/request';
 
@@ -10,6 +9,7 @@ import {
   ResolveFastifyRequestType,
 } from 'fastify/types/type-provider';
 import { Operation, Schema } from './schema';
+import { Jsonlike, Id, Get2, Get, IsEqual, Invalid } from './type-utils';
 
 const addSchema = <
   ServiceSchema extends Schema,
@@ -225,7 +225,7 @@ interface Reply<
         ]
       : [Get2<Op['response'], Status, 'content'>] extends [never]
       ? []
-      : [Get2<Op['response'], Status, 'content'> | Jsonify<Get2<Op['response'], Status, 'content'>>]
+      : [Jsonlike<Get2<Op['response'], Status, 'content'>, true>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;
@@ -283,10 +283,6 @@ type OpaqueReply<
   Opaque = Reply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
 > = Status extends unknown ? Opaque : Content extends unknown ? Opaque : Headers extends unknown ? Opaque : never;
 
-interface Invalid<msg = any> {
-  readonly __INVALID__: unique symbol;
-}
-
 interface AsReply {
   readonly __REPLY_SYMBOL__: unique symbol;
   then(fulfilled: () => void, rejected: (err: Error) => void): void;
@@ -296,8 +292,6 @@ export const asReply = (any: any) => {
   assertAsReply(any);
   return any;
 };
-type Get<T, P> = P extends keyof T ? T[P] : never;
-type Get2<T, P, P2> = Get<Get<T, P>, P2>;
 
 interface Router<Op extends Operation> {
   Querystring: Get<Op['request'], 'querystring'>;
@@ -307,7 +301,6 @@ interface Router<Op extends Operation> {
   // force reply to be never, as we expose it via custom reply interface
   Reply: never;
 }
-type Id<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
 interface Request<
   ServiceSchema extends Schema,
@@ -330,9 +323,11 @@ interface Request<
   ROptions extends Omit<RequestRouteOptions<ContextConfig, SchemaCompiler>, 'method' | 'url'> & {
     method: MP<Path>[0];
     url: MP<Path>[1];
+    body: Get<Op['request'], 'body'>;
   } = Omit<RequestRouteOptions<ContextConfig, SchemaCompiler>, 'method' | 'url'> & {
     method: MP<Path>[0];
     url: MP<Path>[1];
+    body: Get<Op['request'], 'body'>;
   },
 > extends Omit<
     F.FastifyRequest<
@@ -350,14 +345,12 @@ interface Request<
   readonly operationPath: Path;
   readonly method: ROptions['method'];
   // A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
-  readonly body: ROptions['method'] extends 'GET' ? never : Jsonify<Get<Op['request'], 'body'>>;
+  readonly body: ROptions['method'] extends 'GET' ? never : Jsonlike<ROptions['body']>;
   readonly routeOptions: Id<Readonly<ROptions>>;
   readonly routerMethod: ROptions['method'];
   readonly headers: Get<Op['request'], 'headers'>;
   readonly routerPath: ROptions['url'];
 }
-
-type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2 ? true : false;
 
 type GetInvalidParamsValidation<
   Op extends Operation,
