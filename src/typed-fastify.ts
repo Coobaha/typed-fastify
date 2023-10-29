@@ -225,7 +225,7 @@ interface Reply<
         ]
       : [Get2<Op['response'], Status, 'content'>] extends [never]
       ? []
-      : [Jsonlike<Get2<Op['response'], Status, 'content'>, true>]
+      : [Jsonlike<Get2<Op['response'], Status, 'content'>, 'no-cast'>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;
@@ -345,7 +345,7 @@ interface Request<
   readonly operationPath: Path;
   readonly method: ROptions['method'];
   // A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
-  readonly body: ROptions['method'] extends 'GET' ? never : Jsonlike<ROptions['body']>;
+  readonly body: ROptions['method'] extends 'GET' ? never : Jsonlike<ROptions['body'], 'cast'>;
   readonly routeOptions: Id<Readonly<ROptions>>;
   readonly routerMethod: ROptions['method'];
   readonly headers: Get<Op['request'], 'headers'>;

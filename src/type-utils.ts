@@ -20,8 +20,10 @@ type NotJsonable = ((...arguments_: any[]) => any) | undefined | symbol | RegExp
 
 type NeverToNull<T> = IsNever<T> extends true ? null : T;
 
+type JsonCastBehavior = 'cast' | 'no-cast';
+
 // Handles tuples and arrays
-type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends boolean> = T extends []
+type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends JsonCastBehavior> = T extends []
   ? []
   : T extends [infer F, ...infer R]
   ? [NeverToNull<Jsonlike<F, DoNotCastToPrimitive>>, ...JsonlikeList<R, DoNotCastToPrimitive>]
@@ -30,7 +32,7 @@ type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends boolean> = T
   : Array<T[number] extends NotJsonable ? null : Jsonlike<T[number], DoNotCastToPrimitive>>;
 
 // tweaked version of Jsonify from type-fest
-export type Jsonlike<T, DoNotCastToPrimitive extends boolean = false> = T extends PositiveInfinity | NegativeInfinity
+export type Jsonlike<T, CastBehavior extends JsonCastBehavior> = T extends PositiveInfinity | NegativeInfinity
   ? null
   : T extends NotJsonable
   ? IsNotJsonableError<'Passed value'>
@@ -41,10 +43,10 @@ export type Jsonlike<T, DoNotCastToPrimitive extends boolean = false> = T extend
       toJSON(): infer J;
     }
   ? (() => J) extends () => JsonValue // Is J assignable to JsonValue?
-    ? DoNotCastToPrimitive extends true
+    ? CastBehavior extends 'no-cast'
       ? T
       : J // Then T is Jsonable and its Jsonable value is J
-    : Jsonlike<J, DoNotCastToPrimitive> // Maybe if we look a level deeper we'll find a JsonValue
+    : Jsonlike<J, CastBehavior> // Maybe if we look a level deeper we'll find a JsonValue
   : // Instanced primitives are objects
   T extends Number
   ? number
@@ -59,14 +61,12 @@ export type Jsonlike<T, DoNotCastToPrimitive extends boolean = false> = T extend
   : T extends []
   ? []
   : T extends unknown[]
-  ? JsonlikeList<T, DoNotCastToPrimitive>
+  ? JsonlikeList<T, CastBehavior>
   : T extends readonly unknown[]
-  ? JsonlikeList<WritableDeep<T>, DoNotCastToPrimitive>
+  ? JsonlikeList<WritableDeep<T>, CastBehavior>
   : T extends object
   ? {
-      [K in keyof T]: [T[K]] extends [NotJsonable] | [never]
-        ? IsNotJsonableError<K>
-        : Jsonlike<T[K], DoNotCastToPrimitive>;
+      [K in keyof T]: [T[K]] extends [NotJsonable] | [never] ? IsNotJsonableError<K> : Jsonlike<T[K], CastBehavior>;
     } // JsonifyObject recursive call for its children
   : IsNotJsonableError<'Passed value'>;
 
