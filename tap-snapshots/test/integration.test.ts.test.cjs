@@ -1059,6 +1059,82 @@ Object {
 }
 `
 
+exports[`test/integration.test.ts TAP it works with /jsonify 2 > request path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "content-length": "47",
+    "content-type": "application/json",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "date": Object {
+          "format": "date-time",
+          "type": "string",
+        },
+        "regexp": Object {
+          "format": "regex",
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "date",
+        "regexp",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "date": Object {
+            "format": "date-time",
+            "type": "string",
+          },
+          "regexpType": Object {
+            "type": "string",
+          },
+          "type": Object {
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "date",
+          "regexpType",
+          "type",
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`
+
+exports[`test/integration.test.ts TAP it works with /jsonify 2 > response path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 73",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "date": "1970-01-01T00:00:00.000Z",
+      "regexpType": "string",
+      "type": "string",
+    },
+  ],
+}
+`
+
 exports[`test/integration.test.ts TAP it works with /jsonify > request path:POST /jsonify id:req-1 1`] = `
 Object {
   "Body": undefined,
