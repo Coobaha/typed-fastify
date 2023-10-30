@@ -225,7 +225,7 @@ interface Reply<
         ]
       : [Get2<Op['response'], Status, 'content'>] extends [never]
       ? []
-      : [Jsonlike<Get2<Op['response'], Status, 'content'>, 'no-cast'>]
+      : [Jsonlike<Get2<Op['response'], Status, 'content'>, 'combine'>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;

@@ -20,7 +20,7 @@ type NotJsonable = ((...arguments_: any[]) => any) | undefined | symbol | RegExp
 
 type NeverToNull<T> = IsNever<T> extends true ? null : T;
 
-type JsonCastBehavior = 'cast' | 'no-cast';
+type JsonCastBehavior = 'cast' | 'combine';
 
 // Handles tuples and arrays
 type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends JsonCastBehavior> = T extends []
@@ -43,8 +43,8 @@ export type Jsonlike<T, CastBehavior extends JsonCastBehavior> = T extends Posit
       toJSON(): infer J;
     }
   ? (() => J) extends () => JsonValue // Is J assignable to JsonValue?
-    ? CastBehavior extends 'no-cast'
-      ? T
+    ? CastBehavior extends 'combine'
+      ? T | J
       : J // Then T is Jsonable and its Jsonable value is J
     : Jsonlike<J, CastBehavior> // Maybe if we look a level deeper we'll find a JsonValue
   : // Instanced primitives are objects

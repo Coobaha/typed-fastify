@@ -265,12 +265,17 @@
           "type": "object",
           "required": [
             "date",
+            "dateString",
             "regexpType",
             "type"
           ],
           "additionalProperties": false,
           "properties": {
             "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "dateString": {
               "type": "string",
               "format": "date-time"
             },
@@ -462,5 +467,5 @@
       }
     }
   },
-  "$hash": "38609094e259b0406fb6727e3c67af0ce5bad2bc2e945b8df8762d7f3bdf61c7__v1.2.0"
+  "$hash": "09d762cb9c53f4338c7374249078c983ab9ddf1a0814f98d7854a4e15f301e7b__v1.2.0"
 }

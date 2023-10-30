@@ -87,7 +87,12 @@ export interface TestSchema extends Schema {
       };
       response: {
         200: {
-          content: { date: Date; type: string; regexpType: string };
+          content: {
+            date: Date;
+            dateString: Date;
+            type: string;
+            regexpType: string;
+          };
         };
       };
     };

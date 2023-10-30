@@ -32,6 +32,7 @@ export const defaultService: Service<TestSchema> = {
 
     return reply.status(200).send({
       date: new Date(date),
+      dateString: new Date(date).toDateString(),
       type: typeof date,
       regexpType: typeof regexp,
     });

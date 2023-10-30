@@ -1097,6 +1097,11 @@ Object {
             "format": "date-time",
             "type": "string",
           },
+          "dateString": Object {
+            "format": "date-time",
+            "maxLength": 5,
+            "type": "string",
+          },
           "regexpType": Object {
             "type": "string",
           },
@@ -1106,6 +1111,7 @@ Object {
         },
         "required": Array [
           "date",
+          "dateString",
           "regexpType",
           "type",
         ],
@@ -1121,13 +1127,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 73",
+    "content-length: 104",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "date": "1970-01-01T00:00:00.000Z",
+      "dateString": "Thu Jan 01 1970",
       "regexpType": "string",
       "type": "string",
     },
@@ -1173,6 +1180,11 @@ Object {
             "format": "date-time",
             "type": "string",
           },
+          "dateString": Object {
+            "format": "date-time",
+            "maxLength": 5,
+            "type": "string",
+          },
           "regexpType": Object {
             "type": "string",
           },
@@ -1182,6 +1194,7 @@ Object {
         },
         "required": Array [
           "date",
+          "dateString",
           "regexpType",
           "type",
         ],
@@ -1197,13 +1210,14 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 73",
+    "content-length: 104",
     "Date: dateString",
     "Connection: keep-alive",
   ],
   "Payload": Array [
     Object {
       "date": "1970-01-01T00:00:00.000Z",
+      "dateString": "Thu Jan 01 1970",
       "regexpType": "string",
       "type": "string",
     },
@@ -1409,7 +1423,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 4445",
+    "content-length: 4524",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1706,6 +1720,11 @@ Object {
                       "format": "date-time",
                       "type": "string",
                     },
+                    "dateString": Object {
+                      "format": "date-time",
+                      "maxLength": 5,
+                      "type": "string",
+                    },
                     "regexpType": Object {
                       "type": "string",
                     },
@@ -1715,6 +1734,7 @@ Object {
                   },
                   "required": Array [
                     "date",
+                    "dateString",
                     "regexpType",
                     "type",
                   ],
@@ -2160,6 +2180,11 @@ Object {
                   "format": "date-time",
                   "type": "string",
                 },
+                "dateString": Object {
+                  "format": "date-time",
+                  "maxLength": 5,
+                  "type": "string",
+                },
                 "regexpType": Object {
                   "type": "string",
                 },
@@ -2169,6 +2194,7 @@ Object {
               },
               "required": Array [
                 "date",
+                "dateString",
                 "regexpType",
                 "type",
               ],

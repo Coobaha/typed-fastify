@@ -433,7 +433,12 @@ t.test('it works with /jsonify', async (t) => {
   });
 
   t.equal(res.statusCode, 200);
-  t.same(res.json(), { date: new Date(0).toJSON(), type: 'string', regexpType: 'string' });
+  t.same(res.json(), {
+    date: new Date(0).toJSON(),
+    dateString: 'Thu Jan 01 1970',
+    type: 'string',
+    regexpType: 'string',
+  });
 });
 t.test('it works with /jsonify 2', async (t) => {
   const app = await buildApp({ t });
@@ -445,5 +450,5 @@ t.test('it works with /jsonify 2', async (t) => {
   });
   t.equal(res2.statusCode, 200);
 
-  t.same(res2.json(), { date, type: 'string', regexpType: 'string' });
+  t.same(res2.json(), { date, dateString: 'Thu Jan 01 1970', type: 'string', regexpType: 'string' });
 });
