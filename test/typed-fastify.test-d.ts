@@ -725,7 +725,7 @@ expectType<Service<Params>>({
 function verifyJsonlike<
   Input,
   Expected extends Jsonlike<Input, DoNotCastToPrimitive>,
-  DoNotCastToPrimitive extends 'cast' | 'no-cast',
+  DoNotCastToPrimitive extends 'cast' | 'combine',
 >() {}
 
 verifyJsonlike<
@@ -769,5 +769,5 @@ verifyJsonlike<
     b: number;
     A: Invalid<'A is not Json-like'>;
   },
-  'no-cast'
+  'combine'
 >();
