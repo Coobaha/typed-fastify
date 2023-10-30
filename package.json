@@ -81,7 +81,7 @@
     "pretest": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
     "server": "pnpm preserver && tsnd test/server.ts",
     "test": "pnpm pretest && pnpm test:types && pnpm test:integration",
-    "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse",
+    "test:integration": "TAP_TS=1 tap test/*.test.ts -R dot",
     "test:types": "tsc -p test/tsconfig.test.json"
   }
 }
