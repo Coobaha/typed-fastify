@@ -1099,7 +1099,6 @@ Object {
           },
           "dateString": Object {
             "format": "date-time",
-            "maxLength": 5,
             "type": "string",
           },
           "regexpType": Object {
@@ -1182,7 +1181,6 @@ Object {
           },
           "dateString": Object {
             "format": "date-time",
-            "maxLength": 5,
             "type": "string",
           },
           "regexpType": Object {
@@ -1423,7 +1421,7 @@ Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
     "content-type: application/json; charset=utf-8",
-    "content-length: 4524",
+    "content-length: 4510",
     "Date: dateString",
     "Connection: keep-alive",
   ],
@@ -1722,7 +1720,6 @@ Object {
                     },
                     "dateString": Object {
                       "format": "date-time",
-                      "maxLength": 5,
                       "type": "string",
                     },
                     "regexpType": Object {
@@ -2182,7 +2179,6 @@ Object {
                 },
                 "dateString": Object {
                   "format": "date-time",
-                  "maxLength": 5,
                   "type": "string",
                 },
                 "regexpType": Object {
