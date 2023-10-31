@@ -4,6 +4,9 @@ on:
     branches:
       - main
 name: release-please
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   release-please-pr:
     runs-on: ubuntu-latest
