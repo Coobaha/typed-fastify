@@ -232,6 +232,63 @@
         }
       }
     },
+    "POST /jsonify": {
+      "request": {
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "type": "object",
+            "required": [
+              "date",
+              "regexp"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "regexp": {
+                "type": "string",
+                "format": "regex"
+              }
+            }
+          }
+        }
+      },
+      "response": {
+        "200": {
+          "type": "object",
+          "required": [
+            "date",
+            "dateString",
+            "regexpType",
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "dateString": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "type": {
+              "type": "string"
+            },
+            "regexpType": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "GET /empty": {
       "request": {},
       "response": {}
@@ -410,5 +467,5 @@
       }
     }
   },
-  "$hash": "8ab003f270111590ba01112e01c4a7a46d7f515f36297484e9777ea64bd4b0b2__v1.2.0"
+  "$hash": "09d762cb9c53f4338c7374249078c983ab9ddf1a0814f98d7854a4e15f301e7b__v1.2.0"
 }

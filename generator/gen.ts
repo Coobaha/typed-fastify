@@ -124,6 +124,8 @@ export default async (params: { files: string[] }) => {
   };
 
   const PLACEHOLDER_ID = '@__PLACEHOLDER_ID__@' + Date.now();
+  const defaultAgs = TJS.getDefaultArgs();
+
   const settings: TJS.PartialArgs = {
     required: true,
     ref: true,
@@ -134,6 +136,8 @@ export default async (params: { files: string[] }) => {
     ignoreErrors: true,
     strictNullChecks: true,
     id: PLACEHOLDER_ID,
+    // add support for ajv-keywords
+    validationKeywords: [...defaultAgs.validationKeywords, 'instanceof', 'typeof'],
   };
 
   let { files } = params;

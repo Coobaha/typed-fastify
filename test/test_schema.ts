@@ -70,6 +70,32 @@ export interface TestSchema extends Schema {
         };
       };
     };
+    'POST /jsonify': {
+      request: {
+        body: {
+          /**
+           * @type string
+           * @format date-time
+           */
+          date: Date;
+          /**
+           * @type string
+           * @format regex
+           */
+          regexp: string;
+        };
+      };
+      response: {
+        200: {
+          content: {
+            date: Date;
+            dateString: Date;
+            type: string;
+            regexpType: string;
+          };
+        };
+      };
+    };
     'GET /empty': {
       response: {
         204: {};

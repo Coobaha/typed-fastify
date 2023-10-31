@@ -6,7 +6,8 @@ import t from 'tap';
 import addSchema from '../src';
 import { defaultJsonSchema, defaultService } from './fixtures';
 import fastifySwaggerUi from '@fastify/swagger-ui';
-
+import formatsPlugin from 'ajv-formats';
+import keywordsPlugin from 'ajv-keywords';
 type Test = (typeof tap)['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
@@ -27,6 +28,9 @@ const buildApp = async ({
   let stream = split(() => {});
 
   const app = fastify({
+    ajv: {
+      plugins: [formatsPlugin, [keywordsPlugin, ['typeof', 'instanceof']]],
+    },
     logger: {
       stream,
       serializers: {
@@ -406,7 +410,7 @@ t.test('it does not interfere with prefixed plugin', async (t) => {
               },
             },
           };
-          app.get('/', { schema }, (req, reply) => {
+          app.get('/', { schema }, (req) => {
             return String(req.routeOptions.schema === schema);
           });
           done();
@@ -418,4 +422,33 @@ t.test('it does not interfere with prefixed plugin', async (t) => {
 
   const res = await app.inject({ url: '/prefixed' });
   t.same(res.body, 'true');
+});
+
+t.test('it works with /jsonify', async (t) => {
+  const app = await buildApp({ t });
+  const res = await app.inject({
+    url: '/jsonify',
+    method: 'POST',
+    payload: { date: new Date(0), regexp: /test/.toString() },
+  });
+
+  t.equal(res.statusCode, 200);
+  t.same(res.json(), {
+    date: new Date(0).toJSON(),
+    dateString: 'Thu Jan 01 1970',
+    type: 'string',
+    regexpType: 'string',
+  });
+});
+t.test('it works with /jsonify 2', async (t) => {
+  const app = await buildApp({ t });
+  const date = new Date(0).toJSON();
+  const res2 = await app.inject({
+    url: '/jsonify',
+    method: 'POST',
+    payload: { date, regexp: '' },
+  });
+  t.equal(res2.statusCode, 200);
+
+  t.same(res2.json(), { date, dateString: 'Thu Jan 01 1970', type: 'string', regexpType: 'string' });
 });

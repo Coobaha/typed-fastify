@@ -12,6 +12,7 @@
     "glob": "^10.3.4",
     "json-schema-merge-allof": "^0.8.1",
     "json-schema-traverse": "^1.0.0",
+    "type-fest": "^4.6.0",
     "typescript-json-schema": "^0.61.0",
     "yargs": "^17.7.2"
   },
@@ -26,6 +27,8 @@
     "@types/split2": "^4.2.0",
     "@types/tap": "^15.0.9",
     "@types/yargs": "^17.0.24",
+    "ajv-formats": "2.1.1",
+    "ajv-keywords": "5.1.0",
     "coveralls": "3.1.1",
     "fastify": "^4.23.2",
     "husky": "^8.0.3",
@@ -38,7 +41,6 @@
     "tap": "^16.3.8",
     "ts-node-dev": "^2.0.0",
     "tsd": "^0.29.0",
-    "type-fest": "^4.3.1",
     "typescript": "^5.2.2"
   },
   "directories": {
@@ -79,7 +81,7 @@
     "pretest": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",
     "server": "pnpm preserver && tsnd test/server.ts",
     "test": "pnpm pretest && pnpm test:types && pnpm test:integration",
-    "test:integration": "TAP_TS=1 tap test/*.test.ts -R terse",
+    "test:integration": "TAP_TS=1 tap test/*.test.ts -R dot",
     "test:types": "tsc -p test/tsconfig.test.json"
   }
 }

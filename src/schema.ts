@@ -6,6 +6,7 @@ import type { Stream } from 'stream';
 export type StatusCode =
     | 100 | '100' // Continue
     | 101 | '101' // Switching Protocols
+    | 103 | '103' // Early Hints
     | 200 | '200' // OK
     | 201 | '201' // Created
     | 202 | '202' // Accepted
@@ -13,6 +14,9 @@ export type StatusCode =
     | 204 | '204' // No Content
     | 205 | '205' // Reset Content
     | 206 | '206' // Partial Content
+    | 207 | '207' // Multi-Status
+    | 208 | '208' // Already Reported
+    | 226 | '226' // IM Used
     | 300 | '300' // Multiple Choices
     | 301 | '301' // Moved Permanently
     | 302 | '302' // Found
@@ -20,6 +24,7 @@ export type StatusCode =
     | 304 | '304' // Not Modified
     | 305 | '305' // Use Proxy
     | 307 | '307' // Temporary Redirect
+    | 308 | '308' // Permanent Redirect
     | 400 | '400' // Bad Request
     | 401 | '401' // Unauthorized
     | 402 | '402' // Payment Required
@@ -39,12 +44,22 @@ export type StatusCode =
     | 416 | '416' // Range Not Satisfiable
     | 417 | '417' // Expectation Failed
     | 426 | '426' // Upgrade Required
+    | 427 | '427' // Unassigned
+    | 428 | '428' // Precondition Required
+    | 429 | '429' // Too Many Requests
+    | 431 | '431' // Request Header Fields Too Large
+    | 451 | '451' // Unavailable For Legal Reasons
     | 500 | '500' // Internal Server Error
     | 501 | '501' // Not Implemented
     | 502 | '502' // Bad Gateway
     | 503 | '503' // Service Unavailable
     | 504 | '504' // Gateway Timeout
-    | 505 | '505'; // HTTP Version Not Supported;
+    | 505 | '505' // HTTP Version Not Supported;
+    | 506 | '506' // Variant Also Negotiates
+    | 507 | '507' // Insufficient Storage
+    | 508 | '508' // Loop Detected
+    | 510 | '510' // Not Extended
+    | 511 | '511' // Network Authentication Required
 
 export interface FastifyError extends Error {
   code: string;
@@ -71,7 +86,8 @@ export interface Operation {
     };
   };
 }
+
 export interface Schema<SecurityId extends string = string> {
   readonly __SCHEMA_TAG__?: 'BETTER-FASTIFY-SCHEMA';
-  paths: Record<`${HTTPMethods} ${string}`, Partial<Operation>>;
+  paths: Record<`${HTTPMethods} ${string}`, Operation>;
 }
