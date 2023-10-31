@@ -73,8 +73,8 @@
   },
   "repository": "ssh://git@github.com/Coobaha/typed-fastify.git",
   "scripts": {
-    "_postinstall": "husky install",
     "build": "tsc -p src && tsc -p generator",
+    "postinstall": "husky install",
     "postpublish": "pinst --enable",
     "prepublishOnly": "pinst --disable",
     "preserver": "tsnd generator/gen.bin.ts gen 'test/test_schema.ts'",

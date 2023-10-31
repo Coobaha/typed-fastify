@@ -21,8 +21,6 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: release-pr
-          versioning-strategy: prerelease
-          prerelease: true
   release-please-release:
     runs-on: ubuntu-latest
     steps:
@@ -36,8 +34,6 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: github-release
-          prerelease: true
-          versioning-strategy: prerelease
       - uses: pnpm/action-setup@v2
         with:
           version: 8
