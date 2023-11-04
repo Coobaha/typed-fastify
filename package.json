@@ -12,6 +12,7 @@
     "glob": "^10.3.4",
     "json-schema-merge-allof": "^0.8.1",
     "json-schema-traverse": "^1.0.0",
+    "std-env": "3.4.3",
     "type-fest": "^4.6.0",
     "typescript-json-schema": "^0.61.0",
     "yargs": "^17.7.2"
@@ -37,7 +38,6 @@
     "pinst": "^3.0.0",
     "prettier": "^3.0.3",
     "split2": "^4.2.0",
-    "std-env": "3.4.3",
     "syncpack": "^11.2.1",
     "tap": "^16.3.8",
     "ts-node-dev": "^2.0.0",
