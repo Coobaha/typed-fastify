@@ -87,6 +87,9 @@ devDependencies:
   split2:
     specifier: ^4.2.0
     version: 4.2.0
+  std-env:
+    specifier: 3.4.3
+    version: 3.4.3
   syncpack:
     specifier: ^11.2.1
     version: 11.2.1
@@ -3174,6 +3177,10 @@ packages:
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /std-env@3.4.3:
+    resolution: {integrity: sha512-f9aPhy8fYBuMN+sNfakZV18U39PbalgjXG3lLB9WkaYTxijru61wb57V9wxxNthXM5Sd88ETBWi29qLAsHO52Q==}
     dev: true
 
   /string-argv@0.3.2:

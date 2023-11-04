@@ -8,7 +8,9 @@ import traverse from 'json-schema-traverse';
 import mergeAllOf from 'json-schema-merge-allof';
 import type { JSONSchema7 } from 'json-schema';
 import { JSONSchema7Definition } from 'json-schema';
+import { isCI, isTest } from 'std-env';
 
+const doNotUpdateHash = isCI || isTest;
 const revision = '__v' + require('../package.json').version; // + Date.now();
 
 async function normalizeSchema(originalSchema: JSONSchema7, rootId: string, newRootId: string) {
@@ -148,10 +150,13 @@ export default async (params: { files: string[] }) => {
     const contents = await fs.readFile(file, 'utf-8');
     const saved = `${dir}/${name}.gen.json`;
     const savedExists = nodeFs.existsSync(saved);
-    const $hash = sha256(contents).toString() + revision;
+    let $hash = sha256(contents).toString() + revision;
     try {
       if (savedExists) {
         const existing = JSON.parse(await fs.readFile(saved, 'utf-8'));
+        if (doNotUpdateHash) {
+          $hash = existing.$hash;
+        }
         if (existing.$hash === $hash) {
           continue;
         }
