@@ -1,7 +1,6 @@
 # Changelog
 
-## [2.0.0](https://github.com/Coobaha/typed-fastify/compare/v1.2.0...v2.0.0) (2023-10-31)
-
+## [2.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.0) (2023-11-04)
 
 ### ⚠ BREAKING CHANGES
 
@@ -14,13 +13,12 @@
 * allow jsonified variants in response ([e15f273](https://github.com/Coobaha/typed-fastify/commit/e15f27313361b333cc3dad517ded4168d7e36bf0))
 * Better support for json-like input and outputs in the schema ([f27e6f8](https://github.com/Coobaha/typed-fastify/commit/f27e6f8e4ebe9a71ce04f9e91c36337b306824a1))
 
-
 ### Bug Fixes
 
 * additionalProperties false by default ([#88](https://github.com/Coobaha/typed-fastify/issues/88)) ([442fabb](https://github.com/Coobaha/typed-fastify/commit/442fabb9c7fd216f188c7dfb1f79f2e04f697b0c))
 * change Jsonlike behavior for response body to allow both JsonValue and original type ([b8716f6](https://github.com/Coobaha/typed-fastify/commit/b8716f670ceb66b623b7d740697c3991493eef9c))
-* fix type imports ([6bf1606](https://github.com/Coobaha/typed-fastify/commit/6bf1606e29b9c7c9248e7e0bdd419f44dd5ddb78))
 * jsonify req.body ([636b343](https://github.com/Coobaha/typed-fastify/commit/636b3435428728498a3cc93191861d3471a18eae))
+
 
 ## [1.2.0](https://github.com/Coobaha/typed-fastify/compare/v1.1.4...v1.2.0) (2023-09-16)
 
