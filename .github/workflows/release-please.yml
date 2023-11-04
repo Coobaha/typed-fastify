@@ -21,6 +21,7 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: release-pr
+          last-release-sha: bc2c96200f8c81da6b25ca4d2e6964c04c0cd62f
   release-please-release:
     runs-on: ubuntu-latest
     steps:
