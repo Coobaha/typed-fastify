@@ -21,6 +21,7 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: release-pr
+          last-release-sha: d1d0239
   release-please-release:
     runs-on: ubuntu-latest
     steps:
@@ -34,6 +35,7 @@ jobs:
           release-type: node
           package-name: '@coobaha/typed-fastify'
           command: github-release
+          last-release-sha: d1d0239
       - uses: pnpm/action-setup@v2
         with:
           version: 8
