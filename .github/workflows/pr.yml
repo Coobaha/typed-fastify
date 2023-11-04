@@ -1,9 +1,6 @@
 on:
-  push:
-    branches:
-      - main
   pull_request:
-name: ci
+name: PR
 jobs:
   test:
     runs-on: ubuntu-latest

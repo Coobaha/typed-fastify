@@ -24,6 +24,7 @@ jobs:
           bootstrap-sha: 5749cb6e748a34fded03b33d441a060efb8d7e2e
   release-please-release:
     runs-on: ubuntu-latest
+    environment: main
     steps:
       - uses: actions/checkout@v4
         with:
