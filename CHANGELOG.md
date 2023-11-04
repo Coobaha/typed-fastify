@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.1) (2023-11-04)
+
+
+### Bug Fixes
+
+* move std-env to dependencies from devDependencies ([002b12a](https://github.com/Coobaha/typed-fastify/commit/002b12a028c58e33aba285119c07e397a4bace22))
+
 ## [2.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.0) (2023-11-04)
 
 ### ⚠ BREAKING CHANGES
