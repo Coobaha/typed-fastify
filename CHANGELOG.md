@@ -2,6 +2,13 @@
 
 ## [2.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.0) (2023-11-04)
 
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([49b46b6](https://github.com/Coobaha/typed-fastify/commit/49b46b621b5a39214cbe9a86415de61b813f1499))
+
+## [2.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.0) (2023-11-04)
+
 ### ⚠ BREAKING CHANGES
 
 * Better support for json-like input and outputs in the schema
