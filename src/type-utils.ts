@@ -16,7 +16,7 @@ export type IsEqual<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G ex
 
 type IsNotJsonableError<T> = Invalid<`${Extract<T, string>} is not Json-like`> & {};
 
-type NotJsonable = ((...arguments_: any[]) => any) | undefined | symbol | RegExp | Function;
+type NotJsonable = ((...arguments_: any[]) => any) | symbol | RegExp | Function;
 
 type NeverToNull<T> = IsNever<T> extends true ? null : T;
 
@@ -66,8 +66,10 @@ export type Jsonlike<T, CastBehavior extends JsonCastBehavior> = T extends Posit
   ? JsonlikeList<WritableDeep<T>, CastBehavior>
   : T extends object
   ? {
-      [K in keyof T]: [T[K]] extends [NotJsonable] | [never] ? IsNotJsonableError<K> : Jsonlike<T[K], CastBehavior>;
-    } // JsonifyObject recursive call for its children
+      [K in keyof T]: [T[K]] extends [NotJsonable] | [never] ? IsNotJsonableError<K> : Jsonlike<T[K], CastBehavior>; // JsonifyObject recursive call for its children
+    }
+  : T extends undefined
+  ? T
   : IsNotJsonableError<'Passed value'>;
 
 export interface Invalid<msg = any> {

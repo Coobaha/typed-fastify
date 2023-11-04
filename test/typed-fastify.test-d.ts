@@ -722,52 +722,55 @@ expectType<Service<Params>>({
   },
 });
 
-function verifyJsonlike<
-  Input,
-  Expected extends Jsonlike<Input, DoNotCastToPrimitive>,
-  DoNotCastToPrimitive extends 'cast' | 'combine',
->() {}
-
-verifyJsonlike<
-  {
-    a: string;
-    b: {
-      toJSON(): number;
-    };
-    c: {
-      toJSON(): {
-        toJSON(): string;
+function jsonLike<Input, DoNotCastToPrimitive extends 'cast' | 'combine'>() {
+  return {} as unknown as Jsonlike<Input, DoNotCastToPrimitive>;
+}
+expectType<{
+  a?: string;
+  aa?: string | null | undefined;
+  b: number;
+  c: string;
+  d: string;
+  A: Invalid<'A is not Json-like'>;
+  B: Invalid<'B is not Json-like'>;
+  C: Invalid<'C is not Json-like'>;
+  D?: undefined;
+}>(
+  jsonLike<
+    {
+      a: string | undefined;
+      aa?: string | null | undefined;
+      b: {
+        toJSON(): number;
       };
-    };
-    d: Date;
-    A: RegExp;
-    B: Function;
-    C: () => 1;
-    D: undefined;
-  },
-  {
-    a: string;
-    b: number;
-    c: string;
-    d: string;
-    A: Invalid<'A is not Json-like'>;
-    B: Invalid<'B is not Json-like'>;
-    C: Invalid<'C is not Json-like'>;
-    D: Invalid<'D is not Json-like'>;
-  },
-  'cast'
->();
+      c: {
+        toJSON(): {
+          toJSON(): string;
+        };
+      };
+      d: Date;
+      A: RegExp;
+      B: Function;
+      C: () => 1;
+      D: undefined;
+    },
+    'cast'
+  >(),
+);
 
-verifyJsonlike<
-  {
-    a: Date;
-    b: Number;
-    A: RegExp;
-  },
-  {
-    a: Date;
-    b: number;
-    A: Invalid<'A is not Json-like'>;
-  },
-  'combine'
->();
+expectType<{
+  a: Date | string;
+  aa?: Date | string;
+  b: number;
+  A: Invalid<'A is not Json-like'>;
+}>(
+  jsonLike<
+    {
+      a: Date;
+      aa: Date | undefined;
+      b: Number;
+      A: RegExp;
+    },
+    'combine'
+  >(),
+);
