@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/Coobaha/typed-fastify/compare/v2.0.1...v2.0.2) (2023-11-04)
+
+
+### Bug Fixes
+
+* remove bootstrap-sha ([65d25a9](https://github.com/Coobaha/typed-fastify/commit/65d25a9b671ef91ea482725a54303b0125f01ced))
+
 ## [2.0.1](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.1) (2023-11-04)
 
 
