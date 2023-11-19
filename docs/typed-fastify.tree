@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="typed-fastify"
+                 name="typed-fastify"
+                 start-page="starting-page.topic">
+
+    <toc-element topic="starting-page.topic">
+        <toc-element topic="Overview.md"/>
+        <toc-element topic="Installation.md"/>
+        <toc-element topic="First-schema.md"/>
+    </toc-element>
+    <toc-element topic="CLI-Reference.md">
+        <toc-element topic="Watch-mode.md"/>
+    </toc-element>
+</instance-profile>
