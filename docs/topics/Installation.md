@@ -35,12 +35,10 @@ pnpm add %pkg%
 "gen:schema": "tfs gen src/**/*_schema.ts"
 ```
 
-`%pkg%` doesn't have a built-in watcher, so you can use any watcher you want.
-If you want your schema to be re-built on changes, you can use `nodemon` or any other watcher that is suitable for your
-project.
+You can also add `--watch` flag to watch for changes in your schema files
 
 ```json
-"dev:schema": "nodemon --watch src/**/*_schema.ts --exec \"tfs gen src/**/*_schema.ts\""
+"dev:schema": "tfs gen src/**/*_schema.ts --watch"
 ```
 
 3. Setup is complete and you can build your first schema

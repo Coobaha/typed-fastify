@@ -22,7 +22,10 @@ yargs(hideBin(process.argv))
           type: 'boolean',
           description: 'Watch files for changes',
         })
-        .demandOption(['files']),
+        .demandOption(['files'])
+        .example(`$0 gen -w 'src/example_schema.ts'`, `Generate schemas for example_schema.ts`)
+        .example(`$0 gen 'src/**/*.ts'`, `Generate schemas for all ts files in src`)
+        .example(`$0 gen -w 'src/**/*.ts'`, `Watch for changes in src`),
     async (argv) => {
       if (argv.watch) {
         console.log('Watching for changes...');
@@ -35,5 +38,6 @@ yargs(hideBin(process.argv))
       await gen({ files });
     },
   )
+  .example(`$0 gen 'src/**/*.ts'`, `Generate schemas for all ts files in src`)
   .demandCommand(1, 'You need at least one command before moving on')
   .strict().argv;

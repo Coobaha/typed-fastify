@@ -15,6 +15,9 @@ file
 
 ### Other Options
 
+--watch, -w
+: Watches files for changes and re-runs generation on change.
+
 --version
 : Displays version information.
 
@@ -39,5 +42,11 @@ Glob pattern
 
 ```shell
 %cli% gen 'src/**/*_schema.ts'
+```
+
+Glob pattern with watch
+
+```shell
+%cli% gen 'src/**/*_schema.ts' -w
 ```
 
