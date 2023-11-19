@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/Coobaha/typed-fastify/compare/v2.1.0...v2.1.1) (2023-11-19)
+
+
+### Bug Fixes
+
+* allow gen command to accept multiple files ([273d532](https://github.com/Coobaha/typed-fastify/commit/273d532afbad6900264e4d2b362ad590cb3f6e5c))
+
 ## [2.1.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.1...v2.1.0) (2023-11-19)
 
 
