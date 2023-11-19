@@ -1,8 +1,12 @@
 # Watching for changes
 
-Currently, `%pkg%` doesn't have a built-in watcher.
+`%pkg%` have a built-in watcher. It will watch for changes, new files and deleted files and re-build the schema on any change.
 
-If you want your schema to be re-built on changes, you can use `nodemon` or any other watcher that is suitable for your
+```json
+"watch": "tfs gen -w src/**/*_schema.ts"
+```
+
+You can also use `nodemon` or any other watcher that is suitable for your
 project.
 
 ```json
