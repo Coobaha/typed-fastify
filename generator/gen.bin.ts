@@ -8,7 +8,7 @@ import { watcher } from './watcher';
 
 yargs(hideBin(process.argv))
   .command(
-    'gen [files]',
+    'gen [files...]',
     'Generates json schemas next to corresponding ts files',
     (yargs) =>
       yargs
