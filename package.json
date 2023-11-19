@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@types/json-schema": "^7.0.13",
+    "chokidar": "3.5.3",
     "crypto-js": "^4.1.1",
     "glob": "^10.3.4",
     "json-schema-merge-allof": "^0.8.1",

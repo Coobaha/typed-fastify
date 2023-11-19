@@ -1,27 +1,37 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 
-// @ts-ignore
 import { hideBin } from 'yargs/helpers';
 import gen from './gen';
 import { glob } from 'glob';
+import { watcher } from './watcher';
 
 yargs(hideBin(process.argv))
-  .command<{ files: string }>(
+  .command(
     'gen [files]',
     'Generates json schemas next to corresponding ts files',
-    (yargs) => {
+    (yargs) =>
       yargs
         .positional('files', {
           describe: 'glob pattern of files',
           type: 'string',
           demandOption: true,
         })
-        .demandOption(['files']);
-    },
+        .option('watch', {
+          alias: 'w',
+          type: 'boolean',
+          description: 'Watch files for changes',
+        })
+        .demandOption(['files']),
     async (argv) => {
-      const files = await glob(argv.files);
+      if (argv.watch) {
+        console.log('Watching for changes...');
+        watcher(argv.files);
+        return;
+      }
 
+      console.log('Generating schemas...');
+      const files = await glob(argv.files);
       await gen({ files });
     },
   )
