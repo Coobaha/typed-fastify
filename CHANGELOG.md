@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Coobaha/typed-fastify/compare/v2.0.1...v2.1.0) (2023-11-19)
+
+
+### Features
+
+* Add --watch support ([#107](https://github.com/Coobaha/typed-fastify/issues/107)) ([72f0107](https://github.com/Coobaha/typed-fastify/commit/72f01071d048446cb4ead3958e71feb915ba0632))
+
 ## [2.0.1](https://github.com/Coobaha/typed-fastify/compare/v2.0.0...v2.0.1) (2023-11-04)
 
 
