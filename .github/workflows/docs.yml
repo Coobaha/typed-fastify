@@ -18,20 +18,19 @@ jobs:
     env:
       EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
       FORCE_COLOR: 1
+    environment:
+      name: main
     steps:
       - uses: earthly/actions-setup@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: 'latest'
-
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Select satellite
-        run: earthly sat select docs
       - name: Run build
-        run: earthly --ci --push +docs.build
+        run: earthly --org Coobaha --sat docs --ci --output +docs.build
       - name: Run tests
-        run: earthly --ci +docs.test
+        run: earthly --org Coobaha --sat docs --ci +docs.test
 
       - name: Upload documentation
         uses: actions/upload-artifact@v3
