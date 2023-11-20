@@ -15,6 +15,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
+      FORCE_COLOR: 1
     steps:
       - uses: earthly/actions-setup@v1
         with:
@@ -23,11 +26,12 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
-
+      - name: Select satellite
+        run: earthly sat select docs
       - name: Run build
-        run: earthly +docs.build
+        run: earthly --ci --push +docs.build
       - name: Run tests
-        run: earthly +docs.test
+        run: earthly --ci +docs.test
 
       - name: Upload documentation
         uses: actions/upload-artifact@v3
