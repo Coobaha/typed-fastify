@@ -1,6 +1,6 @@
 # Watching for changes
 
-`%pkg%` have a built-in watcher. It will watch for changes, new files and deleted files and re-build the schema on any change.
+`%pkg%` has a built-in watcher. It will watch for changes, new files and deleted files and re-build the schema on any change.
 
 ```json
 "watch": "tfs gen -w src/**/*_schema.ts"
