@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@fastify/swagger": "^8.10.0",
-    "@fastify/swagger-ui": "^1.9.3",
+    "@fastify/swagger-ui": "^2.0.1",
     "@types/crypto-js": "^4.1.2",
     "@types/glob": "^8.1.0",
     "@types/json-schema-merge-allof": "^0.6.2",
