@@ -57,24 +57,25 @@ const addSchema = <
     const key = `${config.method} ${config.routePath}`;
     const fastifySchema = opts.jsonSchema.fastify;
     let maybeSchema = fastifySchema[key];
-    /* istanbul ignore next */
+    /* c8 ignore start */
     if (!maybeSchema && config.routePath === '') {
       maybeSchema = fastifySchema[`${config.method} /`];
     }
+    /* c8 ignore stop */
     if (!maybeSchema && config.routePath === '/') {
       maybeSchema = fastifySchema[`${config.method} /`];
     }
 
     if (maybeSchema) {
-      /* istanbul ignore next */
       config.schema = {
         ...config.schema,
+        /* c8 ignore start */
         ...(opts?.swaggerSecurityMap &&
           opts.swaggerSecurityMap[key] && {
             security: opts.swaggerSecurityMap[key],
           }),
-
         ...maybeSchema?.request?.properties,
+        /* c8 ignore stop */
         ...(maybeSchema.response && {
           response: maybeSchema.response,
         }),
@@ -92,14 +93,15 @@ const addSchema = <
   ] as const);
 
   for (const path in opts.service) {
-    /* istanbul ignore next */
+    /* c8 ignore next */
     if (!Object.hasOwnProperty.call(opts.service, path)) continue;
     const [method, ...route] = path.split(' ');
     const httpMethod = <F.HTTPMethods>String(method).toUpperCase();
-    /* istanbul ignore if */
+    /* c8 ignore start */
     if (!method || !httpMethods.has(httpMethod)) {
       throw Error(`Wrong configuration for ${path}, method [${method}] is unknown HTTP method`);
     }
+    /* c8 ignore stop */
     const handler = opts.service[path];
 
     switch (typeof handler) {
@@ -120,9 +122,10 @@ const addSchema = <
           url: route.join(' '),
         });
         break;
-      /* istanbul ignore next */
+      /* c8 ignore start */
       default:
         throw Error(`Unknown handler`);
+      /* c8 ignore stop */
     }
   }
 };
