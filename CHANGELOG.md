@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/Coobaha/typed-fastify/compare/v2.1.1...v2.1.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* bump dependencies ([#116](https://github.com/Coobaha/typed-fastify/issues/116)) ([5558aae](https://github.com/Coobaha/typed-fastify/commit/5558aae95d0385a25a478fd8fea4c4f9e5e274cd))
+
 ## [2.1.1](https://github.com/Coobaha/typed-fastify/compare/v2.1.0...v2.1.1) (2023-11-19)
 
 
