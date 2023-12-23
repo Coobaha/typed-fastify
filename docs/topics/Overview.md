@@ -17,7 +17,6 @@ Type safety end-to-end
 : Package generates runtime validations based on your schema and enforces returning correct data at the type
 level.
 
-
 ## What are the benefits?
 
 - `%pkg%` adds strong TypeScript support to Fastify request handlers

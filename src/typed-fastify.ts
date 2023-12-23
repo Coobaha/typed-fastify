@@ -132,10 +132,10 @@ export default addSchema;
 type Missing<Candidate extends any, MaybeRequired extends any> = [Candidate, MaybeRequired] extends [never, never]
   ? false
   : [Candidate] extends [never]
-  ? true
-  : [Candidate] extends [MaybeRequired]
-  ? false
-  : true;
+    ? true
+    : [Candidate] extends [MaybeRequired]
+      ? false
+      : true;
 
 type ExtractMethodPath<T extends string | number | symbol, M extends F.HTTPMethods> = T extends `${M} ${infer P}`
   ? [M, P]
@@ -153,8 +153,8 @@ type MP<T extends string | number | symbol> =
 type ExtractParams<T extends string | number | symbol, Acc = {}> = T extends `${infer _}:${infer P}/${infer R}`
   ? ExtractParams<R, Acc & { [_ in P]: string }>
   : T extends `${infer _}:${infer P}`
-  ? Id<Acc & { [_ in P]: string }>
-  : Acc;
+    ? Id<Acc & { [_ in P]: string }>
+    : Acc;
 
 type ArrayTOrT<T> = T | T[];
 
@@ -217,15 +217,15 @@ interface Reply<
     ...payload: [MissingStatus] extends [true]
       ? [Invalid<`Missing status`>]
       : [MissingHeaders] extends [true]
-      ? [
-          Invalid<`Missing headers: [ ${Extract<
-            keyof Omit<AllHeaders, keyof ([Headers] extends [never] ? {} : Headers)>,
-            string
-          >} ]. Please provide required headers before sending reply.`>,
-        ]
-      : [Get2<Op['response'], Status, 'content'>] extends [never]
-      ? []
-      : [Jsonlike<Get2<Op['response'], Status, 'content'>, 'combine'>]
+        ? [
+            Invalid<`Missing headers: [ ${Extract<
+              keyof Omit<AllHeaders, keyof ([Headers] extends [never] ? {} : Headers)>,
+              string
+            >} ]. Please provide required headers before sending reply.`>,
+          ]
+        : [Get2<Op['response'], Status, 'content'>] extends [never]
+          ? []
+          : [Jsonlike<Get2<Op['response'], Status, 'content'>, 'combine'>]
   ): AsReply;
 
   readonly request: Request<ServiceSchema, Op, Path, RawServer, RawRequest>;
@@ -360,11 +360,11 @@ type GetInvalidParamsValidation<
 > = Router<Op>['Params'] extends never
   ? false
   : IsEqual<DifferentKeys, {}> extends false
-  ? Invalid<`request.params keys doesn't match params from router path, probably due to typo in [ ${Extract<
-      keyof DifferentKeys,
-      string
-    >} ] in path: [ ${Extract<MP<Path>[1], string>} ]`>
-  : false;
+    ? Invalid<`request.params keys doesn't match params from router path, probably due to typo in [ ${Extract<
+        keyof DifferentKeys,
+        string
+      >} ] in path: [ ${Extract<MP<Path>[1], string>} ]`>
+    : false;
 
 type Handler<
   Op extends Operation,
@@ -381,8 +381,8 @@ type Handler<
   ValidSchema = [Op['response'][keyof Op['response']]] extends [never]
     ? Invalid<`${Extract<Path, string>} - has no response, every path should have at least one response defined`>
     : InvalidParams extends Invalid
-    ? InvalidParams
-    : true,
+      ? InvalidParams
+      : true,
 > = ValidSchema extends true
   ? (
       this: F.FastifyInstance<RawServer, RawRequest, RawReply, Logger>,

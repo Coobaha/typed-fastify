@@ -1,1 +1,3 @@
 tap-snapshots/**/*.js
+test/**/*.gen.json
+CHANGELOG.md

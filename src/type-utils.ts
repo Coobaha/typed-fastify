@@ -26,51 +26,53 @@ type JsonCastBehavior = 'cast' | 'combine';
 type JsonlikeList<T extends unknown[], DoNotCastToPrimitive extends JsonCastBehavior> = T extends []
   ? []
   : T extends [infer F, ...infer R]
-  ? [NeverToNull<Jsonlike<F, DoNotCastToPrimitive>>, ...JsonlikeList<R, DoNotCastToPrimitive>]
-  : IsUnknown<T[number]> extends true
-  ? []
-  : Array<T[number] extends NotJsonable ? null : Jsonlike<T[number], DoNotCastToPrimitive>>;
+    ? [NeverToNull<Jsonlike<F, DoNotCastToPrimitive>>, ...JsonlikeList<R, DoNotCastToPrimitive>]
+    : IsUnknown<T[number]> extends true
+      ? []
+      : Array<T[number] extends NotJsonable ? null : Jsonlike<T[number], DoNotCastToPrimitive>>;
 
 // tweaked version of Jsonify from type-fest
 export type Jsonlike<T, CastBehavior extends JsonCastBehavior> = T extends PositiveInfinity | NegativeInfinity
   ? null
   : T extends NotJsonable
-  ? IsNotJsonableError<'Passed value'>
-  : T extends JsonPrimitive
-  ? T
-  : // Any object with toJSON is special case
-  T extends {
-      toJSON(): infer J;
-    }
-  ? (() => J) extends () => JsonValue // Is J assignable to JsonValue?
-    ? CastBehavior extends 'combine'
-      ? T | J
-      : J // Then T is Jsonable and its Jsonable value is J
-    : Jsonlike<J, CastBehavior> // Maybe if we look a level deeper we'll find a JsonValue
-  : // Instanced primitives are objects
-  T extends Number
-  ? number
-  : T extends String
-  ? string
-  : T extends Boolean
-  ? boolean
-  : T extends Map<any, any> | Set<any>
-  ? EmptyObject
-  : T extends TypedArray
-  ? Record<string, number> // Non-JSONable type union was found not empty
-  : T extends []
-  ? []
-  : T extends unknown[]
-  ? JsonlikeList<T, CastBehavior>
-  : T extends readonly unknown[]
-  ? JsonlikeList<WritableDeep<T>, CastBehavior>
-  : T extends object
-  ? {
-      [K in keyof T]: [T[K]] extends [NotJsonable] | [never] ? IsNotJsonableError<K> : Jsonlike<T[K], CastBehavior>; // JsonifyObject recursive call for its children
-    }
-  : T extends undefined
-  ? T
-  : IsNotJsonableError<'Passed value'>;
+    ? IsNotJsonableError<'Passed value'>
+    : T extends JsonPrimitive
+      ? T
+      : // Any object with toJSON is special case
+        T extends {
+            toJSON(): infer J;
+          }
+        ? (() => J) extends () => JsonValue // Is J assignable to JsonValue?
+          ? CastBehavior extends 'combine'
+            ? T | J
+            : J // Then T is Jsonable and its Jsonable value is J
+          : Jsonlike<J, CastBehavior> // Maybe if we look a level deeper we'll find a JsonValue
+        : // Instanced primitives are objects
+          T extends Number
+          ? number
+          : T extends String
+            ? string
+            : T extends Boolean
+              ? boolean
+              : T extends Map<any, any> | Set<any>
+                ? EmptyObject
+                : T extends TypedArray
+                  ? Record<string, number> // Non-JSONable type union was found not empty
+                  : T extends []
+                    ? []
+                    : T extends unknown[]
+                      ? JsonlikeList<T, CastBehavior>
+                      : T extends readonly unknown[]
+                        ? JsonlikeList<WritableDeep<T>, CastBehavior>
+                        : T extends object
+                          ? {
+                              [K in keyof T]: [T[K]] extends [NotJsonable] | [never]
+                                ? IsNotJsonableError<K>
+                                : Jsonlike<T[K], CastBehavior>; // JsonifyObject recursive call for its children
+                            }
+                          : T extends undefined
+                            ? T
+                            : IsNotJsonableError<'Passed value'>;
 
 export interface Invalid<msg = any> {
   readonly __INVALID__: unique symbol;
