@@ -49,7 +49,6 @@ You can also add `--watch` flag to watch for changes in your schema files
 > **To learn more about the cli**
 >
 > For more information about `tfs` command, see [CLI](CLI-Reference.md) page.
->
 
 <seealso style="links">
        <category ref="related">
