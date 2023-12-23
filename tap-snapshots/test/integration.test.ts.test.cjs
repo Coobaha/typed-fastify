@@ -4,546 +4,14 @@
  * Re-generate by setting TAP_SNAPSHOT=1 and running tests.
  * Make sure to inspect the output below.  Do not ignore changes!
  */
-'use strict'
-exports[`test/integration.test.ts TAP GET /empty works > request path:GET /empty id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "response": Object {},
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP GET /empty works > response path:GET /empty id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 204 No Content",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [],
-}
-`
-
-exports[`test/integration.test.ts TAP GET /inferredParams/:id > request path:GET /inferredParams/321/123 id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {
-    "castedToNumber": "123",
-    "id": "321",
-  },
-  "Query": Object {},
-  "schema": Object {
-    "params": Object {
-      "additionalProperties": true,
-      "properties": Object {
-        "castedToNumber": Object {
-          "type": "number",
-        },
-      },
-      "required": Array [
-        "castedToNumber",
-      ],
-      "type": "object",
-    },
-    "response": Object {
-      "200": Object {
-        "type": "string",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP GET /inferredParams/:id > response path:GET /inferredParams/321/123 id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: text/plain; charset=utf-8",
-    "content-length: 51",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    "id type is string and castedToNumber type is number",
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP GET /user_and_obj works > request path:GET /user_and_obj id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "response": Object {
-      "200": Object {
-        "items": Array [
-          Object {
-            "$ref": "test_schema#/properties/User",
-            "type": "object",
-          },
-          Object {
-            "$ref": "test_schema#/properties/TestObj",
-            "type": "object",
-          },
-          Object {
-            "additionalProperties": Object {
-              "anyOf": Array [
-                Object {
-                  "type": "string",
-                },
-                Object {
-                  "type": "number",
-                },
-              ],
-            },
-            "type": "object",
-          },
-        ],
-        "maxItems": 3,
-        "minItems": 3,
-        "type": "array",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP GET /user_and_obj works > response path:GET /user_and_obj id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 59",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Array [
-      Object {
-        "name": "user1",
-      },
-      Object {
-        "id": "1",
-        "type": "TEST",
-      },
-      Object {
-        "any": "thing",
-      },
-    ],
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP GET /user_and_obj works > user_and_obj 1`] = `
-Array [
-  Object {
-    "name": "user1",
-  },
-  Object {
-    "id": "1",
-    "type": "TEST",
-  },
-  Object {
-    "any": "thing",
-  },
-]
-`
-
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > error logs 1`] = `
-Error: body/user/name must be string {
-  "code": "FST_ERR_VALIDATION",
-  "statusCode": 400,
-  "validation": Array [
-    Object {
-      "instancePath": "/user/name",
-      "keyword": "type",
-      "message": "must be string",
-      "params": Object {
-        "type": "string",
-      },
-      "schemaPath": "test_schema#/properties/User/properties/name/type",
-    },
-  ],
-  "validationContext": "body",
-}
-`
-
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > invalid user name 1`] = `
-Object {
-  "code": "FST_ERR_VALIDATION",
-  "error": "Bad Request",
-  "message": "body/user/name must be string",
-  "statusCode": 400,
-}
-`
-
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > request path:POST / id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "authorization": "required",
-    "content-length": "29",
-    "content-type": "application/json",
-    "getheader": "isHere",
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "body": Object {
-      "additionalProperties": false,
-      "properties": Object {
-        "user": Object {
-          "$ref": "test_schema#/properties/User",
-        },
-      },
-      "required": Array [
-        "user",
-      ],
-      "type": "object",
-    },
-    "response": Object {
-      "200": Object {
-        "additionalProperties": false,
-        "properties": Object {
-          "msg": Object {
-            "type": "string",
-          },
-          "user": Object {
-            "$ref": "test_schema#/properties/User",
-          },
-        },
-        "required": Array [
-          "msg",
-          "user",
-        ],
-        "type": "object",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST / rejects invalid payload > response path:POST / id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 400 Bad Request",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 110",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "code": "FST_ERR_VALIDATION",
-      "error": "Bad Request",
-      "message": "body/user/name must be string",
-      "statusCode": 400,
-    },
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP POST / type casts payload when possible > 123 was casted to string 1`] = `
-Object {
-  "msg": "Hello, 123, string",
-  "user": Object {
-    "name": "123",
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST / type casts payload when possible > request path:POST / id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "authorization": "required",
-    "content-length": "21",
-    "content-type": "application/json",
-    "getheader": "isHere",
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "body": Object {
-      "additionalProperties": false,
-      "properties": Object {
-        "user": Object {
-          "$ref": "test_schema#/properties/User",
-        },
-      },
-      "required": Array [
-        "user",
-      ],
-      "type": "object",
-    },
-    "response": Object {
-      "200": Object {
-        "additionalProperties": false,
-        "properties": Object {
-          "msg": Object {
-            "type": "string",
-          },
-          "user": Object {
-            "$ref": "test_schema#/properties/User",
-          },
-        },
-        "required": Array [
-          "msg",
-          "user",
-        ],
-        "type": "object",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST / type casts payload when possible > response path:POST / id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 50",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "msg": "Hello, 123, string",
-      "user": Object {
-        "name": "123",
-      },
-    },
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP POST / works > contains user name in msg 1`] = `
-Object {
-  "msg": "Hello, Test User, string",
-  "user": Object {
-    "name": "Test User",
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST / works > request path:POST / id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "authorization": "required",
-    "content-length": "29",
-    "content-type": "application/json",
-    "getheader": "isHere",
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "body": Object {
-      "additionalProperties": false,
-      "properties": Object {
-        "user": Object {
-          "$ref": "test_schema#/properties/User",
-        },
-      },
-      "required": Array [
-        "user",
-      ],
-      "type": "object",
-    },
-    "response": Object {
-      "200": Object {
-        "additionalProperties": false,
-        "properties": Object {
-          "msg": Object {
-            "type": "string",
-          },
-          "user": Object {
-            "$ref": "test_schema#/properties/User",
-          },
-        },
-        "required": Array [
-          "msg",
-          "user",
-        ],
-        "type": "object",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST / works > response path:POST / id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 62",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "msg": "Hello, Test User, string",
-      "user": Object {
-        "name": "Test User",
-      },
-    },
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP POST /params/:id/:subid works > request path:POST /params/11/22 id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {
-    "id": "11",
-    "subid": "22",
-  },
-  "Query": Object {},
-  "schema": Object {
-    "params": Object {
-      "additionalProperties": false,
-      "properties": Object {
-        "id": Object {
-          "type": "number",
-        },
-        "subid": Object {
-          "type": "string",
-        },
-      },
-      "required": Array [
-        "id",
-        "subid",
-      ],
-      "type": "object",
-    },
-    "response": Object {},
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST /params/:id/:subid works > response path:POST /params/11/22 id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-length: 0",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [],
-}
-`
-
-exports[`test/integration.test.ts TAP POST /redirect works > request path:POST /redirect id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "response": Object {},
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST /redirect works > response path:POST /redirect id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 302 Found",
-    "location: example.com",
-    "content-length: 0",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [],
-}
-`
-
-exports[`test/integration.test.ts TAP POST /testframe works > request path:POST /testframe id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "response": Object {
-      "200": Object {
-        "additionalProperties": false,
-        "properties": Object {
-          "frame": Object {
-            "$ref": "test_schema#/properties/TestObj",
-          },
-        },
-        "required": Array [
-          "frame",
-        ],
-        "type": "object",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP POST /testframe works > response path:POST /testframe id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 39",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "frame": Object {
-        "id": "string",
-        "type": "TEST",
-      },
-    },
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP app starts and GET / works > happy path 1`] = `
+'use strict';
+exports[`test/integration.test.ts > TAP > app starts and GET / works > happy path 1`] = `
 Object {
   "name": "hello, getQueryParam=undefined",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP app starts and GET / works > request path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > app starts and GET / works > request path:GET / id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -585,11 +53,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP app starts and GET / works > response path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > app starts and GET / works > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -605,9 +74,178 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP invalid GET /matches > request path:GET /matches?match=%2Finvalid id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > GET /empty works > request path:GET /empty id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {},
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > GET /empty works > response path:GET /empty id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 204 No Content",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [],
+}
+`;
+
+exports[
+  `test/integration.test.ts > TAP > GET /inferredParams/:id > request path:GET /inferredParams/321/123 id:req-1 1`
+] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {
+    "castedToNumber": "123",
+    "id": "321",
+  },
+  "Query": Object {},
+  "schema": Object {
+    "params": Object {
+      "additionalProperties": true,
+      "properties": Object {
+        "castedToNumber": Object {
+          "type": "number",
+        },
+      },
+      "required": Array [
+        "castedToNumber",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "type": "string",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[
+  `test/integration.test.ts > TAP > GET /inferredParams/:id > response path:GET /inferredParams/321/123 id:req-1 1`
+] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: text/plain; charset=utf-8",
+    "content-length: 51",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    "id type is string and castedToNumber type is number",
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > GET /user_and_obj works > request path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "items": Array [
+          Object {
+            "$ref": "test_schema#/properties/User",
+            "type": "object",
+          },
+          Object {
+            "$ref": "test_schema#/properties/TestObj",
+            "type": "object",
+          },
+          Object {
+            "additionalProperties": Object {
+              "anyOf": Array [
+                Object {
+                  "type": "string",
+                },
+                Object {
+                  "type": "number",
+                },
+              ],
+            },
+            "type": "object",
+          },
+        ],
+        "maxItems": 3,
+        "minItems": 3,
+        "type": "array",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > GET /user_and_obj works > response path:GET /user_and_obj id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 59",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Array [
+      Object {
+        "name": "user1",
+      },
+      Object {
+        "id": "1",
+        "type": "TEST",
+      },
+      Object {
+        "any": "thing",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > GET /user_and_obj works > user_and_obj 1`] = `
+Array [
+  Object {
+    "name": "user1",
+  },
+  Object {
+    "id": "1",
+    "type": "TEST",
+  },
+  Object {
+    "any": "thing",
+  },
+]
+`;
+
+exports[
+  `test/integration.test.ts > TAP > invalid GET /matches > request path:GET /matches?match=%2Finvalid id:req-1 1`
+] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -649,11 +287,14 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP invalid GET /matches > response path:GET /matches?match=%2Finvalid id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > invalid GET /matches > response path:GET /matches?match=%2Finvalid id:req-1 1`
+] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -668,9 +309,11 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it does not interfere with prefixed plugin > request path:GET /prefixed id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > it does not interfere with prefixed plugin > request path:GET /prefixed id:req-1 1`
+] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -685,11 +328,14 @@ Object {
         "type": "string",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it does not interfere with prefixed plugin > response path:GET /prefixed id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > it does not interfere with prefixed plugin > response path:GET /prefixed id:req-1 1`
+] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -702,9 +348,9 @@ Object {
     true,
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it sends headers > request path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it sends headers > request path:GET / id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -746,11 +392,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it sends headers > response path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it sends headers > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -766,9 +413,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it sends headers > x-custom header is present 1`] = `
+exports[`test/integration.test.ts > TAP > it sends headers > x-custom header is present 1`] = `
 Object {
   "connection": "keep-alive",
   "content-length": "41",
@@ -776,9 +423,9 @@ Object {
   "date": "dateString",
   "x-custom": "1",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > error logs 1`] = `
+exports[`test/integration.test.ts > TAP > it validates get query param against schema > error logs 1`] = `
 Error: querystring/getQueryParam must be boolean {
   "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
@@ -795,9 +442,11 @@ Error: querystring/getQueryParam must be boolean {
   ],
   "validationContext": "querystring",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > request path:GET /?getQueryParam=1 id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > it validates get query param against schema > request path:GET /?getQueryParam=1 id:req-1 1`
+] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -841,11 +490,14 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > response path:GET /?getQueryParam=1 id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > it validates get query param against schema > response path:GET /?getQueryParam=1 id:req-1 1`
+] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -863,18 +515,19 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates get query param against schema > wrong type of query param 1`] = `
+exports[`test/integration.test.ts > TAP > it validates get query param against schema > wrong type of query param 1`] =
+  `
 Object {
   "code": "FST_ERR_VALIDATION",
   "error": "Bad Request",
   "message": "querystring/getQueryParam must be boolean",
   "statusCode": 400,
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > error logs 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > error logs 1`] = `
 Error: headers must have required property 'authorization' {
   "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
@@ -891,9 +544,9 @@ Error: headers must have required property 'authorization' {
   ],
   "validationContext": "headers",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > error logs 2`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > error logs 2`] = `
 Error: headers must have required property 'getheader' {
   "code": "FST_ERR_VALIDATION",
   "statusCode": 400,
@@ -910,9 +563,9 @@ Error: headers must have required property 'getheader' {
   ],
   "validationContext": "headers",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > missing headers 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > missing headers 1`] = `
 Array [
   Object {
     "code": "FST_ERR_VALIDATION",
@@ -927,9 +580,9 @@ Array [
     "statusCode": 400,
   },
 ]
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > request path:GET / id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -970,11 +623,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > request path:GET / id:req-2 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > request path:GET / id:req-2 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1015,11 +669,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -1037,9 +692,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it validates headers > response path:GET / id:req-2 1`] = `
+exports[`test/integration.test.ts > TAP > it validates headers > response path:GET / id:req-2 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 400 Bad Request",
@@ -1057,91 +712,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it works with /jsonify 2 > request path:POST /jsonify id:req-1 1`] = `
-Object {
-  "Body": undefined,
-  "Headers": Object {
-    "content-length": "47",
-    "content-type": "application/json",
-    "host": "localhost:80",
-    "user-agent": "lightMyRequest",
-  },
-  "Params": Object {},
-  "Query": Object {},
-  "schema": Object {
-    "body": Object {
-      "additionalProperties": false,
-      "properties": Object {
-        "date": Object {
-          "format": "date-time",
-          "type": "string",
-        },
-        "regexp": Object {
-          "format": "regex",
-          "type": "string",
-        },
-      },
-      "required": Array [
-        "date",
-        "regexp",
-      ],
-      "type": "object",
-    },
-    "response": Object {
-      "200": Object {
-        "additionalProperties": false,
-        "properties": Object {
-          "date": Object {
-            "format": "date-time",
-            "type": "string",
-          },
-          "dateString": Object {
-            "format": "date-time",
-            "type": "string",
-          },
-          "regexpType": Object {
-            "type": "string",
-          },
-          "type": Object {
-            "type": "string",
-          },
-        },
-        "required": Array [
-          "date",
-          "dateString",
-          "regexpType",
-          "type",
-        ],
-        "type": "object",
-      },
-    },
-  },
-}
-`
-
-exports[`test/integration.test.ts TAP it works with /jsonify 2 > response path:POST /jsonify id:req-1 1`] = `
-Object {
-  "Headers": Array [
-    "HTTP/1.1 200 OK",
-    "content-type: application/json; charset=utf-8",
-    "content-length: 104",
-    "Date: dateString",
-    "Connection: keep-alive",
-  ],
-  "Payload": Array [
-    Object {
-      "date": "1970-01-01T00:00:00.000Z",
-      "dateString": "Thu Jan 01 1970",
-      "regexpType": "string",
-      "type": "string",
-    },
-  ],
-}
-`
-
-exports[`test/integration.test.ts TAP it works with /jsonify > request path:POST /jsonify id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it works with /jsonify > request path:POST /jsonify id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1199,11 +772,12 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP it works with /jsonify > response path:POST /jsonify id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it works with /jsonify > response path:POST /jsonify id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -1221,9 +795,92 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP objectid > request path:GET /objectid id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > it works with /jsonify 2 > request path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "content-length": "47",
+    "content-type": "application/json",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "date": Object {
+          "format": "date-time",
+          "type": "string",
+        },
+        "regexp": Object {
+          "format": "regex",
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "date",
+        "regexp",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "date": Object {
+            "format": "date-time",
+            "type": "string",
+          },
+          "dateString": Object {
+            "format": "date-time",
+            "type": "string",
+          },
+          "regexpType": Object {
+            "type": "string",
+          },
+          "type": Object {
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "date",
+          "dateString",
+          "regexpType",
+          "type",
+        ],
+        "type": "object",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > it works with /jsonify 2 > response path:POST /jsonify id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 104",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "date": "1970-01-01T00:00:00.000Z",
+      "dateString": "Thu Jan 01 1970",
+      "regexpType": "string",
+      "type": "string",
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > objectid > request path:GET /objectid id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1247,11 +904,12 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP objectid > response path:GET /objectid id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > objectid > response path:GET /objectid id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -1266,32 +924,414 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP objectid > swagger openapi schema 1`] = `
+exports[`test/integration.test.ts > TAP > objectid > swagger openapi schema 1`] = `
 Object {
   "id": "123",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP response is validated > error logs 1`] = `
+exports[`test/integration.test.ts > TAP > POST / rejects invalid payload > error logs 1`] = `
+Error: body/user/name must be string {
+  "code": "FST_ERR_VALIDATION",
+  "statusCode": 400,
+  "validation": Array [
+    Object {
+      "instancePath": "/user/name",
+      "keyword": "type",
+      "message": "must be string",
+      "params": Object {
+        "type": "string",
+      },
+      "schemaPath": "test_schema#/properties/User/properties/name/type",
+    },
+  ],
+  "validationContext": "body",
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / rejects invalid payload > invalid user name 1`] = `
+Object {
+  "code": "FST_ERR_VALIDATION",
+  "error": "Bad Request",
+  "message": "body/user/name must be string",
+  "statusCode": 400,
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / rejects invalid payload > request path:POST / id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "29",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/properties/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "$ref": "test_schema#/properties/User",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / rejects invalid payload > response path:POST / id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 400 Bad Request",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 110",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "code": "FST_ERR_VALIDATION",
+      "error": "Bad Request",
+      "message": "body/user/name must be string",
+      "statusCode": 400,
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / type casts payload when possible > 123 was casted to string 1`] = `
+Object {
+  "msg": "Hello, 123, string",
+  "user": Object {
+    "name": "123",
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / type casts payload when possible > request path:POST / id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "21",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/properties/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "$ref": "test_schema#/properties/User",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / type casts payload when possible > response path:POST / id:req-1 1`] =
+  `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 50",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "msg": "Hello, 123, string",
+      "user": Object {
+        "name": "123",
+      },
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / works > contains user name in msg 1`] = `
+Object {
+  "msg": "Hello, Test User, string",
+  "user": Object {
+    "name": "Test User",
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / works > request path:POST / id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "authorization": "required",
+    "content-length": "29",
+    "content-type": "application/json",
+    "getheader": "isHere",
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "body": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "user": Object {
+          "$ref": "test_schema#/properties/User",
+        },
+      },
+      "required": Array [
+        "user",
+      ],
+      "type": "object",
+    },
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "msg": Object {
+            "type": "string",
+          },
+          "user": Object {
+            "$ref": "test_schema#/properties/User",
+          },
+        },
+        "required": Array [
+          "msg",
+          "user",
+        ],
+        "type": "object",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST / works > response path:POST / id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 62",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "msg": "Hello, Test User, string",
+      "user": Object {
+        "name": "Test User",
+      },
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST /params/:id/:subid works > request path:POST /params/11/22 id:req-1 1`] =
+  `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {
+    "id": "11",
+    "subid": "22",
+  },
+  "Query": Object {},
+  "schema": Object {
+    "params": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "id": Object {
+          "type": "number",
+        },
+        "subid": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "id",
+        "subid",
+      ],
+      "type": "object",
+    },
+    "response": Object {},
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[
+  `test/integration.test.ts > TAP > POST /params/:id/:subid works > response path:POST /params/11/22 id:req-1 1`
+] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-length: 0",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST /redirect works > request path:POST /redirect id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {},
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST /redirect works > response path:POST /redirect id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 302 Found",
+    "location: example.com",
+    "content-length: 0",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST /testframe works > request path:POST /testframe id:req-1 1`] = `
+Object {
+  "Body": undefined,
+  "Headers": Object {
+    "host": "localhost:80",
+    "user-agent": "lightMyRequest",
+  },
+  "Params": Object {},
+  "Query": Object {},
+  "schema": Object {
+    "response": Object {
+      "200": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "frame": Object {
+            "$ref": "test_schema#/properties/TestObj",
+          },
+        },
+        "required": Array [
+          "frame",
+        ],
+        "type": "object",
+      },
+    },
+    [Symbol(fastify.schemas.visited)]: true,
+  },
+}
+`;
+
+exports[`test/integration.test.ts > TAP > POST /testframe works > response path:POST /testframe id:req-1 1`] = `
+Object {
+  "Headers": Array [
+    "HTTP/1.1 200 OK",
+    "content-type: application/json; charset=utf-8",
+    "content-length: 39",
+    "Date: dateString",
+    "Connection: keep-alive",
+  ],
+  "Payload": Array [
+    Object {
+      "frame": Object {
+        "id": "string",
+        "type": "TEST",
+      },
+    },
+  ],
+}
+`;
+
+exports[`test/integration.test.ts > TAP > response is validated > error logs 1`] = `
 Error: "name" is required! {
   "serialization": Object {
     "method": "GET",
     "url": "/",
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP response is validated > invalid response 1`] = `
+exports[`test/integration.test.ts > TAP > response is validated > invalid response 1`] = `
 Object {
   "error": "Internal Server Error",
   "message": "\\"name\\" is required!",
   "statusCode": 500,
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > response is validated > request path:GET / id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1333,11 +1373,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP response is validated > request path:GET / id:req-1 2`] = `
+exports[`test/integration.test.ts > TAP > response is validated > request path:GET / id:req-1 2`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1377,11 +1418,12 @@ Object {
         "$ref": "test_schema#/properties/User",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP response is validated > response path:GET / id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > response is validated > response path:GET / id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 500 Internal Server Error",
@@ -1399,9 +1441,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP swagger integration works > request path:GET /openapi/json id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > swagger integration works > request path:GET /openapi/json id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -1412,11 +1454,12 @@ Object {
   "Query": Object {},
   "schema": Object {
     "hide": true,
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP swagger integration works > response path:GET /openapi/json id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > swagger integration works > response path:GET /openapi/json id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -1882,9 +1925,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP swagger integration works > swagger openapi schema 1`] = `
+exports[`test/integration.test.ts > TAP > swagger integration works > swagger openapi schema 1`] = `
 Object {
   "basePath": "/",
   "definitions": Object {
@@ -2339,9 +2382,9 @@ Object {
   },
   "swagger": "2.0",
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /asReply > request path:GET /asReply?reply=known id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > valid GET /asReply > request path:GET /asReply?reply=known id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -2380,11 +2423,12 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /asReply > request path:GET /asReply?reply=unknown id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > valid GET /asReply > request path:GET /asReply?reply=unknown id:req-1 1`] = `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -2423,11 +2467,12 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /asReply > response path:GET /asReply?reply=known id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > valid GET /asReply > response path:GET /asReply?reply=known id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -2442,9 +2487,9 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /asReply > response path:GET /asReply?reply=unknown id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > valid GET /asReply > response path:GET /asReply?reply=unknown id:req-1 1`] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -2459,9 +2504,10 @@ Object {
     },
   ],
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /matches > request path:GET /matches?match=%2Fmatches id:req-1 1`] = `
+exports[`test/integration.test.ts > TAP > valid GET /matches > request path:GET /matches?match=%2Fmatches id:req-1 1`] =
+  `
 Object {
   "Body": undefined,
   "Headers": Object {
@@ -2503,11 +2549,14 @@ Object {
         "type": "object",
       },
     },
+    [Symbol(fastify.schemas.visited)]: true,
   },
 }
-`
+`;
 
-exports[`test/integration.test.ts TAP valid GET /matches > response path:GET /matches?match=%2Fmatches id:req-1 1`] = `
+exports[
+  `test/integration.test.ts > TAP > valid GET /matches > response path:GET /matches?match=%2Fmatches id:req-1 1`
+] = `
 Object {
   "Headers": Array [
     "HTTP/1.1 200 OK",
@@ -2522,4 +2571,4 @@ Object {
     },
   ],
 }
-`
+`;
