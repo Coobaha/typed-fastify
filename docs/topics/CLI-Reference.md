@@ -49,4 +49,3 @@ Glob pattern with watch
 ```shell
 %cli% gen 'src/**/*_schema.ts' -w
 ```
-

@@ -16,7 +16,6 @@ Use [CodeSanbox](https://codesandbox.io/p/github/Coobaha/typed-fastify-example?f
 Try different requests `GET /`, `GET /?name=error` and `GET /?name=1&name=2`.
 Also try changing the schema and use different types and implement new routes 🤓
 
-
 ## Define schema
 
 Here is an example of an imaginary API schema:
@@ -24,7 +23,7 @@ Here is an example of an imaginary API schema:
 ```typescript
 // example_schema.ts
 
-import type { Schema } from "@coobaha/typed-fastify";
+import type { Schema } from '@coobaha/typed-fastify';
 
 interface User {
   name: string;
@@ -38,7 +37,7 @@ interface ResponseError {
 
 export interface ExampleSchema extends Schema {
   paths: {
-    "GET /": {
+    'GET /': {
       request: {
         querystring: {
           name?: string;
@@ -64,23 +63,23 @@ Create a service implementation that matches the schema:
 ```typescript
 // example_service.ts
 
-import { Service } from "@coobaha/typed-fastify";
+import { Service } from '@coobaha/typed-fastify';
 
-import type { ExampleSchema } from "./example_schema";
+import type { ExampleSchema } from './example_schema';
 
 const exampleService: Service<ExampleSchema> = {
-  "GET /": (req, reply) => {
-    const name = req.query.name ?? "John";
-    if (name === "error") {
+  'GET /': (req, reply) => {
+    const name = req.query.name ?? 'John';
+    if (name === 'error') {
       return reply.status(404).send({
         code: 404,
-        message: "Not Found",
+        message: 'Not Found',
       });
     }
     return reply.status(200).send({
       id: 1,
       name: name,
-     });
+    });
   },
 };
 ```
@@ -109,10 +108,7 @@ npx tfs gen example_schema.ts
     "properties": {
       "User": {
         "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "additionalProperties": false,
         "properties": {
           "name": {
@@ -125,10 +121,7 @@ npx tfs gen example_schema.ts
       },
       "ResponseError": {
         "type": "object",
-        "required": [
-          "code",
-          "message"
-        ],
+        "required": ["code", "message"],
         "additionalProperties": false,
         "properties": {
           "message": {
@@ -146,9 +139,7 @@ npx tfs gen example_schema.ts
     "GET /": {
       "request": {
         "type": "object",
-        "required": [
-          "querystring"
-        ],
+        "required": ["querystring"],
         "additionalProperties": false,
         "properties": {
           "querystring": {
@@ -177,15 +168,14 @@ npx tfs gen example_schema.ts
 
 {collapsible="true" collapsed-title="Generated JSON Schema"}
 
-
 ## Add service to Fastify instance
 
 We now have a JSON schema file `example_schema.gen.json` that we can use to validate requests and responses. To wire up
 the service to Fastify, we need to add the schema and service to Fastify instance
 
-> You can add this schema to version control and commit it to your repository. 
+> You can add this schema to version control and commit it to your repository.
 > This way you can also verify diffs and always have the latest version of the schema in your repository.
-> 
+>
 > You can also configure file nesting in your Editor to hide generated files from the project view.
 
 In the same file where you defined `exampleService`, add the following code:
@@ -193,7 +183,7 @@ In the same file where you defined `exampleService`, add the following code:
 ```typescript
 // example_service.ts
 
-import jsonSchema from './example_schema.gen.json'
+import jsonSchema from './example_schema.gen.json';
 
 // ... other imports and exampleService implementation
 
@@ -210,15 +200,15 @@ addSchema(app, {
 You can now run the server and try out the API.
 
 It will have a:
+
 1. Type safe implementation of the service, that matches the schema
 2. Runtime validation of request and response
 3. Generated JSON schema that allows you to use it for documentation and verification.
-                   
+
 You can find the full example code here:
 
-- Interactive playground [CodeSanbox](https://codesandbox.io/p/github/Coobaha/typed-fastify-example?file=%2Fsrc%2Fexample_schema.ts) 
+- Interactive playground [CodeSanbox](https://codesandbox.io/p/github/Coobaha/typed-fastify-example?file=%2Fsrc%2Fexample_schema.ts)
 - [typed-fastify-example](https://github.com/coobaha/typed-fastify-example) on GitHub
-
 
 <seealso style="links">
        <category ref="external">
