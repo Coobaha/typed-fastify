@@ -106,10 +106,12 @@ const addSchema = <
 
     const fastifySchema = opts.jsonSchema.fastify;
     const routeSchema = fastifySchema[path];
-    const schema = !routeSchema ? {} : {
+    const schema = {
+      /* c8 ignore start */
       ...routeSchema?.request?.properties,
-      response: routeSchema?.response,
-    }
+      response: routeSchema?.response ?? {},
+      /* c8 ignore stop */
+    };
 
     switch (typeof handler) {
       case 'object':
@@ -128,7 +130,7 @@ const addSchema = <
           // @ts-ignore
           handler: handler,
           url: route.join(' '),
-          schema
+          schema,
         });
         break;
       /* c8 ignore start */
