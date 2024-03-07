@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.4](https://github.com/Coobaha/typed-fastify/compare/v2.1.3...v2.1.4) (2024-03-07)
+
+
+### Bug Fixes
+
+* include schema option in route declaration ([#149](https://github.com/Coobaha/typed-fastify/issues/149)) ([81dd230](https://github.com/Coobaha/typed-fastify/commit/81dd230e5ad58dea5eb066014e4860cce7ad4f6d))
+
 ## [2.1.3](https://github.com/Coobaha/typed-fastify/compare/v2.1.2...v2.1.3) (2024-01-01)
 
 

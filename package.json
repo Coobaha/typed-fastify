@@ -1,7 +1,7 @@
 {
   "name": "@coobaha/typed-fastify",
   "description": "opinionated types for fastify",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "bin": {
     "tfs": "bin/gen.bin.js",
     "typed-fastify-schema": "bin/gen.bin.js"
