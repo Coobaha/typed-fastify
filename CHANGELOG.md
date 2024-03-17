@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/Coobaha/typed-fastify/compare/v2.1.4...v2.2.0) (2024-03-17)
+
+
+### Features
+
+* bump deps ([#153](https://github.com/Coobaha/typed-fastify/issues/153)) ([e8bbe96](https://github.com/Coobaha/typed-fastify/commit/e8bbe96ef6479cfb9d00ea9a9baa2b9fd612d7c4))
+
 ## [2.1.4](https://github.com/Coobaha/typed-fastify/compare/v2.1.3...v2.1.4) (2024-03-07)
 
 
