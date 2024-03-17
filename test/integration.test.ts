@@ -1,5 +1,5 @@
 import swagger, { FastifyDynamicSwaggerOptions } from '@fastify/swagger';
-import fastify from 'fastify';
+import { fastify, type FastifyInstance } from 'fastify';
 import split from 'split2';
 import tap from 'tap';
 import t from 'tap';
@@ -23,7 +23,7 @@ const buildApp = async ({
   t: Test;
   service?: typeof defaultService;
   jsonSchema?: typeof defaultJsonSchema;
-  prepare?: (app: ReturnType<typeof fastify>) => unknown;
+  prepare?: (app: FastifyInstance) => unknown;
 }) => {
   let stream = split(() => {});
 
