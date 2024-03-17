@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@types/json-schema':
     specifier: ^7.0.15
@@ -2271,8 +2267,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /ip@2.0.0:
-    resolution: {integrity: sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==}
+  /ip@2.0.1:
+    resolution: {integrity: sha512-lJUL9imLTNi1ZfXT+DU6rBBdbiKGBuay9B6xGSPVjUeQwaH1RIGqef8RZkUtHioLmSNpPR5M4HVKJGm1j8FWVQ==}
     dev: true
 
   /ipaddr.js@1.9.1:
@@ -3810,7 +3806,7 @@ packages:
     resolution: {integrity: sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==}
     engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
     dependencies:
-      ip: 2.0.0
+      ip: 2.0.1
       smart-buffer: 4.2.0
     dev: true
 
@@ -4680,3 +4676,7 @@ packages:
   /yoga-wasm-web@0.3.3:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
