@@ -42,7 +42,7 @@
     "syncpack": "^12.3.0",
     "tap": "^18.7.1",
     "ts-node-dev": "^2.0.0",
-    "tsd": "^0.30.7",
+    "tsd": "^0.31.0",
     "typescript": "^5.4.2"
   },
   "directories": {

@@ -103,8 +103,8 @@ devDependencies:
     specifier: ^2.0.0
     version: 2.0.0(@types/node@20.11.28)(typescript@5.4.2)
   tsd:
-    specifier: ^0.30.7
-    version: 0.30.7
+    specifier: ^0.31.0
+    version: 0.31.0
   typescript:
     specifier: ^5.4.2
     version: 5.4.2
@@ -241,7 +241,7 @@ packages:
     dependencies:
       string-width: 5.1.2
       string-width-cjs: /string-width@4.2.3
-      strip-ansi: 7.0.1
+      strip-ansi: 7.1.0
       strip-ansi-cjs: /strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
@@ -368,7 +368,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.15.0
+      fastq: 1.17.1
     dev: true
 
   /@npmcli/agent@2.2.0:
@@ -868,8 +868,8 @@ packages:
     resolution: {integrity: sha512-madaWq2k+LYMEhmcp0fs+OGaLFk0OenpHa4gmI4VEmCKX4PJntQ6fnnGADVFrVkBj0wIdAlQnK/MrlYTHsa1gQ==}
     dev: true
 
-  /@tsd/typescript@5.3.3:
-    resolution: {integrity: sha512-CQlfzol0ldaU+ftWuG52vH29uRoKboLinLy84wS8TQOu+m+tWoaUfk4svL4ij2V8M5284KymJBlHUusKj6k34w==}
+  /@tsd/typescript@5.4.3:
+    resolution: {integrity: sha512-htCVCSQP58wZcLfQaT7ikW9hSjJN7ntIe0HzAfYpBauI0tYoIM0ow4XEZGFwYN266qEsJoOHhlnkNvz/gLrx4Q==}
     engines: {node: '>=14.17'}
     dev: true
 
@@ -1874,12 +1874,6 @@ packages:
       - supports-color
     dev: true
 
-  /fastq@1.15.0:
-    resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
-    dependencies:
-      reusify: 1.0.4
-    dev: true
-
   /fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
     dependencies:
@@ -2655,7 +2649,6 @@ packages:
   /lru-cache@10.1.0:
     resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
     engines: {node: 14 || >=16.14}
-    dev: true
 
   /lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
@@ -2663,10 +2656,6 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
-
-  /lru-cache@9.1.1:
-    resolution: {integrity: sha512-65/Jky17UwSb0BuB9V+MyDpsOtXKmYwzhyl+cOa9XUiI4uV2Ouy/2voFP3+al0BjZbJgMBD8FojMpAf+Z+qn4A==}
-    engines: {node: 14 || >=16.14}
 
   /make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
@@ -3198,7 +3187,7 @@ packages:
     resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
-      lru-cache: 9.1.1
+      lru-cache: 10.1.0
       minipass: 6.0.2
 
   /path-type@4.0.0:
@@ -3924,7 +3913,7 @@ packages:
     dependencies:
       eastasianwidth: 0.2.0
       emoji-regex: 9.2.2
-      strip-ansi: 7.0.1
+      strip-ansi: 7.1.0
 
   /string-width@7.0.0:
     resolution: {integrity: sha512-GPQHj7row82Hjo9hKZieKcHIhaAIKOJvFSIZXuCU9OASVZrMNUaZuz++SPVrBjnLsnk4k+z9f2EIypgxf2vNFw==}
@@ -3947,18 +3936,11 @@ packages:
     dependencies:
       ansi-regex: 5.0.1
 
-  /strip-ansi@7.0.1:
-    resolution: {integrity: sha512-cXNxvT8dFNRVfhVME3JAe98mkXDYN2O1l7jmcwMnOslDeESg1rF/OZMtK0nRAhiari1unG5cD4jG3rapUAkLbw==}
-    engines: {node: '>=12'}
-    dependencies:
-      ansi-regex: 6.0.1
-
   /strip-ansi@7.1.0:
     resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
     engines: {node: '>=12'}
     dependencies:
       ansi-regex: 6.0.1
-    dev: true
 
   /strip-bom@3.0.0:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
@@ -4296,12 +4278,12 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /tsd@0.30.7:
-    resolution: {integrity: sha512-oTiJ28D6B/KXoU3ww/Eji+xqHJojiuPVMwA12g4KYX1O72N93Nb6P3P3h2OAhhf92Xl8NIhb/xFmBZd5zw/xUw==}
+  /tsd@0.31.0:
+    resolution: {integrity: sha512-yjBiQ5n8OMv/IZOuhDjBy0ZLCoJ7rky/RxRh5W4sJ0oNNCU/kf6s3puPAkGNi59PptDdkcpUm+RsKSdjR2YbNg==}
     engines: {node: '>=14.16'}
     hasBin: true
     dependencies:
-      '@tsd/typescript': 5.3.3
+      '@tsd/typescript': 5.4.3
       eslint-formatter-pretty: 4.1.0
       globby: 11.1.0
       jest-diff: 29.5.0
@@ -4589,7 +4571,7 @@ packages:
     dependencies:
       ansi-styles: 6.2.1
       string-width: 5.1.2
-      strip-ansi: 7.0.1
+      strip-ansi: 7.1.0
 
   /wrap-ansi@9.0.0:
     resolution: {integrity: sha512-G8ura3S+3Z2G+mkgNRq8dqaFZAuxfsxpBB8OCTGRTCtp+l/v9nbFNmCUP1BZMts3G1142MsZfn6eeUKrr4PD1Q==}
