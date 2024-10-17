@@ -183,8 +183,18 @@ interface Reply<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
+  SchemaCompiler extends F.FastifySchema = F.FastifySchema,
+  TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
 > extends Omit<
-    F.FastifyReply<RawServer, RawRequest, RawReply, Router<Op>, ContextConfig>,
+    F.FastifyReply<
+      Router<Extract<Path, Operation>>,
+      RawServer,
+      RawRequest,
+      RawReply,
+      ContextConfig,
+      SchemaCompiler,
+      TypeProvider
+    >,
     | 'send'
     | 'status'
     | 'statusCode'
@@ -201,7 +211,7 @@ interface Reply<
   matches<
     P extends keyof ServiceSchema['paths'],
     IsKnown = P extends Path ? true : false,
-    NewOp extends ServiceSchema['paths'][P] = ServiceSchema['paths'][P],
+    NewOp = IsKnown extends true ? ServiceSchema['paths'][P] : never,
     S = keyof Get<NewOp, 'response'>,
     Content = Get<Get2<NewOp, 'response', S>, 'content'>,
     Headers = Get<Get2<NewOp, 'response', S>, 'headers'>,
@@ -210,7 +220,7 @@ interface Reply<
     path: IsKnown extends true ? P : Path,
   ): this is IsKnown extends true
     ? Reply<
-        Extract<NewOp, Operation>,
+        Extract<ServiceSchema['paths'][P], Operation>,
         S,
         Content,
         Headers,
@@ -219,7 +229,9 @@ interface Reply<
         RawServer,
         RawRequest,
         RawReply,
-        ContextConfig
+        ContextConfig,
+        SchemaCompiler,
+        TypeProvider
       >
     : never;
 
@@ -247,7 +259,20 @@ interface Reply<
 
   headers<Headers extends Get2<Op['response'], Status, 'headers'>>(
     values: Headers,
-  ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+  ): OpaqueReply<
+    Op,
+    Status,
+    Content,
+    Headers,
+    Path,
+    ServiceSchema,
+    RawServer,
+    RawRequest,
+    RawReply,
+    ContextConfig,
+    SchemaCompiler,
+    TypeProvider
+  >;
 
   header<Header extends keyof AllHeaders, AllHeaders = Get2<Op['response'], Status, 'headers'>>(
     header: Header,
@@ -262,13 +287,17 @@ interface Reply<
     RawServer,
     RawRequest,
     RawReply,
-    ContextConfig
+    ContextConfig,
+    SchemaCompiler,
+    TypeProvider
   >;
 
   getHeader<Header extends keyof Headers>(header: Header): Headers[Header];
+
   getHeaders(): Headers;
 
   redirect<Status extends keyof Op['response']>(statusCode: Status, url: string): AsReply;
+
   redirect(url: string): AsReply;
 
   status<
@@ -277,10 +306,37 @@ interface Reply<
       : keyof Op['response'],
   >(
     status: Status,
-  ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+  ): OpaqueReply<
+    Op,
+    Status,
+    Content,
+    Headers,
+    Path,
+    ServiceSchema,
+    RawServer,
+    RawRequest,
+    RawReply,
+    ContextConfig,
+    SchemaCompiler,
+    TypeProvider
+  >;
+
   code<Status extends keyof Op['response']>(
     status: Status,
-  ): OpaqueReply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>;
+  ): OpaqueReply<
+    Op,
+    Status,
+    Content,
+    Headers,
+    Path,
+    ServiceSchema,
+    RawServer,
+    RawRequest,
+    RawReply,
+    ContextConfig,
+    SchemaCompiler,
+    TypeProvider
+  >;
 }
 
 type OpaqueReply<
@@ -294,13 +350,30 @@ type OpaqueReply<
   RawRequest extends F.RawRequestDefaultExpression<RawServer> = F.RawRequestDefaultExpression<RawServer>,
   RawReply extends F.RawReplyDefaultExpression<RawServer> = F.RawReplyDefaultExpression<RawServer>,
   ContextConfig = F.ContextConfigDefault,
-  Opaque = Reply<Op, Status, Content, Headers, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig>,
+  SchemaCompiler extends F.FastifySchema = F.FastifySchema,
+  TypeProvider extends F.FastifyTypeProvider = F.FastifyTypeProviderDefault,
+  Opaque = Reply<
+    Op,
+    Status,
+    Content,
+    Headers,
+    Path,
+    ServiceSchema,
+    RawServer,
+    RawRequest,
+    RawReply,
+    ContextConfig,
+    SchemaCompiler,
+    TypeProvider
+  >,
 > = Status extends unknown ? Opaque : Content extends unknown ? Opaque : Headers extends unknown ? Opaque : never;
 
 interface AsReply {
   readonly __REPLY_SYMBOL__: unique symbol;
+
   then(fulfilled: () => void, rejected: (err: Error) => void): void;
 }
+
 const assertAsReply: (any: any) => asserts any is AsReply = () => {};
 export const asReply = (any: any) => {
   assertAsReply(any);
@@ -411,7 +484,20 @@ type Handler<
         ContextConfig,
         Logger
       >,
-      reply: Reply<Op, never, never, never, Path, ServiceSchema, RawServer, RawRequest, RawReply, ContextConfig> & {
+      reply: Reply<
+        Op,
+        never,
+        never,
+        never,
+        Path,
+        ServiceSchema,
+        RawServer,
+        RawRequest,
+        RawReply,
+        ContextConfig,
+        SchemaCompiler,
+        TypeProvider
+      > & {
         readonly __unknownReply: unique symbol;
         M: MP<Path>[0];
       },
