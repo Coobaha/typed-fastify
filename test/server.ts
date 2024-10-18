@@ -31,7 +31,7 @@ async function init(): Promise<void> {
   } as FastifyDynamicSwaggerOptions);
 
   await app.register(fastifySwaggerUi, {
-    prefix: '/openapi',
+    routePrefix: '/openapi',
     uiConfig: {
       docExpansion: 'full',
     },

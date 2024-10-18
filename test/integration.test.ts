@@ -5,9 +5,10 @@ import tap from 'tap';
 import t from 'tap';
 import addSchema from '../src';
 import { defaultJsonSchema, defaultService } from './fixtures';
-import fastifySwaggerUi from '@fastify/swagger-ui';
+import fastifySwaggerUi, { FastifySwaggerUiOptions } from '@fastify/swagger-ui';
 import formatsPlugin from 'ajv-formats';
 import keywordsPlugin from 'ajv-keywords';
+
 type Test = (typeof tap)['Test']['prototype'];
 
 t.cleanSnapshot = (s) => {
@@ -102,11 +103,12 @@ const buildApp = async ({
   } as FastifyDynamicSwaggerOptions);
 
   await app.register(fastifySwaggerUi, {
-    prefix: '/openapi',
+    routePrefix: '/openapi',
     uiConfig: {
       docExpansion: 'full',
+      deepLinking: false,
     },
-  });
+  } satisfies FastifySwaggerUiOptions);
 
   addSchema(app, {
     jsonSchema,
