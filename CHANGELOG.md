@@ -9,6 +9,17 @@
 
 ### Features
 
+* Bump deps and fastify to v5 ([#190](https://github.com/Coobaha/typed-fastify/issues/190)) ([c70bec9](https://github.com/Coobaha/typed-fastify/commit/c70bec9548ec8bd99f338ff1dd9abb98a12bdee8))
+
+## [3.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.3.0...v3.0.0) (2024-10-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump deps and fastify to v5 ([#190](https://github.com/Coobaha/typed-fastify/issues/190))
+
+### Features
+
 * Bump deps and fastify to v5 ([#190](https://github.com/Coobaha/typed-fastify/issues/190)) ([1989eec](https://github.com/Coobaha/typed-fastify/commit/1989eec4d5e6a726deb72c2fcef673de17ba6ad5))
 
 ## [2.3.0](https://github.com/Coobaha/typed-fastify/compare/v2.2.0...v2.3.0) (2024-04-01)
