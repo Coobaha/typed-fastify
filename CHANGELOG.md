@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/Coobaha/typed-fastify/compare/v3.0.0...v4.0.0) (2025-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump deps ([#218](https://github.com/Coobaha/typed-fastify/issues/218))
+
+### Bug Fixes
+
+* Bump deps ([#218](https://github.com/Coobaha/typed-fastify/issues/218)) ([444316a](https://github.com/Coobaha/typed-fastify/commit/444316a5e0c4e6bb6709f24c1d9f43ae1c5c5430))
+
 ## [3.0.0](https://github.com/Coobaha/typed-fastify/compare/v2.3.0...v3.0.0) (2024-10-18)
 
 
