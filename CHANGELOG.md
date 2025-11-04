@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/Coobaha/typed-fastify/compare/v4.0.0...v4.1.0) (2025-11-04)
+
+
+### Features
+
+* update dependencies and run tests ([#222](https://github.com/Coobaha/typed-fastify/issues/222)) ([d3d4130](https://github.com/Coobaha/typed-fastify/commit/d3d41302d165c9960cfbf1964828f716243784f5))
+
 ## [4.0.0](https://github.com/Coobaha/typed-fastify/compare/v3.0.0...v4.0.0) (2025-10-06)
 
 
